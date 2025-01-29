@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Mastery Pro - Next-Gen Learning</title>
+    <title>AI Mastery Pro - Enhanced</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Base Styles */
@@ -20,23 +20,28 @@
             overflow-x: hidden;
         }
 
-        /* Neon Text Effect */
-        .neon-text {
-            text-shadow: 0 0 10px #00f3ff,
-                       0 0 20px #00f3ff,
-                       0 0 30px #00f3ff;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
-        /* Glassmorphism Effect */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 1s ease-in;
         }
 
-        /* Interactive Sections */
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00b4d8, #90e0ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Floating Action Buttons */
         .floating-buttons {
             position: fixed;
             right: 30px;
@@ -65,27 +70,64 @@
             transform: scale(1.1) rotate(15deg);
         }
 
-        /* Contributors Carousel */
-        .contributors-carousel {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 2rem;
-            padding: 2rem 0;
+        /* Social Panel */
+        .social-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: rgba(0,0,0,0.95);
+            padding: 2rem;
+            transition: 0.4s ease-in-out;
+            z-index: 999;
         }
 
-        .contributor-card {
-            scroll-snap-align: center;
-            min-width: 300px;
+        .social-panel.active {
+            right: 0;
+        }
+
+        .social-card {
             background: rgba(255,255,255,0.1);
-            border-radius: 15px;
             padding: 1.5rem;
-            text-align: center;
+            border-radius: 15px;
+            margin: 1rem 0;
+            cursor: pointer;
             transition: transform 0.3s ease;
         }
 
-        .contributor-card:hover {
-            transform: translateY(-10px);
+        .social-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Contributors Section */
+        .contributors-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            z-index: 1001;
+        }
+
+        .contributors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .contributor-card {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
         }
 
         .contributor-pfp {
@@ -98,185 +140,206 @@
             box-shadow: 0 0 20px rgba(0,243,255,0.3);
         }
 
-        /* Enhanced Payment Modal */
-        .payment-processor {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 2rem;
+        /* Payment Modal */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            z-index: 1002;
         }
 
-        .payment-step {
-            padding: 1rem;
+        .payment-option {
             background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            margin: 1rem 0;
             border-radius: 10px;
-            text-align: center;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .payment-step.active {
-            background: linear-gradient(45deg, #00b4d8, #90e0ef);
-            transform: scale(1.05);
+        .payment-option:hover {
+            background: rgba(255,255,255,0.15);
         }
 
-        /* Social Media Panel */
-        .social-panel {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100vh;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 2rem;
-            z-index: 999;
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .social-panel.active {
-            right: 0;
-        }
-
-        /* Holographic Effect */
-        .holographic-effect {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .holographic-effect::before {
-            content: '';
+        .close-btn {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, 
-                transparent 25%,
-                rgba(0,243,255,0.1) 50%,
-                transparent 75%);
-            animation: hologram 6s infinite linear;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #90e0ef;
         }
 
-        @keyframes hologram {
-            0% { transform: rotate(0deg) translate(-50%, -50%); }
-            100% { transform: rotate(360deg) translate(-50%, -50%); }
-        }
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .floating-buttons {
+                bottom: 20px;
+                top: auto;
+                right: 20px;
+                flex-direction: row;
+            }
 
-        /* Add other styles from previous version */
+            .social-panel {
+                width: 100%;
+                right: -100%;
+            }
+
+            .contributors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Floating Action Buttons -->
-    <div class="floating-buttons">
-        <div class="floating-btn" onclick="toggleSocialPanel()">
-            <i class="fas fa-share-alt"></i>
-        </div>
-        <div class="floating-btn" onclick="showEnrollment()">
-            <i class="fas fa-rocket"></i>
-        </div>
-        <div class="floating-btn" onclick="showContributors()">
-            <i class="fas fa-users"></i>
-        </div>
-    </div>
+    <div class="container">
+        <header>
+            <h1>AI Mastery Pro</h1>
+            <p>Transform Your Future with Artificial Intelligence</p>
+            <div class="course-image">
+                <img src="https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa" alt="AI Course" style="width:100%;border-radius:15px;">
+            </div>
+        </header>
 
-    <!-- Social Media Panel -->
-    <div class="social-panel glass-card">
-        <h2 class="neon-text">Connect With Us</h2>
-        <div class="social-grid">
+        <!-- Floating Action Buttons -->
+        <div class="floating-buttons">
+            <div class="floating-btn" onclick="toggleSocialPanel()">
+                <i class="fas fa-share-alt"></i>
+            </div>
+            <div class="floating-btn" onclick="showPaymentModal()">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <div class="floating-btn" onclick="showContributors()">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+
+        <!-- Social Panel -->
+        <div class="social-panel">
+            <span class="close-btn" onclick="toggleSocialPanel()">&times;</span>
+            <h2>Connect With Us</h2>
             <div class="social-card" onclick="window.open('https://instagram.com/aimasterycourse')">
-                <div class="social-header">
-                    <i class="fab fa-instagram"></i>
-                    <h3>@aimasterycourse</h3>
-                </div>
-                <p>Follow for daily AI insights</p>
-                <div class="social-preview">
-                    <img src="https://source.unsplash.com/random/800x600?ai,tech" alt="Instagram Preview">
-                </div>
+                <i class="fab fa-instagram"></i> @aimasterycourse
+                <p>Follow for daily updates</p>
             </div>
-            <!-- Add similar cards for other social media -->
-        </div>
-    </div>
-
-    <!-- Contributors Section -->
-    <div class="contributors-container glass-card">
-        <div class="contributors-carousel">
-            <div class="contributor-card holographic-effect">
-                <img src="https://media.discordapp.net/attachments/1328338436226285589/1334229217482641458/296fe121-5dfa-43f4-98b5-db50019738a7.jpg" 
-                     class="contributor-pfp" alt="Team Member">
-                <h3>Joban Arsh</h3>
-                <p>Lead AI Architect</p>
-                <div class="contributor-bio">
-                    <p>10+ years experience in machine learning</p>
-                </div>
+            <div class="social-card" onclick="window.open('https://facebook.com/aimasterycourse')">
+                <i class="fab fa-facebook"></i> AI Mastery Course
+                <p>Join our community</p>
             </div>
-            <!-- Add other contributors -->
-        </div>
-    </div>
-
-    <!-- Enhanced Payment Gateway -->
-    <div class="payment-modal glass-card">
-        <div class="payment-processor">
-            <div class="payment-step active" data-step="1">
-                <i class="fas fa-wallet"></i>
-                <p>Choose Plan</p>
-            </div>
-            <div class="payment-step" data-step="2">
-                <i class="fas fa-credit-card"></i>
-                <p>Payment Details</p>
-            </div>
-            <div class="payment-step" data-step="3">
-                <i class="fas fa-check-circle"></i>
-                <p>Confirmation</p>
+            <div class="social-card" onclick="window.open('https://wa.me/917284920412')">
+                <i class="fab fa-whatsapp"></i> +91 7284920412
+                <p>24/7 Support</p>
             </div>
         </div>
-        <!-- Add payment form steps -->
-    </div>
 
-    <!-- Course Highlights -->
-    <div class="course-highlights">
-        <div class="highlight-card holographic-effect">
-            <div class="highlight-content">
-                <h4>AI Project Lab</h4>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 75%"></div>
+        <!-- Contributors Modal -->
+        <div class="contributors-container" id="contributorsModal">
+            <span class="close-btn" onclick="closeContributors()">&times;</span>
+            <h2>Expert Team</h2>
+            <div class="contributors-grid">
+                <div class="contributor-card">
+                    <img src="https://media.discordapp.net/attachments/1328338436226285589/1334229217482641458/296fe121-5dfa-43f4-98b5-db50019738a7.jpg" 
+                         class="contributor-pfp" alt="Joban Arsh">
+                    <h3>Joban Arsh</h3>
+                    <p>AI Architect</p>
                 </div>
-                <button class="neuro-button">Start Project</button>
+                <div class="contributor-card">
+                    <img src="https://example.com/path-to-image.jpg" 
+                         class="contributor-pfp" alt="Team Member">
+                    <h3>Jadeja Keyur</h3>
+                    <p>ML Engineer</p>
+                </div>
+                <!-- Add other team members -->
+            </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div class="payment-modal" id="paymentModal">
+            <span class="close-btn" onclick="closePayment()">&times;</span>
+            <h2>Enrollment Options</h2>
+            <div class="payment-options">
+                <div class="payment-option" onclick="selectPlan('monthly')">
+                    <h3>Monthly Plan</h3>
+                    <p>₹1299/month</p>
+                </div>
+                <div class="payment-option" onclick="selectPlan('yearly')">
+                    <h3>Yearly Plan</h3>
+                    <p>₹1699/year (Save 35%)</p>
+                </div>
+            </div>
+            <div id="paymentProcessor" style="display:none;">
+                <input type="text" placeholder="Card Number" class="payment-field">
+                <input type="text" placeholder="MM/YY" class="payment-field">
+                <input type="text" placeholder="CVV" class="payment-field">
+                <button class="pay-button" onclick="processPayment()">Pay Now</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Interactive Social Panel
+        // Social Panel Toggle
         function toggleSocialPanel() {
             document.querySelector('.social-panel').classList.toggle('active');
         }
 
-        // 3D Payment Process
-        let currentStep = 1;
-        function updatePaymentSteps(step) {
-            document.querySelectorAll('.payment-step').forEach(el => {
-                el.classList.remove('active');
-                if(parseInt(el.dataset.step) === step) {
-                    el.classList.add('active');
-                }
-            });
+        // Contributors Modal
+        function showContributors() {
+            document.getElementById('contributorsModal').style.display = 'block';
         }
 
-        // Holographic Interaction
-        document.querySelectorAll('.holographic-effect').forEach(el => {
-            el.addEventListener('mousemove', (e) => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                el.style.transform = `perspective(1000px) rotateX(${(y - rect.height/2)/10}deg) rotateY(${-(x - rect.width/2)/10}deg)`;
-            });
+        function closeContributors() {
+            document.getElementById('contributorsModal').style.display = 'none';
+        }
 
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = 'none';
-            });
-        });
+        // Payment Modal
+        function showPaymentModal() {
+            document.getElementById('paymentModal').style.display = 'block';
+        }
 
-        // Add other interactive functions
+        function closePayment() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function selectPlan(planType) {
+            document.getElementById('paymentProcessor').style.display = 'block';
+        }
+
+        function processPayment() {
+            const modal = document.getElementById('paymentModal');
+            modal.innerHTML = `
+                <div style="text-align:center; padding:2rem;">
+                    <h2 style="color:#00b4d8;">Payment Successful! 🎉</h2>
+                    <i class="fas fa-check-circle" style="font-size:4rem; color:#00b4d8;"></i>
+                    <p>Welcome to AI Mastery Pro!</p>
+                    <button class="close-btn" onclick="closePayment()">Start Learning</button>
+                </div>
+            `;
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('contributorsModal')) {
+                closeContributors();
+            }
+            if (event.target === document.getElementById('paymentModal')) {
+                closePayment();
+            }
+            if (event.target === document.querySelector('.social-panel')) {
+                toggleSocialPanel();
+            }
+        }
     </script>
 </body>
 </html>
