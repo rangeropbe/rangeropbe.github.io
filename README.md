@@ -3,198 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Academy - Learn Artificial Intelligence</title>
+    <title>AI Mastery - Premium AI Courses</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            line-height: 1.6;
+            background: #0a0a2e;
+            color: #fff;
+            overflow-x: hidden;
         }
 
-        /* Header Styles */
-        header {
-            background: #1a1a1a;
-            color: white;
-            padding: 1rem;
+        .navbar {
             position: fixed;
             width: 100%;
-            top: 0;
-            z-index: 100;
-        }
-
-        nav {
+            padding: 20px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
+            background: rgba(10, 10, 46, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: bold;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
         }
 
         .nav-links a {
-            color: white;
+            color: #fff;
             text-decoration: none;
-            margin-left: 2rem;
+            transition: 0.3s;
         }
 
-        /* Hero Section */
+        .nav-links a:hover {
+            color: #00ffff;
+        }
+
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-                        url('ai-bg.jpg');
-            background-size: cover;
             height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            padding: 0 1rem;
+            justify-content: space-between;
+            padding: 0 10%;
+            background: radial-gradient(circle at center, #1a1a4a 0%, #0a0a2e 100%);
         }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
         }
 
         .cta-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: #00b894;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-top: 1rem;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Courses Section */
-        .courses {
-            padding: 5rem 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
         }
 
-        .courses-grid {
+        .ai-image {
+            width: 500px;
+            height: 500px;
+            background: url('https://media.discordapp.net/attachments/1328338436226285589/1334098573268353075/image0.jpg?ex=679b4b9e&is=6799fa1e&hm=3edcca294a4cca39d9c50b353c85fb2d050026f357368a892aa955f21da5004a&') center/contain no-repeat;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .features {
+            padding: 100px 10%;
+            background: #1a1a4a;
+        }
+
+        .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            gap: 40px;
+            margin-top: 50px;
         }
 
-        .course-card {
-            background: #f5f6fa;
-            padding: 1.5rem;
-            border-radius: 10px;
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .pricing {
+            padding: 100px 10%;
+        }
+
+        .price-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .price-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            width: 300px;
             text-align: center;
+            transition: 0.3s;
         }
 
-        .course-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 5px;
+        .price-card:hover {
+            transform: scale(1.05);
         }
 
-        .price {
-            font-size: 1.5rem;
-            color: #00b894;
-            margin: 1rem 0;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            background: #f5f6fa;
-            padding: 5rem 1rem;
-            text-align: center;
-        }
-
-        /* Footer */
         footer {
-            background: #1a1a1a;
-            color: white;
+            padding: 50px 10%;
+            background: #000;
             text-align: center;
-            padding: 2rem 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">AI Academy</div>
-            <div class="nav-links">
-                <a href="#courses">Courses</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Master Artificial Intelligence</h1>
-            <p>Transform your career with our comprehensive AI courses</p>
-            <a href="#courses" class="cta-button">Explore Courses</a>
+    <nav class="navbar">
+        <div class="logo">AI Mastery</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#contact">Contact</a>
         </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content" data-aos="fade-right">
+            <h1>Master AI with Our Expert Courses</h1>
+            <p>Transform your future with cutting-edge AI education from industry leaders.</p>
+            <button class="cta-button">Start Learning Now</button>
+        </div>
+        <div class="ai-image" data-aos="fade-left"></div>
     </section>
 
-    <section id="courses" class="courses">
-        <h2>Featured Courses</h2>
-        <div class="courses-grid">
-            <div class="course-card">
-                <img src="machine-learning.jpg" alt="Machine Learning">
-                <h3>Machine Learning Fundamentals</h3>
-                <p class="price">$199</p>
-                <p>Learn the basics of machine learning and predictive modeling</p>
-                <a href="#" class="cta-button">Enroll Now</a>
+    <section class="features" id="features">
+        <h2 data-aos="fade-up">Why Choose Us</h2>
+        <div class="feature-grid">
+            <div class="feature-card" data-aos="zoom-in">
+                <i class="fas fa-brain fa-3x"></i>
+                <h3>Expert Instructors</h3>
+                <p>Learn from industry professionals with real-world AI experience.</p>
             </div>
-
-            <div class="course-card">
-                <img src="deep-learning.jpg" alt="Deep Learning">
-                <h3>Deep Learning Specialization</h3>
-                <p class="price">$299</p>
-                <p>Master neural networks and deep learning architectures</p>
-                <a href="#" class="cta-button">Enroll Now</a>
+            <div class="feature-card" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fas fa-certificate fa-3x"></i>
+                <h3>Certification</h3>
+                <p>Get recognized certification upon course completion.</p>
             </div>
-
-            <div class="course-card">
-                <img src="nlp.jpg" alt="Natural Language Processing">
-                <h3>Natural Language Processing</h3>
-                <p class="price">$249</p>
-                <p>Build intelligent systems that understand human language</p>
-                <a href="#" class="cta-button">Enroll Now</a>
+            <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fas fa-infinity fa-3x"></i>
+                <h3>Lifetime Access</h3>
+                <p>Access course materials anytime, anywhere, forever.</p>
             </div>
         </div>
     </section>
 
-    <section class="testimonials">
-        <h2>Student Testimonials</h2>
-        <div class="testimonial">
-            <p>"The best AI courses I've found online. Highly recommended!"</p>
-            <h4>- John Doe, Data Scientist</h4>
+    <section class="pricing" id="pricing">
+        <h2 data-aos="fade-up">Pricing Plans</h2>
+        <div class="price-cards">
+            <div class="price-card" data-aos="flip-left">
+                <h3>Basic</h3>
+                <h2>$99</h2>
+                <p>Monthly Access</p>
+                <button class="cta-button">Choose Plan</button>
+            </div>
+            <div class="price-card" data-aos="flip-left" data-aos-delay="200">
+                <h3>Pro</h3>
+                <h2>$299</h2>
+                <p>Annual Access</p>
+                <button class="cta-button">Choose Plan</button>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2023 AI Academy. All rights reserved.</p>
+        <p>&copy; 2025 AI Community. All rights reserved.</p>
     </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'ease-in-out'
+        });
+    </script>
 </body>
-</html>
+</html># aicourse.github.io
