@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -69,14 +68,6 @@
         .hero {
             position: relative;
             overflow: hidden;
-<section class="hero" id="home">
-    <div class="hero-content">
-        <!-- Text content -->
-    </div>
-    <div class="hero-image">
-        <img src="https://media.discordapp.net/attachments/1328338436226285589/1334098573268353075/image0.jpg?ex=679b4b9e&is=6799fa1e&hm=3edcca294a4cca39d9c50b353c85fb2d050026f357368a892aa955f21da5004a&" alt="AI Course Illustration" loading="lazy">
-    </div>
-</section>
         }
 
         .particles {
@@ -183,7 +174,7 @@
         <div class="hero-content">
             <h1>Become AI Expert in 2024</h1>
             <p>Join 10,000+ students mastering AI with our industry-leading program</p>
-            <button class="cta-button">Enroll Now at ₹1,999 <s>₹2,999</s></button>
+            <button class="cta-button">Enroll Now at ₹8,999 <s>₹15,999</s></button>
         </div>
         <div class="ai-image">
             <img src="https://undraw.co/illustrations" alt="AI Learning" loading="lazy">
@@ -222,9 +213,9 @@
     <section class="pricing" id="pricing">
         <div class="price-card">
             <h3>Full Stack AI Program</h3>
-            <h2>₹1,999 <span>/ lifetime</span></h2>
+            <h2>₹8,999 <span>/ lifetime</span></h2>
             <ul>
-                <li>40+ Hours Content</li>
+                <li>100+ Hours Content</li>
                 <li>50+ Projects</li>
                 <li>1:1 Mentorship</li>
             </ul>
