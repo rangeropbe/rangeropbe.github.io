@@ -2,31 +2,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroNex - AI Mastery Program</title>
+    <title>AI Mastery Course - Enroll Now</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --neon-blue: #00f3ff;
-            --cyber-purple: #6c00ff;
-            --matrix-green: #00ff9d;
-            --dark-bg: #0a0a12;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
-            background: var(--dark-bg);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #fff;
-            line-height: 1.6;
-            background-image: 
-                linear-gradient(rgba(108, 0, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(108, 0, 255, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
+            min-height: 100vh;
         }
 
         .container {
@@ -35,178 +24,226 @@
             padding: 2rem;
         }
 
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 10, 18, 0.95);
-            padding: 1rem 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 1s ease-in;
         }
 
-        /* Add previous styles with cyberpunk modifications */
-        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00b4d8, #90e0ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pricing-switch {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin: 0 1rem;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #00b4d8;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .price-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
         .price-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--neon-blue);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            width: 350px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .price-card h2 {
+            margin-bottom: 1rem;
+            color: #90e0ef;
+        }
+
+        .price {
+            font-size: 3rem;
+            margin: 1rem 0;
+            font-weight: bold;
+        }
+
+        .features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .features li {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .enroll-btn {
-            background: linear-gradient(45deg, var(--cyber-purple), var(--neon-blue));
-            letter-spacing: 1px;
+            background: linear-gradient(45deg, #00b4d8, #90e0ef);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 100%;
         }
 
-        .instructor-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--matrix-green);
+        .enroll-btn:hover {
+            transform: scale(1.05);
         }
 
-        /* Add glowing animations */
-        @keyframes glow {
-            0% { box-shadow: 0 0 10px var(--neon-blue); }
-            50% { box-shadow: 0 0 20px var(--neon-blue); }
-            100% { box-shadow: 0 0 10px var(--neon-blue); }
+        .course-image {
+            width: 100%;
+            max-width: 400px;
+            margin: 2rem auto;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .course-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .price-cards {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="nav">
-        <ul>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#curriculum">Curriculum</a></li>
-            <li><a href="#instructors">Instructors</a></li>
-            <li><a href="#testimonials">Reviews</a></li>
-            <li><a href#faq">FAQ</a></li>
-        </ul>
-    </nav>
-
-    <section class="hero">
-        <div class="container">
-            <h1>Neuro<span class="neon-text">Nex</span></h1>
-            <p>40-Hour Quantum AI Certification Program</p>
+    <div class="container">
+        <header>
+            <h1>AI Mastery Course</h1>
+            <p>40 Hours of Intensive Learning | Hands-on Projects | Certificate of Completion</p>
             <div class="course-image">
-                <img src="https://images.unsplash.com/photo-1640340434855-6084b1f4901c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                     alt="AI Neural Network">
+                <img src="https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="AI Course">
             </div>
+        </header>
+
+        <div class="pricing-switch">
+            <span>Monthly</span>
+            <label class="switch">
+                <input type="checkbox" id="pricingToggle">
+                <span class="slider"></span>
+            </label>
+            <span>Yearly (Save 35%)</span>
         </div>
-    </section>
 
-    <!-- Instructors Section -->
-    <section id="instructors" class="container">
-        <h2 class="section-title">Cyber Mentors</h2>
-        <div class="instructors">
-            <div class="instructor-card">
-                <div class="instructor-img">
-                    <img src="https://images.unsplash.com/photo-1580894908361-967195033215?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                         alt="Joban Arsh">
-                </div>
-                <h3>Joban Arsh</h3>
-                <p>Quantum AI Architect</p>
-                <p class="bio">15+ years in neural interface systems</p>
-            </div>
-
-            <div class="instructor-card">
-                <div class="instructor-img">
-                    <img src="https://images.unsplash.com/photo-1580894906475-403276d3942d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                         alt="Bhanderi Jayesh">
-                </div>
-                <h3>Bhanderi Jayesh</h3>
-                <p>Deep Learning Pioneer</p>
-                <p class="bio">NLP systems developer for NASA</p>
-            </div>
-
-            <div class="instructor-card">
-                <div class="instructor-img">
-                    <img src="https://images.unsplash.com/photo-1580894905938-1f6b7d02f9a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                         alt="Jadeja Keyur">
-                </div>
-                <h3>Jadeja Keyur</h3>
-                <p>Robotic Cognition Expert</p>
-                <p class="bio">Boston Dynamics AI core team member</p>
-            </div>
-
-            <div class="instructor-card">
-                <div class="instructor-img">
-                    <img src="https://images.unsplash.com/photo-1580894908361-967195033215?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
-                         alt="Raghvani Tushar">
-                </div>
-                <h3>Raghvani Tushar</h3>
-                <p>AI Ethics Philosopher</p>
-                <p class="bio">UN AI Policy Advisor</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Enhanced Curriculum -->
-    <section id="curriculum" class="container">
-        <h2 class="section-title">Neural Curriculum</h2>
-        <div class="module">
-            <div class="module-header">
-                <h3><i class="fas fa-brain"></i> Module 1: Quantum Neural Networks</h3>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="module-content">
-                <ul>
-                    <li>🧠 Neuromorphic Computing Basics</li>
-                    <li>⚛️ Quantum Machine Learning</li>
-                    <li>🔗 Hybrid Neural Architectures</li>
+        <div class="price-cards">
+            <div class="price-card" id="monthlyCard">
+                <h2>Monthly Plan</h2>
+                <div class="price">₹<span id="monthlyPrice">1299</span></div>
+                <ul class="features">
+                    <li><i class="fas fa-clock"></i>40 Hours Course</li>
+                    <li><i class="fas fa-certificate"></i>Course Certificate</li>
+                    <li><i class="fas fa-video"></i>Lifetime Access</li>
+                    <li><i class="fas fa-headset"></i>24/7 Support</li>
                 </ul>
+                <button class="enroll-btn">Enroll Now</button>
             </div>
-        </div>
-        <!-- Add more modules -->
-    </section>
 
-    <!-- AI-Powered Chatbot -->
-    <div class="chatbot-container">
-        <div class="chatbot-button" style="background: var(--cyber-purple)">
-            <i class="fas fa-robot"></i>
-        </div>
-        <div class="chat-window">
-            <div class="chat-header">
-                <h4>NeuroAssistant</h4>
-                <div class="pulse"></div>
-            </div>
-            <div class="chat-messages">
-                <div class="ai-message">
-                    <p>Welcome to NeuroNex! How can I help you today?</p>
-                </div>
+            <div class="price-card" id="yearlyCard">
+                <h2>Yearly Plan</h2>
+                <div class="price">₹<span id="yearlyPrice">1699</span></div>
+                <ul class="features">
+                    <li><i class="fas fa-clock"></i>40 Hours Course</li>
+                    <li><i class="fas fa-certificate"></i>Course Certificate</li>
+                    <li><i class="fas fa-video"></i>Lifetime Access</li>
+                    <li><i class="fas fa-headset"></i>24/7 Support</li>
+                    <li><i class="fas fa-gift"></i>35% Discount</li>
+                </ul>
+                <button class="enroll-btn">Enroll Now</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Add cyberpunk animations
-        document.querySelectorAll('.instructor-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                card.style.transform = `
-                    perspective(1000px)
-                    rotateX(${(y - rect.height/2) / 10}deg)
-                    rotateY(${-(x - rect.width/2) / 10}deg)
-                `;
-            });
+        const pricingToggle = document.getElementById('pricingToggle');
+        const monthlyCard = document.getElementById('monthlyCard');
+        const yearlyCard = document.getElementById('yearlyCard');
 
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'none';
-            });
+        pricingToggle.addEventListener('change', function() {
+            if(this.checked) {
+                yearlyCard.style.display = 'block';
+                monthlyCard.style.display = 'none';
+            } else {
+                monthlyCard.style.display = 'block';
+                yearlyCard.style.display = 'none';
+            }
         });
 
-        // Add particle animation to header
-        const hero = document.querySelector('.hero');
-        for(let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 2 + 's';
-            hero.appendChild(particle);
-        }
+        // Initialize with monthly plan visible
+        yearlyCard.style.display = 'none';
     </script>
 </body>
 </html>
