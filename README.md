@@ -2,226 +2,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroAI Academy - Future of Learning</title>
+    <title>AI Master Pro | Artificial Intelligence Certification</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --neon-blue: #00f3ff;
-            --cyber-purple: #bc13fe;
-            --matrix-green: #0f0;
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         body {
-            background: radial-gradient(circle at center, #00081d 0%, #000 100%);
-            color: #fff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            font-family: 'Oxanium', cursive;
+            background-color: var(--light);
+            color: var(--dark);
         }
 
-        .cyber-border {
-            position: relative;
-            background: linear-gradient(45deg, 
-                transparent 25%,
-                var(--neon-blue) 50%,
-                transparent 75%);
-            background-size: 200% 200%;
-            animation: cyberGlow 4s linear infinite;
+        .header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
         }
 
-        .hologram-card {
-            perspective: 1000px;
-            transform-style: preserve-3d;
-            transition: transform 0.5s;
+        .course-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
         }
 
-        .hologram-card:hover {
-            transform: rotateX(5deg) rotateY(5deg);
-        }
-
-        .dna-strand {
-            position: fixed;
-            top: 0;
-            left: 50%;
-            width: 4px;
-            height: 100vh;
-            background: linear-gradient(to bottom, 
-                var(--neon-blue),
-                var(--cyber-purple),
-                var(--neon-blue));
-            box-shadow: 0 0 40px var(--neon-blue);
-            animation: dnaFlow 8s linear infinite;
-            z-index: -1;
-        }
-
-        .neuro-button {
-            background: none;
-            border: 2px solid var(--neon-blue);
-            padding: 15px 30px;
-            color: var(--neon-blue);
-            font-size: 1.2em;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .neuro-button::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, 
-                transparent 25%,
-                var(--neon-blue) 50%,
-                transparent 75%);
-            animation: cyberGlow 3s linear infinite;
-        }
-
-        @keyframes cyberGlow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
-        @keyframes dnaFlow {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        .cyber-terminal {
-            background: rgba(0,0,0,0.9);
-            border: 2px solid var(--matrix-green);
+        .highlight-card {
+            background: white;
             padding: 2rem;
-            font-family: 'Courier New', monospace;
-            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
         }
 
-        .terminal-text {
-            color: var(--matrix-green);
-            text-shadow: 0 0 10px var(--matrix-green);
+        .pricing-section {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
         }
 
-        .particle-network {
-            position: fixed;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: -1;
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
         }
 
-        /* Add remaining styles from previous versions */
+        .pricing-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 300px;
+            transition: transform 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background: var(--secondary);
+        }
+
+        .instructor-section {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .instructor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .instructor-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .instructor-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+        }
+
+        .testimonial-section {
+            background: var(--light);
+            padding: 4rem 2rem;
+        }
     </style>
 </head>
 <body>
-    <div class="dna-strand"></div>
-    <div class="particle-network"></div>
+    <header class="header">
+        <h1>Master Artificial Intelligence</h1>
+        <p>40-Hour Professional Certification Program</p>
+        <a href="#pricing" class="cta-button">Enroll Now</a>
+    </header>
 
-    <!-- Cyber Terminal Enrollment -->
-    <div class="cyber-terminal" id="enrollmentTerminal">
-        <div class="terminal-text">
-            > INITIALIZING NEUROAI ENROLLMENT SYSTEM...
-            <br>
-            > SELECT INPUT METHOD:
-            <br>
-            [1] CRYPTOCARD PAYMENT
-            <br>
-            [2] NEURAL LINK VERIFICATION
-            <br>
-            [3] BLOCKCHAIN CREDENTIALS
+    <section class="course-highlights">
+        <div class="highlight-card">
+            <i class="fas fa-certificate fa-3x"></i>
+            <h3>Industry-Recognized Certification</h3>
+            <p>Globally accepted certification from AI Masters</p>
         </div>
-        <div class="neuro-input">
-            <span class="blinking-cursor">_</span>
-            <input type="text" id="cyberInput" autocomplete="off">
+        <div class="highlight-card">
+            <i class="fas fa-chalkboard-teacher fa-3x"></i>
+            <h3>Expert Instructors</h3>
+            <p>Learn from top AI researchers and practitioners</p>
         </div>
-    </div>
+        <div class="highlight-card">
+            <i class="fas fa-briefcase fa-3x"></i>
+            <h3>Career Support</h3>
+            <p>Job placement assistance and career guidance</p>
+        </div>
+    </section>
 
-    <!-- Holographic Team Display -->
-    <div class="hologram-grid">
-        <div class="hologram-card">
-            <div class="cyber-border"></div>
-            <img src="https://media.discordapp.net/attachments/1328338436226285589/1334229217482641458/296fe121-5dfa-43f4-98b5-db50019738a7.jpg" 
-                 alt="Joban Arsh" class="hologram-avatar">
-            <div class="cyber-data">
-                <h3 class="neon-text">JOBAN ARSH</h3>
-                <p class="cyber-title">CHIEF NEURAL ARCHITECT</p>
-                <div class="skill-bars">
-                    <div class="skill" data-skill="AI Development" data-level="98%"></div>
-                    <div class="skill" data-skill="Neuro-Links" data-level="95%"></div>
-                </div>
+    <section id="pricing" class="pricing-section">
+        <h2>Choose Your Plan</h2>
+        <div class="pricing-cards">
+            <div class="pricing-card">
+                <h3>Monthly Access</h3>
+                <div class="price">₹1299/month</div>
+                <ul style="list-style: none; margin: 1rem 0;">
+                    <li>✔ Full Course Access</li>
+                    <li>✔ Weekly Live Sessions</li>
+                    <li>✔ Community Support</li>
+                </ul>
+                <a href="#" class="cta-button">Start Learning</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Annual Access</h3>
+                <div class="price">₹1699/year</div>
+                <p style="margin: 1rem 0;">Save 35%</p>
+                <ul style="list-style: none;">
+                    <li>✔ Everything in Monthly</li>
+                    <li>✔ Exclusive Workshops</li>
+                    <li>✔ 1-on-1 Mentoring</li>
+                </ul>
+                <a href="#" class="cta-button">Get Premium</a>
             </div>
         </div>
-        <!-- Add other team members -->
-    </div>
+    </section>
 
-    <!-- Quantum Social Interface -->
-    <div class="quantum-social">
-        <div class="qbit qbit-instagram" data-platform="instagram">
-            <div class="qbit-core"></div>
+    <section class="instructor-section">
+        <h2>Meet Your Instructors</h2>
+        <div class="instructor-grid">
+            <div class="instructor-card">
+                <img src="https://example.com/joban-arsh.jpg" alt="Joban Arsh" class="instructor-img">
+                <h3>Joban Arsh</h3>
+                <p>AI Research Lead</p>
+                <p>15+ years experience</p>
+            </div>
+            <!-- Add other instructors similarly -->
         </div>
-        <div class="qbit qbit-whatsapp" data-platform="whatsapp">
-            <div class="qbit-core"></div>
+    </section>
+
+    <section class="testimonial-section">
+        <h2>Student Success Stories</h2>
+        <div class="testimonials">
+            <!-- Add testimonials here -->
         </div>
-        <div class="qbit qbit-facebook" data-platform="facebook">
-            <div class="qbit-core"></div>
-        </div>
-    </div>
-
-    <!-- Neural Payment Gateway -->
-    <div class="neural-payment" id="paymentGateway">
-        <div class="synapse-connection"></div>
-        <div class="neuron-node" data-node="input"></div>
-        <div class="neuron-node" data-node="processor"></div>
-        <div class="neuron-node" data-node="output"></div>
-    </div>
-
-    <script>
-        // Quantum Social Interaction
-        document.querySelectorAll('.qbit').forEach(qbit => {
-            qbit.addEventListener('click', () => {
-                const platform = qbit.dataset.platform;
-                const urls = {
-                    instagram: 'https://instagram.com/aimasterycourse',
-                    whatsapp: 'https://wa.me/917284920412',
-                    facebook: 'https://facebook.com/aimasterycourse'
-                };
-                window.open(urls[platform], '_blank');
-                
-                // Create quantum entanglement effect
-                qbit.style.transform = `scale(5)`;
-                setTimeout(() => {
-                    qbit.style.transform = 'scale(1)';
-                }, 500);
-            });
-        });
-
-        // Neural Payment Animation
-        const animatePayment = () => {
-            const nodes = document.querySelectorAll('.neuron-node');
-            nodes.forEach((node, index) => {
-                setTimeout(() => {
-                    node.style.background = `radial-gradient(circle, 
-                        ${index === 1 ? '#00f3ff' : '#bc13fe'}, 
-                        transparent)`;
-                }, index * 300);
-            });
-        };
-
-        // Cyber Terminal Interaction
-        document.getElementById('cyberInput').addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') {
-                const input = e.target.value;
-                // Process cyber commands
-                if(input === '1') animatePayment();
-                if(input === '2') showNeuralScan();
-                if(input === '3') showBlockchainInterface();
-                e.target.value = '';
-            }
-        });
-
-        // Add particle network animation
-        // Add remaining interactive functions
-    </script>
+    </section>
 </body>
 </html>
