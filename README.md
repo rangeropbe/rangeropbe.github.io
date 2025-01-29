@@ -216,28 +216,28 @@
         <div class="contributor-grid">
          <!-- Joban Arsh -->
         <div class="contributor-card">
-            <img src="https://source.unsplash.com/random/600x600/?man,face,tech" 
+            <img src="https://media.discordapp.net/attachments/1328338436226285589/1334217392825307156/image0.png?ex=679bba47&is=679a68c7&hm=f9242c18d7bc073a8cb45aeee9219dfadc87d0da4ec48d479a499c9ac1c1d316&" 
                  alt="Joban Arsh" class="contributor-img">
             <h3>Joban Arsh</h3>
             <p>AI Researcher</p>
             <p>@joban.arsh</p>
         </div>
             <div class="contributor-card">
-                <img src="https://source.unsplash.com/random/600x600/?man,face,indian" 
+                <img src="https://media.discordapp.net/attachments/1328338436226285589/1334217392825307156/image0.png?ex=679bba47&is=679a68c7&hm=f9242c18d7bc073a8cb45aeee9219dfadc87d0da4ec48d479a499c9ac1c1d316&" 
                      alt="Jadeja Keyur" class="contributor-img">
                 <h3>Jadeja Keyur</h3>
                 <p>AI Architect</p>
                 <p>@keyur.jadeja</p>
             </div>
             <div class="contributor-card">
-                <img src="https://source.unsplash.com/random/600x600/?man,face,business" 
+                <img src="https://media.discordapp.net/attachments/1328338436226285589/1334217392825307156/image0.png?ex=679bba47&is=679a68c7&hm=f9242c18d7bc073a8cb45aeee9219dfadc87d0da4ec48d479a499c9ac1c1d316&" 
                      alt="Raghvani Tushar" class="contributor-img">
                 <h3>Raghvani Tushar</h3>
                 <p>ML Engineer</p>
                 <p>@tushar.raghvani</p>
             </div>
             <div class="contributor-card">
-                <img src="https://source.unsplash.com/random/600x600/?man,face,professional" 
+                <img src="https://media.discordapp.net/attachments/1328338436226285589/1334217392825307156/image0.png?ex=679bba47&is=679a68c7&hm=f9242c18d7bc073a8cb45aeee9219dfadc87d0da4ec48d479a499c9ac1c1d316&" 
                      alt="Bhanderi Jayesh" class="contributor-img">
                 <h3>Bhanderi Jayesh</h3>
                 <p>Data Scientist</p>
