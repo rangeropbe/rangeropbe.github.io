@@ -10,6 +10,9 @@
             --secondary: #1e40af;
             --dark: #1f2937;
             --light: #f3f4f6;
+            --bg-dark: #0a0a12;
+            --text-dark: #ffffff;
+            --card-dark: #1a1a2e;
         }
 
         * {
@@ -17,6 +20,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', sans-serif;
+            transition: background 0.3s, color 0.3s;
         }
 
         body {
@@ -24,174 +28,141 @@
             color: var(--dark);
         }
 
-        .header {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
+        body[data-theme="dark"] {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
         }
 
-        .course-highlights {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            padding: 4rem 2rem;
-        }
-
-        .highlight-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .pricing-section {
-            background: var(--dark);
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .pricing-cards {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .pricing-card {
-            background: rgba(255,255,255,0.1);
-            padding: 2rem;
-            border-radius: 10px;
-            width: 300px;
-            transition: transform 0.3s;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .cta-button {
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
             background: var(--primary);
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 5px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 1rem;
-            transition: background 0.3s;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
         }
 
-        .cta-button:hover {
-            background: var(--secondary);
-        }
-
-        .instructor-section {
+        /* Contributors Section */
+        .contributors-section {
             padding: 4rem 2rem;
             text-align: center;
         }
 
-        .instructor-grid {
+        .contributor-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
-        .instructor-card {
+        .contributor-card {
             background: white;
-            padding: 1rem;
+            padding: 1.5rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .instructor-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 1rem;
+        body[data-theme="dark"] .contributor-card {
+            background: var(--card-dark);
         }
 
-        .testimonial-section {
-            background: var(--light);
-            padding: 4rem 2rem;
+        .contributor-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary);
         }
+
+        /* Add previous styles for modals, pricing, etc. */
     </style>
 </head>
 <body>
-    <header class="header">
-        <h1>Master Artificial Intelligence</h1>
-        <p>40-Hour Professional Certification Program</p>
-        <a href="#pricing" class="cta-button">Enroll Now</a>
-    </header>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <span>Dark Mode</span>
+    </button>
 
-    <section class="course-highlights">
-        <div class="highlight-card">
-            <i class="fas fa-certificate fa-3x"></i>
-            <h3>Industry-Recognized Certification</h3>
-            <p>Globally accepted certification from AI Masters</p>
-        </div>
-        <div class="highlight-card">
-            <i class="fas fa-chalkboard-teacher fa-3x"></i>
-            <h3>Expert Instructors</h3>
-            <p>Learn from top AI researchers and practitioners</p>
-        </div>
-        <div class="highlight-card">
-            <i class="fas fa-briefcase fa-3x"></i>
-            <h3>Career Support</h3>
-            <p>Job placement assistance and career guidance</p>
-        </div>
-    </section>
-
-    <section id="pricing" class="pricing-section">
-        <h2>Choose Your Plan</h2>
-        <div class="pricing-cards">
-            <div class="pricing-card">
-                <h3>Monthly Access</h3>
-                <div class="price">₹1299/month</div>
-                <ul style="list-style: none; margin: 1rem 0;">
-                    <li>✔ Full Course Access</li>
-                    <li>✔ Weekly Live Sessions</li>
-                    <li>✔ Community Support</li>
-                </ul>
-                <a href="#" class="cta-button">Start Learning</a>
+    <!-- Contributors Section -->
+    <section class="contributors-section">
+        <h2>Core Contributors</h2>
+        <div class="contributor-grid">
+            <!-- Jadeja Keyur -->
+            <div class="contributor-card">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                     alt="Jadeja Keyur" class="contributor-img">
+                <h3>Jadeja Keyur</h3>
+                <p>AI Architect</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/keyur.jadeja" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
             </div>
-            <div class="pricing-card">
-                <h3>Annual Access</h3>
-                <div class="price">₹1699/year</div>
-                <p style="margin: 1rem 0;">Save 35%</p>
-                <ul style="list-style: none;">
-                    <li>✔ Everything in Monthly</li>
-                    <li>✔ Exclusive Workshops</li>
-                    <li>✔ 1-on-1 Mentoring</li>
-                </ul>
-                <a href="#" class="cta-button">Get Premium</a>
+
+            <!-- Raghvani Tushar -->
+            <div class="contributor-card">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                     alt="Raghvani Tushar" class="contributor-img">
+                <h3>Raghvani Tushar</h3>
+                <p>ML Engineer</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/tushar.raghvani" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bhanderi Jayesh -->
+            <div class="contributor-card">
+                <img src="https://images.unsplash.com/photo-1530268729831-4b0b9e170218?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+                     alt="Bhanderi Jayesh" class="contributor-img">
+                <h3>Bhanderi Jayesh</h3>
+                <p>Data Scientist</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/jayesh.bhanderi" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="instructor-section">
-        <h2>Meet Your Instructors</h2>
-        <div class="instructor-grid">
-            <div class="instructor-card">
-                <img src="https://example.com/joban-arsh.jpg" alt="Joban Arsh" class="instructor-img">
-                <h3>Joban Arsh</h3>
-                <p>AI Research Lead</p>
-                <p>15+ years experience</p>
-            </div>
-            <!-- Add other instructors similarly -->
-        </div>
-    </section>
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
 
-    <section class="testimonial-section">
-        <h2>Student Success Stories</h2>
-        <div class="testimonials">
-            <!-- Add testimonials here -->
-        </div>
-    </section>
+        themeToggle.addEventListener('click', () => {
+            if(body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i><span>Dark Mode</span>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light Mode</span>';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if(savedTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light Mode</span>';
+        }
+
+        // Add previous modal and payment scripts
+    </script>
 </body>
 </html>
