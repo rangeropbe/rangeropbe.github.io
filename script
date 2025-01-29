@@ -214,6 +214,14 @@
     <section class="contributors-section">
         <h2>Core Contributors</h2>
         <div class="contributor-grid">
+ <!-- Joban Arsh -->
+        <div class="contributor-card">
+            <img src="https://source.unsplash.com/random/600x600/?man,face,tech" 
+                 alt="Joban Arsh" class="contributor-img">
+            <h3>Joban Arsh</h3>
+            <p>AI Researcher</p>
+            <p>@joban.arsh</p>
+        </div>
             <div class="contributor-card">
                 <img src="https://source.unsplash.com/random/600x600/?man,face,indian" 
                      alt="Jadeja Keyur" class="contributor-img">
