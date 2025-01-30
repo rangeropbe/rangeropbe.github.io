@@ -2,11 +2,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Visionaries - Premium AI Courses</title>
+    <title>AI Visionaries - Premium Courses</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --dark-bg: #0f172a;
+            --dark-text: #f8fafc;
+            --light-bg: #f8fafc;
+            --light-text: #0f172a;
+            --primary: #4F46E5;
+            --secondary: #818cf8;
+            --accent: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        body.light-theme {
+            background-color: var(--light-bg);
+            color: var(--light-text);
+        }
+
+        /* Header Styles */
+        header {
+            padding: 1rem;
+            background-color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo img {
+            height: 50px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .nav-buttons button {
+            margin-left: 1rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* Main Content Styles */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+        }
+
+        .course-buttons {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .course-btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--accent);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: var(--dark-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .light-theme .modal-content {
+            background-color: var(--light-bg);
+            color: var(--light-text);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Premium Section */
+        .premium-section {
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .membership-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse:active {
+            animation: pulse 0.3s ease;
+        }
+
+        @keyframes scale-in {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .scale-in {
+            animation: scale-in 0.3s ease;
+        }
+
+        .payment-success {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #4CAF50;
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            z-index: 1001;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body class="dark-theme">
+    <!-- Header Section -->
     <header>
         <nav>
             <div class="logo">
@@ -21,14 +194,15 @@
                         <span class="slider"></span>
                     </label>
                 </div>
-                <button class="auth-btn" id="signInBtn">Sign In</button>
-                <button class="auth-btn" id="signUpBtn">Sign Up</button>
-                <button class="contributors-btn" id="contributorsBtn">Contributors</button>
-                <button class="contact-btn" id="contactBtn">Contact Us</button>
+                <button class="auth-btn pulse" id="signInBtn">Sign In</button>
+                <button class="auth-btn pulse" id="signUpBtn">Sign Up</button>
+                <button class="contributors-btn pulse" id="contributorsBtn">Contributors</button>
+                <button class="contact-btn pulse" id="contactBtn">Contact Us</button>
             </div>
         </nav>
     </header>
 
+    <!-- Main Content -->
     <main>
         <section class="hero">
             <h1>Master Artificial Intelligence</h1>
@@ -41,7 +215,7 @@
         <section class="demo-video">
             <h2>Demo Course</h2>
             <div class="video-container">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/ukzFI9rgwfU" frameborder="0" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ukzFI9rgwfU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -101,7 +275,6 @@
         </div>
     </div>
 
-    <!-- Add other modals -->
     <div class="modal-overlay" id="contributorsModal">
         <div class="modal-content scale-in">
             <span class="close-btn">&times;</span>
@@ -120,19 +293,101 @@
             <span class="close-btn">&times;</span>
             <h3>Contact Us</h3>
             <div class="contact-options">
-                <a href="https://instagram.com/Team Visionaries" class="contact-link" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://facebook.com/Team Visionaries" class="contact-link" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="https://instagram.com/TeamVisionaries" class="contact-link" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://facebook.com/TeamVisionaries" class="contact-link" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
                 <a href="https://wa.me/+917835913134" class="contact-link" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             </div>
         </div>
     </div>
 
-    <div class="payment-success hidden">
+    <div class="payment-success">
         <i class="fas fa-check-circle success-icon"></i>
         <h3>Payment Successful!</h3>
         <p>Thank you for your purchase</p>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme Toggle
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // Premium Toggle
+            const premiumToggle = document.getElementById('premiumToggle');
+            premiumToggle.addEventListener('change', handlePremiumToggle);
+
+            // Course Buttons
+            document.querySelectorAll('.course-btn').forEach(btn => {
+                btn.addEventListener('click', () => openModal('courseModal'));
+            });
+
+            // Select Course Buttons
+            document.querySelectorAll('.select-course').forEach(btn => {
+                btn.addEventListener('click', () => openModal('paymentModal'));
+            });
+
+            // Payment Buttons
+            document.querySelectorAll('.payment-btn').forEach(btn => {
+                btn.addEventListener('click', handlePayment);
+            });
+
+            // Contributors Button
+            document.getElementById('contributorsBtn').addEventListener('click', () => openModal('contributorsModal'));
+
+            // Contact Button
+            document.getElementById('contactBtn').addEventListener('click', () => openModal('contactModal'));
+
+            // Close Modals
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', closeModal);
+            });
+
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal-overlay')) {
+                    closeModal();
+                }
+            });
+
+            // Initialize theme
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+            }
+        });
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+            const icon = document.querySelector('#themeToggle i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+        }
+
+        function handlePremiumToggle(e) {
+            if (!e.target.checked) {
+                window.location.href = '#courses';
+            }
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+
+        function handlePayment() {
+            const successMsg = document.querySelector('.payment-success');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+                closeModal();
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
