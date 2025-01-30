@@ -2,35 +2,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI Visionaries - Premium AI Education Platform">
-    <title>AI Visionaries - Professional AI Courses</title>
+    <title>AI Learning Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --dark-bg: #0f172a;
-            --dark-text: #f8fafc;
-            --light-bg: #f8fafc;
-            --light-text: #0f172a;
+            --dark-bg: #1a1a1a;
+            --dark-text: #ffffff;
+            --light-bg: #ffffff;
+            --light-text: #1a1a1a;
             --primary: #4F46E5;
-            --secondary: #818cf8;
-            --accent: #f59e0b;
-            --section-spacing: 100px;
-            --header-height: 80px;
+            --secondary: #10B981;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: Arial, sans-serif;
             background-color: var(--dark-bg);
             color: var(--dark-text);
-            line-height: 1.6;
-            padding-top: var(--header-height);
         }
 
         body.light-theme {
@@ -38,451 +32,236 @@
             color: var(--light-text);
         }
 
-        /* Header Styles */
-        .main-header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            height: var(--header-height);
-        }
-
-        .light-theme .main-header {
-            background: rgba(248, 250, 252, 0.95);
-        }
-
-        .nav-container {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        .header {
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
         }
 
-        .logo img {
-            height: 40px;
-            width: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover img {
-            transform: scale(1.05);
-        }
-
-        /* Main Navigation */
-        .main-nav {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: inherit;
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            padding: 0.5rem 0;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            min-height: calc(100vh - var(--header-height));
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .course-container {
+            display: none;
             padding: 2rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
-            margin-bottom: var(--section-spacing);
         }
 
-        .hero-content {
-            max-width: 1200px;
-            text-align: center;
+        .visible {
+            display: block;
         }
 
-        .hero-heading {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: 2rem;
-            line-height: 1.2;
-            animation: slideUp 1s ease;
-        }
-
-        /* Courses Section */
-        .courses-section {
-            padding: 0 2rem;
-            margin-bottom: var(--section-spacing);
-        }
-
-        .section-heading {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1440px;
-            margin: 0 auto;
-        }
-
-        .course-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-            transform: translateY(0);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Interactive Modals */
-        .modal-overlay {
+        .modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            display: none;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
-            backdrop-filter: blur(5px);
         }
 
         .modal-content {
             background: var(--dark-bg);
             padding: 2rem;
-            border-radius: 16px;
-            max-width: 600px;
-            width: 90%;
-            position: relative;
-            animation: modalSlide 0.3s ease-out;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
         }
 
-        .light-theme .modal-content {
-            background: var(--light-bg);
-        }
-
-        /* Animations */
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes modalSlide {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Loading Screen */
-        .loading-screen {
+        .payment-success {
+            display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark-bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #10B981;
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
         }
 
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--primary);
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Optimized Button Styles */
-        .btn {
-            padding: 1rem 2rem;
+        button {
+            padding: 0.5rem 1rem;
+            margin: 0.5rem;
             border: none;
-            border-radius: 8px;
-            font-weight: 600;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
-        .btn-primary {
+        .course-btn {
             background: var(--primary);
             color: white;
         }
 
-        .btn-primary:hover {
+        .auth-btn {
             background: var(--secondary);
-            transform: translateY(-2px);
+            color: white;
+        }
+
+        .video-container {
+            margin: 2rem 0;
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body class="dark-theme">
-    <!-- Loading Screen -->
-    <div class="loading-screen">
-        <div class="loading-spinner"></div>
+    <!-- Header -->
+    <div class="header">
+        <h1>AI Learning Platform</h1>
+        <div>
+            <button id="themeToggle"><i class="fas fa-moon"></i></button>
+            <button class="auth-btn" id="signInBtn">Sign In</button>
+            <button class="auth-btn" id="signUpBtn">Sign Up</button>
+        </div>
     </div>
 
-    <!-- Header -->
-    <header class="main-header">
-        <nav class="nav-container">
-            <a href="#" class="logo">
-                <img src="https://cdn.discordapp.com/attachments/899226459925794839/1334483700380991529/1000080776-removebg-preview.png?ex=679cb24b&is=679b60cb&hm=3e2597e207b4efbfb637b009fcae416f66acf7ddd0729a2b0012b31e275e4abf&" alt="AI Visionaries Logo">
-            </a>
-            <nav class="main-nav">
-                <a href="#courses" class="nav-link">Courses</a>
-                <a href="#premium" class="nav-link">Premium</a>
-                <a href="#team" class="nav-link">Team</a>
-                <a href="#contact" class="nav-link">Contact</a>
-                <button id="themeToggle" class="btn btn-primary">
-                    <i class="fas fa-moon"></i>
-                </button>
-            </nav>
-        </nav>
-    </header>
+    <!-- Course Selection -->
+    <div class="container visible" id="mainContent">
+        <h2>Available Courses</h2>
+        <button class="course-btn" onclick="selectCourse('ml')">Machine Learning (₹999)</button>
+        <button class="course-btn" onclick="selectCourse('ai-management')">AI for Management (₹999)</button>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-heading">Master AI with Industry Experts</h1>
-            <div class="hero-actions">
-                <button class="btn btn-primary" id="exploreCourses">Explore Courses</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Courses Section -->
-    <section id="courses" class="courses-section">
-        <h2 class="section-heading">Featured Courses</h2>
-        <div class="courses-grid"></div>
-    </section>
-
-    <!-- Course Modal -->
-    <div class="modal-overlay" id="courseModal">
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h3>Select Your Course</h3>
-            <div class="course-options"></div>
+            <h3>Select Payment Method</h3>
+            <button class="payment-btn" onclick="processPayment('upi')">UPI</button>
+            <button class="payment-btn" onclick="processPayment('netbanking')">Net Banking</button>
+            <button class="payment-btn" onclick="processPayment('creditcard')">Credit Card</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Course Content -->
+    <div class="course-container" id="mlCourse">
+        <h2>Machine Learning Course</h2>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/ukzFI9rgwfU" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/KNAWp2S3w94" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="course-container" id="aiManagementCourse">
+        <h2>AI for Management Course</h2>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/kYMfE9u-lMo" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/4jmsHaJ7xEA" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Payment Success Message -->
+    <div class="payment-success" id="successMessage">
+        <h3>Payment Successful! 🎉</h3>
+        <p>Redirecting to course content...</p>
+    </div>
+
+    <!-- Auth Modals -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content">
+            <h3>Sign In</h3>
+            <input type="email" placeholder="Email" id="loginEmail">
+            <input type="password" placeholder="Password" id="loginPassword">
+            <button onclick="handleLogin()">Sign In</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modal" id="signUpModal">
+        <div class="modal-content">
+            <h3>Sign Up</h3>
+            <input type="text" placeholder="Name" id="signupName">
+            <input type="email" placeholder="Email" id="signupEmail">
+            <input type="password" placeholder="Password" id="signupPassword">
+            <button onclick="handleSignup()">Create Account</button>
+            <button onclick="closeModal()">Cancel</button>
         </div>
     </div>
 
     <script>
-        // Initialize loading screen
-        window.addEventListener('load', () => {
-            document.querySelector('.loading-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.querySelector('.loading-screen').remove();
-            }, 500);
+        // Theme Toggle
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            const icon = document.querySelector('#themeToggle i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
         });
 
-        // Course Data
-        const courses = [
-            {
-                id: 1,
-                title: "Machine Learning Pro",
-                price: 999,
-                description: "Master ML algorithms and real-world implementations",
-                features: ["Python Basics", "Neural Networks", "TensorFlow", "5 Projects"],
-                duration: "6 Weeks"
-            },
-            {
-                id: 2,
-                title: "AI for Business Leaders",
-                price: 999,
-                description: "Strategic AI implementation for managers",
-                features: ["Case Studies", "ROI Analysis", "Team Management", "10 Templates"],
-                duration: "4 Weeks"
-            }
-        ];
+        // Auth Handlers
+        document.getElementById('signInBtn').addEventListener('click', () => {
+            document.getElementById('signInModal').style.display = 'flex';
+        });
 
-        // Initialize Application
-        class App {
-            constructor() {
-                this.initializeTheme();
-                this.initializeModals();
-                this.initializeCourses();
-                this.initializeEventListeners();
-                this.initializeIntersectionObserver();
-            }
+        document.getElementById('signUpBtn').addEventListener('click', () => {
+            document.getElementById('signUpModal').style.display = 'flex';
+        });
 
-            initializeTheme() {
-                this.themeToggle = document.getElementById('themeToggle');
-                this.currentTheme = localStorage.getItem('theme') || 'dark';
-                document.body.classList.toggle('light-theme', this.currentTheme === 'light');
-                this.updateThemeIcon();
-                this.themeToggle.addEventListener('click', () => this.toggleTheme());
-            }
-
-            toggleTheme() {
-                this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
-                document.body.classList.toggle('light-theme');
-                localStorage.setItem('theme', this.currentTheme);
-                this.updateThemeIcon();
-            }
-
-            updateThemeIcon() {
-                const icon = this.themeToggle.querySelector('i');
-                icon.classList.toggle('fa-moon', this.currentTheme === 'dark');
-                icon.classList.toggle('fa-sun', this.currentTheme === 'light');
-            }
-
-            initializeModals() {
-                this.modals = {
-                    courseModal: document.getElementById('courseModal')
-                };
-                
-                document.querySelectorAll('.close-btn').forEach(btn => {
-                    btn.addEventListener('click', () => this.closeModals());
-                });
-
-                window.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('modal-overlay')) {
-                        this.closeModals();
-                    }
-                });
-            }
-
-            openModal(modalId) {
-                this.modals[modalId].style.display = 'flex';
-            }
-
-            closeModals() {
-                Object.values(this.modals).forEach(modal => {
-                    modal.style.display = 'none';
-                });
-            }
-
-            initializeCourses() {
-                const coursesGrid = document.querySelector('.courses-grid');
-                coursesGrid.innerHTML = courses.map(course => `
-                    <div class="course-card" data-course-id="${course.id}">
-                        <h3>${course.title}</h3>
-                        <div class="course-price">₹${course.price}</div>
-                        <p>${course.description}</p>
-                        <ul class="course-features">
-                            ${course.features.map(f => `<li>${f}</li>`).join('')}
-                        </ul>
-                        <button class="btn btn-primary enroll-btn">Enroll Now</button>
-                    </div>
-                `).join('');
-            }
-
-            initializeEventListeners() {
-                // Course Enrollment
-                document.querySelectorAll('.enroll-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const courseId = e.target.closest('.course-card').dataset.courseId;
-                        this.handleCourseSelection(courseId);
-                    });
-                });
-
-                // Explore Courses Button
-                document.getElementById('exploreCourses').addEventListener('click', () => {
-                    this.openModal('courseModal');
-                });
-
-                // Smooth Scroll
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const target = document.querySelector(anchor.getAttribute('href'));
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    });
-                });
-            }
-
-            handleCourseSelection(courseId) {
-                const selectedCourse = courses.find(c => c.id == courseId);
-                this.openPaymentModal(selectedCourse);
-            }
-
-            openPaymentModal(course) {
-                // Implement payment modal logic
-                console.log('Processing payment for:', course.title);
-                this.showPaymentSuccess();
-            }
-
-            showPaymentSuccess() {
-                const successModal = document.createElement('div');
-                successModal.className = 'payment-success';
-                successModal.innerHTML = `
-                    <i class="fas fa-check-circle"></i>
-                    <h3>Payment Successful!</h3>
-                    <p>Your enrollment is confirmed</p>
-                `;
-                document.body.appendChild(successModal);
-                setTimeout(() => successModal.remove(), 3000);
-            }
-
-            initializeIntersectionObserver() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                document.querySelectorAll('.course-card').forEach(card => {
-                    observer.observe(card);
-                });
-            }
+        function handleLogin() {
+            // Add real authentication logic here
+            alert('Login successful!');
+            closeModal();
         }
 
-        // Start Application
-        new App();
+        function handleSignup() {
+            // Add real registration logic here
+            alert('Account created!');
+            closeModal();
+        }
+
+        // Course Selection
+        let selectedCourse = null;
+
+        function selectCourse(courseId) {
+            selectedCourse = courseId;
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        // Payment Processing
+        function processPayment(method) {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+                showCourseContent();
+            }, 2000);
+        }
+
+        function showCourseContent() {
+            document.getElementById('mainContent').classList.remove('visible');
+            document.getElementById(`${selectedCourse}Course`).classList.add('visible');
+        }
+
+        // Modal Controls
+        function closeModal() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal();
+            }
+        }
     </script>
 </body>
 </html>
