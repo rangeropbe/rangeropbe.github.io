@@ -2,266 +2,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Learning Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --dark-bg: #1a1a1a;
-            --dark-text: #ffffff;
-            --light-bg: #ffffff;
-            --light-text: #1a1a1a;
-            --primary: #4F46E5;
-            --secondary: #10B981;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--dark-text);
-        }
-
-        body.light-theme {
-            background-color: var(--light-bg);
-            color: var(--light-text);
-        }
-
-        .header {
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.8);
-        }
-
-        .course-container {
-            display: none;
-            padding: 2rem;
-        }
-
-        .visible {
-            display: block;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: var(--dark-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            width: 400px;
-            text-align: center;
-        }
-
-        .payment-success {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #10B981;
-            color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        button {
-            padding: 0.5rem 1rem;
-            margin: 0.5rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .course-btn {
-            background: var(--primary);
-            color: white;
-        }
-
-        .auth-btn {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .video-container {
-            margin: 2rem 0;
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    <title>AI for Management - Course</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
 </head>
-<body class="dark-theme">
-    <!-- Header -->
-    <div class="header">
-        <h1>AI Learning Platform</h1>
-        <div>
-            <button id="themeToggle"><i class="fas fa-moon"></i></button>
-            <button class="auth-btn" id="signInBtn">Sign In</button>
-            <button class="auth-btn" id="signUpBtn">Sign Up</button>
+<body>
+    <header>
+        <h1>AI for Management</h1>
+        <nav>
+            <ul>
+                <li><a href="curriculum.html">Curriculum</a></li>
+                <li><a href="contributors.html">Contributors</a></li>
+                <li><a href="testimonials.html">Testimonials</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="payment.html">Enroll Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>Master AI for Business & Management</h2>
+        <p>40-hour interactive AI course. Start your journey today!</p>
+        <a href="payment.html" class="cta-button">Enroll Now</a>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <h3>Interactive Learning</h3>
+            <p>AI-driven simulations and real-world case studies.</p>
         </div>
-    </div>
-
-    <!-- Course Selection -->
-    <div class="container visible" id="mainContent">
-        <h2>Available Courses</h2>
-        <button class="course-btn" onclick="selectCourse('ml')">Machine Learning (₹999)</button>
-        <button class="course-btn" onclick="selectCourse('ai-management')">AI for Management (₹999)</button>
-    </div>
-
-    <!-- Payment Modal -->
-    <div class="modal" id="paymentModal">
-        <div class="modal-content">
-            <h3>Select Payment Method</h3>
-            <button class="payment-btn" onclick="processPayment('upi')">UPI</button>
-            <button class="payment-btn" onclick="processPayment('netbanking')">Net Banking</button>
-            <button class="payment-btn" onclick="processPayment('creditcard')">Credit Card</button>
-            <button onclick="closeModal()">Cancel</button>
+        <div class="feature">
+            <h3>Affordable Pricing</h3>
+            <p>₹1299/month or ₹1699/year.</p>
         </div>
-    </div>
-
-    <!-- Course Content -->
-    <div class="course-container" id="mlCourse">
-        <h2>Machine Learning Course</h2>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/ukzFI9rgwfU" frameborder="0" allowfullscreen></iframe>
+        <div class="feature">
+            <h3>Expert Contributors</h3>
+            <p>Joban Arsh, Bhanderi Jayesh, Raghvani Tushar, Jadeja Keyur.</p>
         </div>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/KNAWp2S3w94" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
+    </section>
 
-    <div class="course-container" id="aiManagementCourse">
-        <h2>AI for Management Course</h2>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/kYMfE9u-lMo" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/4jmsHaJ7xEA" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
-
-    <!-- Payment Success Message -->
-    <div class="payment-success" id="successMessage">
-        <h3>Payment Successful! 🎉</h3>
-        <p>Redirecting to course content...</p>
-    </div>
-
-    <!-- Auth Modals -->
-    <div class="modal" id="signInModal">
-        <div class="modal-content">
-            <h3>Sign In</h3>
-            <input type="email" placeholder="Email" id="loginEmail">
-            <input type="password" placeholder="Password" id="loginPassword">
-            <button onclick="handleLogin()">Sign In</button>
-            <button onclick="closeModal()">Cancel</button>
-        </div>
-    </div>
-
-    <div class="modal" id="signUpModal">
-        <div class="modal-content">
-            <h3>Sign Up</h3>
-            <input type="text" placeholder="Name" id="signupName">
-            <input type="email" placeholder="Email" id="signupEmail">
-            <input type="password" placeholder="Password" id="signupPassword">
-            <button onclick="handleSignup()">Create Account</button>
-            <button onclick="closeModal()">Cancel</button>
-        </div>
-    </div>
-
-    <script>
-        // Theme Toggle
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
-            const icon = document.querySelector('#themeToggle i');
-            icon.classList.toggle('fa-moon');
-            icon.classList.toggle('fa-sun');
-        });
-
-        // Auth Handlers
-        document.getElementById('signInBtn').addEventListener('click', () => {
-            document.getElementById('signInModal').style.display = 'flex';
-        });
-
-        document.getElementById('signUpBtn').addEventListener('click', () => {
-            document.getElementById('signUpModal').style.display = 'flex';
-        });
-
-        function handleLogin() {
-            // Add real authentication logic here
-            alert('Login successful!');
-            closeModal();
-        }
-
-        function handleSignup() {
-            // Add real registration logic here
-            alert('Account created!');
-            closeModal();
-        }
-
-        // Course Selection
-        let selectedCourse = null;
-
-        function selectCourse(courseId) {
-            selectedCourse = courseId;
-            document.getElementById('paymentModal').style.display = 'flex';
-        }
-
-        // Payment Processing
-        function processPayment(method) {
-            document.getElementById('paymentModal').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'block';
-            
-            setTimeout(() => {
-                document.getElementById('successMessage').style.display = 'none';
-                showCourseContent();
-            }, 2000);
-        }
-
-        function showCourseContent() {
-            document.getElementById('mainContent').classList.remove('visible');
-            document.getElementById(`${selectedCourse}Course`).classList.add('visible');
-        }
-
-        // Modal Controls
-        function closeModal() {
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.style.display = 'none';
-            });
-        }
-
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                closeModal();
-            }
-        }
-    </script>
+    <footer>
+        <p>&copy; 2025 AI for Management. All Rights Reserved.</p>
+    </footer>
 </body>
 </html>
