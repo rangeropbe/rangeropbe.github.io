@@ -1,0 +1,138 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Visionaries - Premium AI Courses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="https://cdn.discordapp.com/attachments/899226459925794839/1334483700380991529/1000080776-removebg-preview.png" alt="Visionaries Logo">
+            </div>
+            <div class="nav-buttons">
+                <button id="themeToggle"><i class="fas fa-moon"></i></button>
+                <div class="premium-switch">
+                    <label>Premium</label>
+                    <label class="switch">
+                        <input type="checkbox" id="premiumToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button class="auth-btn" id="signInBtn">Sign In</button>
+                <button class="auth-btn" id="signUpBtn">Sign Up</button>
+                <button class="contributors-btn" id="contributorsBtn">Contributors</button>
+                <button class="contact-btn" id="contactBtn">Contact Us</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Master Artificial Intelligence</h1>
+            <div class="course-buttons">
+                <button class="course-btn pulse" data-course="ml">Machine Learning</button>
+                <button class="course-btn pulse" data-course="ai-mgmt">AI for Management</button>
+            </div>
+        </section>
+
+        <section class="demo-video">
+            <h2>Demo Course</h2>
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ukzFI9rgwfU" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="premium-section" id="premiumSection">
+            <div class="membership-card">
+                <h3>Premium Membership ₹1299</h3>
+                <ul>
+                    <li><i class="fas fa-star"></i> Exclusive Courses</li>
+                    <li><i class="fas fa-headset"></i> 24/7 Support</li>
+                    <li><i class="fas fa-calendar-week"></i> Weekly Sessions</li>
+                    <li><i class="fas fa-certificate"></i> Webinar Priority</li>
+                </ul>
+                <button class="subscribe-btn pulse">Subscribe Now</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="courseModal">
+        <div class="modal-content scale-in">
+            <span class="close-btn">&times;</span>
+            <h3>Select Course</h3>
+            <div class="course-options">
+                <div class="course-card">
+                    <h4>Machine Learning (₹999)</h4>
+                    <ul>
+                        <li>Python Programming Basics</li>
+                        <li>Supervised & Unsupervised Learning</li>
+                        <li>Neural Networks</li>
+                        <li>Real-world Projects</li>
+                    </ul>
+                    <button class="select-course pulse">Select Course</button>
+                </div>
+                <div class="course-card">
+                    <h4>AI for Management (₹999)</h4>
+                    <ul>
+                        <li>AI in Business Strategy</li>
+                        <li>Decision Making Models</li>
+                        <li>Resource Optimization</li>
+                        <li>Case Studies</li>
+                    </ul>
+                    <button class="select-course pulse">Select Course</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content scale-in">
+            <span class="close-btn">&times;</span>
+            <h3>Payment Options</h3>
+            <div class="payment-options">
+                <button class="payment-btn upi pulse"><i class="fas fa-mobile-alt"></i> UPI</button>
+                <button class="payment-btn netbanking pulse"><i class="fas fa-university"></i> Net Banking</button>
+                <button class="payment-btn creditcard pulse"><i class="fas fa-credit-card"></i> Credit Card</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add other modals -->
+    <div class="modal-overlay" id="contributorsModal">
+        <div class="modal-content scale-in">
+            <span class="close-btn">&times;</span>
+            <h3>Our Team</h3>
+            <ul class="contributors-list">
+                <li>Joban Arsh</li>
+                <li>Jadeja Keyur</li>
+                <li>Raghwani Tushar</li>
+                <li>Bhanderi Jayesh</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-content scale-in">
+            <span class="close-btn">&times;</span>
+            <h3>Contact Us</h3>
+            <div class="contact-options">
+                <a href="https://instagram.com/Team Visionaries" class="contact-link" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://facebook.com/Team Visionaries" class="contact-link" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="https://wa.me/+917835913134" class="contact-link" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-success hidden">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h3>Payment Successful!</h3>
+        <p>Thank you for your purchase</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
