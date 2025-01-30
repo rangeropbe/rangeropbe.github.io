@@ -1,0 +1,14 @@
+<section id="testimonials">
+    <h2>What Our Students Say</h2>
+    <div id="testimonial-container"></div>
+</section>
+
+<script>
+const testimonials = [
+    "This course changed my career! - Rahul M.",
+    "The best AI course I've ever taken! - Priya S.",
+    "Highly recommended for business professionals. - Aman K."
+];
+
+document.getElementById("testimonial-container").innerHTML = testimonials.map(t => `<p>${t}</p>`).join("");
+</script>
