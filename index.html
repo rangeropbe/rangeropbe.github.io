@@ -2,7 +2,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Visionaries - Professional AI Education Platform</title>
+    <meta name="description" content="AI Visionaries - Premium AI Education Platform">
+    <title>AI Visionaries - Professional AI Courses</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -14,6 +15,7 @@
             --secondary: #818cf8;
             --accent: #f59e0b;
             --section-spacing: 100px;
+            --header-height: 80px;
         }
 
         * {
@@ -28,6 +30,7 @@
             background-color: var(--dark-bg);
             color: var(--dark-text);
             line-height: 1.6;
+            padding-top: var(--header-height);
         }
 
         body.light-theme {
@@ -35,7 +38,7 @@
             color: var(--light-text);
         }
 
-        /* Modern Header */
+        /* Header Styles */
         .main-header {
             position: fixed;
             top: 0;
@@ -44,6 +47,7 @@
             backdrop-filter: blur(10px);
             z-index: 1000;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            height: var(--header-height);
         }
 
         .light-theme .main-header {
@@ -53,12 +57,24 @@
         .nav-container {
             max-width: 1440px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 100%;
         }
 
+        .logo img {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Main Navigation */
         .main-nav {
             display: flex;
             gap: 2rem;
@@ -71,6 +87,7 @@
             font-weight: 500;
             position: relative;
             padding: 0.5rem 0;
+            transition: color 0.3s ease;
         }
 
         .nav-link::after {
@@ -90,11 +107,11 @@
 
         /* Hero Section */
         .hero-section {
-            min-height: 100vh;
+            min-height: calc(100vh - var(--header-height));
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 120px 2rem 2rem;
+            padding: 2rem;
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
             margin-bottom: var(--section-spacing);
@@ -106,16 +123,22 @@
         }
 
         .hero-heading {
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 5vw, 4rem);
             margin-bottom: 2rem;
             line-height: 1.2;
             animation: slideUp 1s ease;
         }
 
-        /* Courses Grid */
+        /* Courses Section */
         .courses-section {
             padding: 0 2rem;
             margin-bottom: var(--section-spacing);
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
         }
 
         .courses-grid {
@@ -134,6 +157,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .course-card:hover {
@@ -141,31 +165,36 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        /* Interactive Features */
-        .interactive-section {
-            padding: 4rem 2rem;
+        /* Interactive Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
             background: var(--dark-bg);
-            margin-bottom: var(--section-spacing);
-        }
-
-        .features-carousel {
-            display: flex;
-            gap: 2rem;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding: 2rem 0;
-        }
-
-        .feature-card {
-            flex: 0 0 300px;
-            scroll-snap-align: start;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
             padding: 2rem;
-            text-align: center;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            animation: modalSlide 0.3s ease-out;
         }
 
-        /* Advanced Animations */
+        .light-theme .modal-content {
+            background: var(--light-bg);
+        }
+
+        /* Animations */
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -177,14 +206,15 @@
             }
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .floating {
-            animation: float 3s ease-in-out infinite;
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Loading Screen */
@@ -214,6 +244,29 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* Optimized Button Styles */
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body class="dark-theme">
@@ -225,15 +278,17 @@
     <!-- Header -->
     <header class="main-header">
         <nav class="nav-container">
-            <div class="logo">
-                <img src="https://cdn.discordapp.com/attachments/899226459925794839/1334483700380991529/1000080776-removebg-preview.png" alt="Visionaries Logo" style="height: 40px;">
-            </div>
+            <a href="#" class="logo">
+                <img src="https://cdn.discordapp.com/attachments/899226459925794839/1334483700380991529/1000080776-removebg-preview.png?ex=679cb24b&is=679b60cb&hm=3e2597e207b4efbfb637b009fcae416f66acf7ddd0729a2b0012b31e275e4abf&" alt="AI Visionaries Logo">
+            </a>
             <nav class="main-nav">
                 <a href="#courses" class="nav-link">Courses</a>
                 <a href="#premium" class="nav-link">Premium</a>
                 <a href="#team" class="nav-link">Team</a>
                 <a href="#contact" class="nav-link">Contact</a>
-                <button id="themeToggle" class="nav-link"><i class="fas fa-moon"></i></button>
+                <button id="themeToggle" class="btn btn-primary">
+                    <i class="fas fa-moon"></i>
+                </button>
             </nav>
         </nav>
     </header>
@@ -241,10 +296,9 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-content">
-            <h1 class="hero-heading">Transform Your Career with AI Expertise</h1>
-            <div class="hero-buttons">
-                <button class="cta-button">Start Learning</button>
-                <button class="cta-button outline">Explore Courses</button>
+            <h1 class="hero-heading">Master AI with Industry Experts</h1>
+            <div class="hero-actions">
+                <button class="btn btn-primary" id="exploreCourses">Explore Courses</button>
             </div>
         </div>
     </section>
@@ -252,111 +306,183 @@
     <!-- Courses Section -->
     <section id="courses" class="courses-section">
         <h2 class="section-heading">Featured Courses</h2>
-        <div class="courses-grid">
-            <!-- Course cards will be dynamically populated -->
-        </div>
+        <div class="courses-grid"></div>
     </section>
 
-    <!-- Interactive Features Section -->
-    <section class="interactive-section">
-        <h2 class="section-heading">Why Choose Us?</h2>
-        <div class="features-carousel">
-            <div class="feature-card">
-                <i class="fas fa-rocket feature-icon"></i>
-                <h3>Cutting-Edge Curriculum</h3>
-                <p>Stay ahead with industry-relevant content updated monthly</p>
-            </div>
-            <!-- Add more feature cards -->
+    <!-- Course Modal -->
+    <div class="modal-overlay" id="courseModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Select Your Course</h3>
+            <div class="course-options"></div>
         </div>
-    </section>
+    </div>
 
     <script>
         // Initialize loading screen
         window.addEventListener('load', () => {
             document.querySelector('.loading-screen').style.opacity = '0';
             setTimeout(() => {
-                document.querySelector('.loading-screen').style.display = 'none';
+                document.querySelector('.loading-screen').remove();
             }, 500);
         });
 
-        // Smooth scroll functionality
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Dynamic content loading
+        // Course Data
         const courses = [
             {
+                id: 1,
                 title: "Machine Learning Pro",
-                price: "₹999",
+                price: 999,
                 description: "Master ML algorithms and real-world implementations",
-                features: ["Python Basics", "Neural Networks", "TensorFlow", "5 Projects"]
+                features: ["Python Basics", "Neural Networks", "TensorFlow", "5 Projects"],
+                duration: "6 Weeks"
             },
             {
+                id: 2,
                 title: "AI for Business Leaders",
-                price: "₹999",
+                price: 999,
                 description: "Strategic AI implementation for managers",
-                features: ["Case Studies", "ROI Analysis", "Team Management", "10 Templates"]
+                features: ["Case Studies", "ROI Analysis", "Team Management", "10 Templates"],
+                duration: "4 Weeks"
             }
         ];
 
-        const coursesGrid = document.querySelector('.courses-grid');
-        courses.forEach(course => {
-            const card = document.createElement('div');
-            card.className = 'course-card';
-            card.innerHTML = `
-                <h3>${course.title}</h3>
-                <p class="price">${course.price}</p>
-                <p>${course.description}</p>
-                <ul class="course-features">
-                    ${course.features.map(f => `<li>${f}</li>`).join('')}
-                </ul>
-                <button class="enroll-button">Enroll Now</button>
-            `;
-            coursesGrid.appendChild(card);
-        });
+        // Initialize Application
+        class App {
+            constructor() {
+                this.initializeTheme();
+                this.initializeModals();
+                this.initializeCourses();
+                this.initializeEventListeners();
+                this.initializeIntersectionObserver();
+            }
 
-        // Intersection Observer for animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0)";
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
+            initializeTheme() {
+                this.themeToggle = document.getElementById('themeToggle');
+                this.currentTheme = localStorage.getItem('theme') || 'dark';
+                document.body.classList.toggle('light-theme', this.currentTheme === 'light');
+                this.updateThemeIcon();
+                this.themeToggle.addEventListener('click', () => this.toggleTheme());
+            }
 
-        document.querySelectorAll('.course-card, .feature-card').forEach(el => {
-            el.style.opacity = "0";
-            el.style.transform = "translateY(50px)";
-            observer.observe(el);
-        });
+            toggleTheme() {
+                this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+                document.body.classList.toggle('light-theme');
+                localStorage.setItem('theme', this.currentTheme);
+                this.updateThemeIcon();
+            }
 
-        // Theme management
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', toggleTheme);
+            updateThemeIcon() {
+                const icon = this.themeToggle.querySelector('i');
+                icon.classList.toggle('fa-moon', this.currentTheme === 'dark');
+                icon.classList.toggle('fa-sun', this.currentTheme === 'light');
+            }
 
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
-            const icon = themeToggle.querySelector('i');
-            icon.classList.toggle('fa-moon');
-            icon.classList.toggle('fa-sun');
-            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+            initializeModals() {
+                this.modals = {
+                    courseModal: document.getElementById('courseModal')
+                };
+                
+                document.querySelectorAll('.close-btn').forEach(btn => {
+                    btn.addEventListener('click', () => this.closeModals());
+                });
+
+                window.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal-overlay')) {
+                        this.closeModals();
+                    }
+                });
+            }
+
+            openModal(modalId) {
+                this.modals[modalId].style.display = 'flex';
+            }
+
+            closeModals() {
+                Object.values(this.modals).forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+
+            initializeCourses() {
+                const coursesGrid = document.querySelector('.courses-grid');
+                coursesGrid.innerHTML = courses.map(course => `
+                    <div class="course-card" data-course-id="${course.id}">
+                        <h3>${course.title}</h3>
+                        <div class="course-price">₹${course.price}</div>
+                        <p>${course.description}</p>
+                        <ul class="course-features">
+                            ${course.features.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                        <button class="btn btn-primary enroll-btn">Enroll Now</button>
+                    </div>
+                `).join('');
+            }
+
+            initializeEventListeners() {
+                // Course Enrollment
+                document.querySelectorAll('.enroll-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const courseId = e.target.closest('.course-card').dataset.courseId;
+                        this.handleCourseSelection(courseId);
+                    });
+                });
+
+                // Explore Courses Button
+                document.getElementById('exploreCourses').addEventListener('click', () => {
+                    this.openModal('courseModal');
+                });
+
+                // Smooth Scroll
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(anchor.getAttribute('href'));
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    });
+                });
+            }
+
+            handleCourseSelection(courseId) {
+                const selectedCourse = courses.find(c => c.id == courseId);
+                this.openPaymentModal(selectedCourse);
+            }
+
+            openPaymentModal(course) {
+                // Implement payment modal logic
+                console.log('Processing payment for:', course.title);
+                this.showPaymentSuccess();
+            }
+
+            showPaymentSuccess() {
+                const successModal = document.createElement('div');
+                successModal.className = 'payment-success';
+                successModal.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Payment Successful!</h3>
+                    <p>Your enrollment is confirmed</p>
+                `;
+                document.body.appendChild(successModal);
+                setTimeout(() => successModal.remove(), 3000);
+            }
+
+            initializeIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.course-card').forEach(card => {
+                    observer.observe(card);
+                });
+            }
         }
 
-        // Initialize theme
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-theme');
-            themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
-        }
+        // Start Application
+        new App();
     </script>
 </body>
 </html>
