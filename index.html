@@ -1,46 +1,100 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Previous head content remains same -->
-    <style>
-        /* Loading spinner */
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary-color);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            display: none;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Selling Course</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Add loading overlay -->
-    <div id="loadingOverlay" class="loading-overlay">
-        <div class="loader"></div>
-    </div>
 
-    <!-- Update payment modal with loading state -->
-    <div id="paymentModal" class="modal">
-        <div class="modal-content payment-content">
-            <span class="close" onclick="closePayment()">&times;</span>
-            <h2>Complete Payment</h2>
-            <div class="payment-options">
-                <!-- Payment options remain same -->
+    <header>
+        <h1>AI Selling Course</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#membership">Membership</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <div class="container">
+            <h1>Unlock the Power of AI in Sales</h1>
+            <p>Learn how to leverage AI to boost your sales, increase efficiency, and gain a competitive edge.</p>
+            <button class="btn-enroll">Enroll Now</button>
+        </div>
+    </section>
+
+    <section id="courses">
+        <h2>Select Your Course</h2>
+        <div class="course-container">
+            <div class="course">
+                <h3>Machine Learning</h3>
+                <p>Learn the fundamentals of machine learning and its applications in sales.</p>
+                <p>Price: ₹999</p>
+                <button class="btn-select" data-course="machine-learning">Select Course</button>
             </div>
-            <button onclick="processPayment()" id="payButton">
-                <span>CONFIRM PAYMENT</span>
-                <div class="loader" id="paymentLoader"></div>
-            </button>
-            <p id="paymentError" class="error-message"></p>
+            <div class="course">
+                <h3>AI for Management</h3>
+                <p>Discover how AI can revolutionize your sales management strategies.</p>
+                <p>Price: ₹999</p>
+                <button class="btn-select" data-course="ai-for-management">Select Course</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="membership">
+        <h2>Premium Membership</h2>
+        <p>Gain exclusive access to premium content, weekly sessions, and priority support.</p>
+        <p>Price: ₹1299/month</p>
+        <button class="btn-enroll">Enroll Now</button>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <ul>
+            <li>Instagram: <a href="#">Team Visionaries</a></li>
+            <li>Facebook: <a href="#">Team Visionaries</a></li>
+            <li>WhatsApp: <a href="https://wa.me/917849201419">+91 7849201419</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 AI Selling Course</p>
+        <p>Contributors:</p>
+        <ul>
+            <li>Joban Arsh</li>
+            <li>Jadeja Keyur</li>
+            <li>Raghwani Tushar</li>
+            <li>Bhanderi Jayesh</li>
+        </ul>
+    </footer>
+
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Payment Options</h2>
+            <ul>
+                <li>UPI</li>
+                <li>Paytm</li>
+                <li>Netbanking</li>
+                <li>Credit/Debit Card</li>
+            </ul>
+            <button class="btn-pay">Pay Now (Fake)</button>
         </div>
     </div>
-    <!-- Rest of the HTML remains same -->
+
+    <div id="course-content-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Course Content</h2>
+            <div id="course-content-container"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
+
