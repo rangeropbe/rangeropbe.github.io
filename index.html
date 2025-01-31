@@ -8,68 +8,82 @@
 <body>
 
     <header>
-        <h1>AI Selling Course</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#courses">Courses</a></li>
-                <li><a href="#membership">Membership</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="AI Selling Course Logo"> 
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#membership">Membership</a></li>
+                    <li><a href="#about">About</a></li> 
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <section id="home">
         <div class="container">
-            <h1>Unlock the Power of AI in Sales</h1>
-            <p>Learn how to leverage AI to boost your sales, increase efficiency, and gain a competitive edge.</p>
-            <button class="btn-enroll">Enroll Now</button>
+            <h1>Unlock Your Sales Potential with AI</h1>
+            <p>Learn how to leverage the power of AI to revolutionize your sales strategy.</p>
+            <button class="btn-primary">Enroll Now</button>
         </div>
     </section>
 
-    <section id="courses">
-        <h2>Select Your Course</h2>
-        <div class="course-container">
-            <div class="course">
-                <h3>Machine Learning</h3>
-                <p>Learn the fundamentals of machine learning and its applications in sales.</p>
-                <p>Price: ₹999</p>
-                <button class="btn-select" data-course="machine-learning">Select Course</button>
-            </div>
-            <div class="course">
-                <h3>AI for Management</h3>
-                <p>Discover how AI can revolutionize your sales management strategies.</p>
-                <p>Price: ₹999</p>
-                <button class="btn-select" data-course="ai-for-management">Select Course</button>
+    <section id="courses" class="section-padding">
+        <div class="container">
+            <h2>Featured Courses</h2>
+            <div class="course-grid">
+                <div class="course-card">
+                    <h3>Machine Learning for Sales</h3>
+                    <p>Master the fundamentals of machine learning and its applications in sales.</p>
+                    <div class="price">₹999</div>
+                    <button class="btn-secondary">Select Course</button>
+                </div>
+                <div class="course-card">
+                    <h3>AI for Sales Management</h3>
+                    <p>Discover how AI can optimize your sales management processes.</p>
+                    <div class="price">₹999</div>
+                    <button class="btn-secondary">Select Course</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="membership">
-        <h2>Premium Membership</h2>
-        <p>Gain exclusive access to premium content, weekly sessions, and priority support.</p>
-        <p>Price: ₹1299/month</p>
-        <button class="btn-enroll">Enroll Now</button>
+    <section id="membership" class="section-padding">
+        <div class="container">
+            <h2>Premium Membership</h2>
+            <p>Exclusive access to premium content, weekly live sessions, priority support, and more.</p>
+            <div class="price">₹1299/month</div>
+            <button class="btn-primary">Join Now</button>
+        </div>
     </section>
 
-    <section id="contact">
-        <h2>Contact Us</h2>
-        <ul>
-            <li>Instagram: <a href="#">Team Visionaries</a></li>
-            <li>Facebook: <a href="#">Team Visionaries</a></li>
-            <li>WhatsApp: <a href="https://wa.me/917849201419">+91 7849201419</a></li>
-        </ul>
+    <section id="about" class="section-padding">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>We are a team of AI and sales experts dedicated to empowering professionals with the knowledge and skills to succeed in the age of AI.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <ul class="social-links">
+                <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                <li><a href="https://wa.me/917849201419" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+            </ul>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 AI Selling Course</p>
-        <p>Contributors:</p>
-        <ul>
-            <li>Joban Arsh</li>
-            <li>Jadeja Keyur</li>
-            <li>Raghwani Tushar</li>
-            <li>Bhanderi Jayesh</li>
-        </ul>
+        <div class="container">
+            <p>&copy; 2023 AI Selling Course. All Rights Reserved.</p>
+            <p>Contributors: Joban Arsh, Jadeja Keyur, Raghwani Tushar, Bhanderi Jayesh</p>
+        </div>
     </footer>
 
     <div id="payment-modal" class="modal">
@@ -82,7 +96,7 @@
                 <li>Netbanking</li>
                 <li>Credit/Debit Card</li>
             </ul>
-            <button class="btn-pay">Pay Now (Fake)</button>
+            <button class="btn-secondary">Pay Now (Fake)</button>
         </div>
     </div>
 
