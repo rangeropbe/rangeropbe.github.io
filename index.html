@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Visionaries - Complete Platform</title>
+    <title>AI Visionaries - Course Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -101,7 +101,6 @@
             max-width: 400px;
         }
 
-        /* Dashboard Styles */
         .dashboard {
             padding: 2rem 5%;
             display: none;
@@ -126,7 +125,6 @@
             border: 3px solid var(--accent-color);
         }
 
-        /* Success Animation */
         .success-modal {
             background: #4BB543;
             color: white;
@@ -163,7 +161,6 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="logo">AI Visionaries</div>
         <div>
@@ -175,7 +172,6 @@
         </div>
     </nav>
 
-    <!-- Course Cards -->
     <div class="course-cards" id="coursesSection">
         <div class="course-card">
             <h3><i class="fas fa-robot"></i> Machine Learning</h3>
@@ -196,7 +192,6 @@
         </div>
     </div>
 
-    <!-- Dashboard -->
     <section class="dashboard" id="dashboardSection">
         <div class="profile-section">
             <img src="https://via.placeholder.com/120" class="profile-pic" id="profilePic">
@@ -212,7 +207,6 @@
         </div>
     </section>
 
-    <!-- Modals -->
     <div id="authModal" class="modal">
         <div class="modal-content">
             <h2>Create Account</h2>
@@ -253,32 +247,25 @@
         let currentUser = null;
         let selectedCourse = null;
 
-        // Course Selection
+        // Enrollment Flow
         function selectCourse(name, price) {
             selectedCourse = { name, price };
             showModal('authModal');
         }
 
-        // Auth Handling
         document.getElementById('authForm').addEventListener('submit', (e) => {
             e.preventDefault();
             currentUser = {
                 name: e.target[0].value,
-                email: e.target[1].value
+                email: e.target[1].value,
+                password: e.target[2].value
             };
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            showDashboard();
-        });
-
-        // Dashboard Functions
-        function showDashboard() {
+            initDashboard();
             closeModal('authModal');
             showModal('paymentModal');
-            document.getElementById('dashboardBtn').style.display = 'inline-block';
-            document.getElementById('logoutBtn').style.display = 'inline-block';
-        }
+        });
 
-        // Payment Processing
         function processPayment() {
             closeModal('paymentModal');
             showModal('successModal');
@@ -287,7 +274,43 @@
                 closeModal('successModal');
                 document.getElementById('coursesSection').style.display = 'none';
                 document.getElementById('dashboardSection').style.display = 'block';
+                document.getElementById('dashboardBtn').style.display = 'inline-block';
+                document.getElementById('logoutBtn').style.display = 'inline-block';
+                updateDashboard();
             }, 3000);
+        }
+
+        // Dashboard Functions
+        function updateDashboard() {
+            if(currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userEmail').textContent = currentUser.email;
+            }
+        }
+
+        function toggleEditForm() {
+            const form = document.getElementById('editProfileForm');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function saveProfile() {
+            currentUser.name = document.getElementById('editName').value || currentUser.name;
+            currentUser.email = document.getElementById('editEmail').value || currentUser.email;
+            
+            const fileInput = document.getElementById('profileUpload');
+            if(fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentUser.profilePic = e.target.result;
+                    document.getElementById('profilePic').src = e.target.result;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+            
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateDashboard();
+            toggleEditForm();
         }
 
         // Navigation
@@ -296,11 +319,32 @@
             document.getElementById('dashboardSection').style.display = 'none';
         });
 
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('currentUser');
+            location.reload();
+        });
+
+        // Modal Controls
+        function showModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            if(localStorage.getItem('currentUser')) {
-                currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                showDashboard();
+            currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if(currentUser) {
+                document.getElementById('coursesSection').style.display = 'none';
+                document.getElementById('dashboardSection').style.display = 'block';
+                document.getElementById('dashboardBtn').style.display = 'inline-block';
+                document.getElementById('logoutBtn').style.display = 'inline-block';
+                updateDashboard();
+                if(currentUser.profilePic) {
+                    document.getElementById('profilePic').src = currentUser.profilePic;
+                }
             }
         });
     </script>
