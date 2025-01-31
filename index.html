@@ -60,9 +60,28 @@
             box-shadow: 0 4px 15px rgba(0,200,150,0.3);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,200,150,0.4);
+        /* Course Cards */
+        .course-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 3rem 5%;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .premium {
+            border: 2px solid var(--accent-color);
         }
 
         /* Modals */
@@ -85,12 +104,6 @@
             border-radius: 15px;
             width: 90%;
             max-width: 400px;
-            animation: modalSlide 0.3s ease-out;
-        }
-
-        @keyframes modalSlide {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         /* Success Animation */
@@ -115,23 +128,6 @@
                        scale .3s ease-in-out .9s both;
         }
 
-        .checkmark__circle {
-            stroke-dasharray: 166;
-            stroke-dashoffset: 166;
-            stroke-width: 2;
-            stroke-miterlimit: 10;
-            stroke: #fff;
-            fill: none;
-            animation: stroke .6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-        }
-
-        .checkmark__check {
-            transform-origin: 50% 50%;
-            stroke-dasharray: 48;
-            stroke-dashoffset: 48;
-            animation: stroke .3s cubic-bezier(0.65, 0, 0.45, 1) .8s forwards;
-        }
-
         @keyframes stroke {
             100% { stroke-dashoffset: 0; }
         }
@@ -146,10 +142,6 @@
         }
 
         /* Course Content */
-        .course-content {
-            padding: 2rem 5%;
-        }
-
         .video-container {
             margin: 2rem 0;
             position: relative;
@@ -178,10 +170,45 @@
         </div>
     </nav>
 
-    <!-- Course Content -->
-    <div class="course-content" id="courseContent">
+    <!-- Course Cards -->
+    <div class="course-cards">
+        <!-- Machine Learning -->
+        <div class="course-card">
+            <h3><i class="fas fa-robot"></i> Machine Learning</h3>
+            <p class="price">₹999</p>
+            <button class="btn btn-primary" onclick="selectCourse('Machine Learning', 999)">
+                Enroll Now
+            </button>
+        </div>
+
+        <!-- AI for Management -->
+        <div class="course-card">
+            <h3><i class="fas fa-chart-line"></i> AI for Management</h3>
+            <p class="price">₹999</p>
+            <button class="btn btn-primary" onclick="selectCourse('AI for Management', 999)">
+                Enroll Now
+            </button>
+        </div>
+
+        <!-- Premium Membership -->
+        <div class="course-card premium">
+            <h3><i class="fas fa-gem"></i> Premium Membership</h3>
+            <p class="price">₹1299/month</p>
+            <ul class="premium-features">
+                <li><i class="fas fa-star"></i> Exclusive Content</li>
+                <li><i class="fas fa-video"></i> Weekly Sessions</li>
+                <li><i class="fas fa-headset"></i> 24/7 Support</li>
+            </ul>
+            <button class="btn btn-primary" onclick="selectCourse('Premium Membership', 1299)">
+                Subscribe Now
+            </button>
+        </div>
+    </div>
+
+    <!-- Course Content Sections -->
+    <div id="courseContent" style="display:none;">
         <div class="video-container">
-            <iframe class="video-iframe" src="https://www.youtube.com/embed/your-video-id" 
+            <iframe class="video-iframe" id="courseVideo" 
                 frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
@@ -229,31 +256,26 @@
                 <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
             </svg>
             <h2>Payment Successful!</h2>
-            <p>Redirecting to course content...</p>
+            <p>Loading course content...</p>
         </div>
     </div>
 
     <script>
-        // User State
+        // Course Data
+        const courses = {
+            'Machine Learning': 'https://www.youtube.com/embed/your-ml-video-id',
+            'AI for Management': 'https://www.youtube.com/embed/your-ai-mgmt-video-id',
+            'Premium Membership': 'https://www.youtube.com/embed/your-premium-video-id'
+        };
+
         let currentUser = null;
         let selectedCourse = null;
-        let selectedPaymentMethod = null;
 
-        // Enrollment Flow
-        document.getElementById('enrollBtn').addEventListener('click', () => {
+        // Course Selection
+        function selectCourse(name, price) {
+            selectedCourse = { name, price };
             showModal('authModal');
-        });
-
-        // Contributors Button
-        document.getElementById('contributorsBtn').addEventListener('click', () => {
-            const contributors = [
-                "1. Joban Arsh",
-                "2. Jadeja Keyur",
-                "3. Raghwani Tushar",
-                "4. Bhanderi Jayesh"
-            ];
-            alert("Project Contributors:\n\n" + contributors.join("\n"));
-        });
+        }
 
         // Auth Handling
         document.getElementById('authForm').addEventListener('submit', (e) => {
@@ -267,22 +289,30 @@
         });
 
         // Payment Processing
-        function selectPayment(method) {
-            selectedPaymentMethod = method;
-            document.querySelectorAll('.payment-method').forEach(el => {
-                el.style.borderColor = el === event.target ? '#00C896' : '#ddd';
-            });
-        }
-
         function processPayment() {
+            closeModal('paymentModal');
             showModal('successModal');
+            
             setTimeout(() => {
                 closeModal('successModal');
+                document.getElementById('courseContent').style.display = 'block';
+                document.getElementById('courseVideo').src = courses[selectedCourse.name];
                 document.getElementById('courseContent').scrollIntoView({
                     behavior: 'smooth'
                 });
             }, 3000);
         }
+
+        // Contributors Button
+        document.getElementById('contributorsBtn').addEventListener('click', () => {
+            const contributors = [
+                "1. Joban Arsh",
+                "2. Jadeja Keyur",
+                "3. Raghwani Tushar",
+                "4. Bhanderi Jayesh"
+            ];
+            alert("Project Contributors:\n\n" + contributors.join("\n"));
+        });
 
         // Modal Controls
         function showModal(id) {
@@ -291,13 +321,6 @@
 
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
-        }
-
-        // Close modals on outside click
-        window.onclick = function(event) {
-            if (event.target.className === 'modal') {
-                event.target.style.display = 'none';
-            }
         }
     </script>
 </body>
