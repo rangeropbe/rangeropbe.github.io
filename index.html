@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Visionaries - Course Platform</title>
+    <title>AI Visionaries - Complete Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -12,6 +12,7 @@
             --accent-color: #00C896;
             --light-bg: #f8f9fa;
             --text-dark: #2d3436;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         * {
@@ -37,6 +38,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: var(--shadow);
         }
 
         .logo {
@@ -73,7 +75,7 @@
             background: white;
             border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             transition: transform 0.3s ease;
         }
 
@@ -81,8 +83,29 @@
             transform: translateY(-5px);
         }
 
-        .premium {
-            border: 2px solid var(--accent-color);
+        /* Dashboard Styles */
+        .dashboard {
+            padding: 2rem 5%;
+            display: none;
+        }
+
+        .profile-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            border: 3px solid var(--accent-color);
         }
 
         /* Modals */
@@ -141,24 +164,6 @@
         @keyframes fill {
             100% { box-shadow: inset 0 0 0 100% #4BB543; }
         }
-
-        /* Course Content */
-        .video-container {
-            margin: 2rem 0;
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-        }
-
-        .video-iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 15px;
-        }
     </style>
 </head>
 <body>
@@ -168,53 +173,47 @@
         <div>
             <button class="btn btn-primary" id="enrollBtn">Enroll Now</button>
             <button class="btn btn-primary" id="contributorsBtn">Contributors</button>
+            <button class="btn btn-primary" id="dashboardBtn" style="display: none;">Dashboard</button>
+            <button class="btn btn-primary" id="logoutBtn" style="display: none;">Logout</button>
         </div>
     </nav>
 
     <!-- Course Cards -->
     <div class="course-cards">
-        <!-- Machine Learning -->
         <div class="course-card">
             <h3><i class="fas fa-robot"></i> Machine Learning</h3>
             <p class="price">₹999</p>
-            <button class="btn btn-primary" onclick="selectCourse('Machine Learning', 999)">
-                Enroll Now
-            </button>
+            <button class="btn btn-primary" onclick="selectCourse('Machine Learning', 999)">Enroll</button>
         </div>
-
-        <!-- AI for Management -->
         <div class="course-card">
             <h3><i class="fas fa-chart-line"></i> AI for Management</h3>
             <p class="price">₹999</p>
-            <button class="btn btn-primary" onclick="selectCourse('AI for Management', 999)">
-                Enroll Now
-            </button>
+            <button class="btn btn-primary" onclick="selectCourse('AI for Management', 999)">Enroll</button>
         </div>
-
-        <!-- Premium Membership -->
-        <div class="course-card premium">
+        <div class="course-card">
             <h3><i class="fas fa-gem"></i> Premium Membership</h3>
             <p class="price">₹1299/month</p>
-            <ul class="premium-features">
-                <li><i class="fas fa-star"></i> Exclusive Content</li>
-                <li><i class="fas fa-video"></i> Weekly Sessions</li>
-                <li><i class="fas fa-headset"></i> 24/7 Support</li>
-            </ul>
-            <button class="btn btn-primary" onclick="selectCourse('Premium Membership', 1299)">
-                Subscribe Now
-            </button>
+            <button class="btn btn-primary" onclick="selectCourse('Premium Membership', 1299)">Subscribe</button>
         </div>
     </div>
 
-    <!-- Course Content Sections -->
-    <div id="courseContent" style="display:none;">
-        <div class="video-container">
-            <iframe class="video-iframe" id="courseVideo" 
-                frameborder="0" allowfullscreen></iframe>
+    <!-- Dashboard -->
+    <section class="dashboard" id="dashboard">
+        <div class="profile-section">
+            <img src="https://via.placeholder.com/120" class="profile-pic" id="profilePic">
+            <h3 id="userName"></h3>
+            <p id="userEmail"></p>
+            <button class="btn btn-primary" onclick="toggleEditForm()">Edit Profile</button>
+            <div class="edit-profile-form" id="editProfileForm">
+                <input type="text" id="editName" placeholder="Full Name">
+                <input type="email" id="editEmail" placeholder="Email">
+                <input type="file" id="profileUpload" accept="image/*">
+                <button class="btn btn-primary" onclick="saveProfile()">Save</button>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Auth Modal -->
+    <!-- Modals -->
     <div id="authModal" class="modal">
         <div class="modal-content">
             <h2>Create Account</h2>
@@ -227,29 +226,19 @@
         </div>
     </div>
 
-    <!-- Payment Modal -->
     <div id="paymentModal" class="modal">
         <div class="modal-content">
             <h2>Complete Payment</h2>
             <div class="payment-options">
-                <div class="payment-method" onclick="selectPayment('upi')">
-                    <i class="fas fa-mobile-alt"></i> UPI
-                </div>
-                <div class="payment-method" onclick="selectPayment('paytm')">
-                    <i class="fas fa-wallet"></i> Paytm
-                </div>
-                <div class="payment-method" onclick="selectPayment('netbanking')">
-                    <i class="fas fa-university"></i> Netbanking
-                </div>
-                <div class="payment-method" onclick="selectPayment('card')">
-                    <i class="far fa-credit-card"></i> Card
-                </div>
+                <div class="payment-method">UPI</div>
+                <div class="payment-method">Paytm</div>
+                <div class="payment-method">Netbanking</div>
+                <div class="payment-method">Credit/Debit Card</div>
             </div>
             <button class="btn btn-primary" onclick="processPayment()">Pay Now</button>
         </div>
     </div>
 
-    <!-- Success Modal -->
     <div id="successModal" class="modal">
         <div class="success-modal">
             <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -257,19 +246,13 @@
                 <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
             </svg>
             <h2>Payment Successful!</h2>
-            <p>Loading course content...</p>
+            <p>Redirecting to dashboard...</p>
         </div>
     </div>
 
     <script>
-        // Course Data
-        const courses = {
-            'Machine Learning': 'https://www.youtube.com/embed/your-ml-video-id',
-            'AI for Management': 'https://www.youtube.com/embed/your-ai-mgmt-video-id',
-            'Premium Membership': 'https://www.youtube.com/embed/your-premium-video-id'
-        };
-
-        let currentUser = null;
+        // User Management
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
         let selectedCourse = null;
 
         // Course Selection
@@ -283,8 +266,11 @@
             e.preventDefault();
             currentUser = {
                 name: e.target[0].value,
-                email: e.target[1].value
+                email: e.target[1].value,
+                profilePic: 'https://via.placeholder.com/120'
             };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateDashboard();
             closeModal('authModal');
             showModal('paymentModal');
         });
@@ -293,18 +279,28 @@
         function processPayment() {
             closeModal('paymentModal');
             showModal('successModal');
-            
             setTimeout(() => {
                 closeModal('successModal');
-                document.getElementById('courseContent').style.display = 'block';
-                document.getElementById('courseVideo').src = courses[selectedCourse.name];
-                document.getElementById('courseContent').scrollIntoView({
-                    behavior: 'smooth'
-                });
+                showDashboard();
             }, 3000);
         }
 
-        // Contributors Button
+        // Dashboard Functions
+        function updateDashboard() {
+            document.getElementById('dashboardBtn').style.display = 'inline-block';
+            document.getElementById('logoutBtn').style.display = 'inline-block';
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('profilePic').src = currentUser.profilePic;
+        }
+
+        function showDashboard() {
+            document.querySelector('.course-cards').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            updateDashboard();
+        }
+
+        // Contributors
         document.getElementById('contributorsBtn').addEventListener('click', () => {
             const contributors = [
                 "1. Joban Arsh",
@@ -322,6 +318,11 @@
 
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
+        }
+
+        // Initialize
+        if(currentUser) {
+            showDashboard();
         }
     </script>
 </body>
