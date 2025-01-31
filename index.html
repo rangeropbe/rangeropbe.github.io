@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Visionaries - Course Platform</title>
+    <title>AI Visionaries - Complete Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -99,8 +99,8 @@
             transform: translateY(-5px);
         }
 
-        .course-details {
-            padding: 3rem 5%;
+        .dashboard {
+            padding: 2rem 5%;
             display: none;
         }
 
@@ -139,6 +139,40 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
+        .success-modal {
+            background: #4BB543;
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .checkmark {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 2;
+            stroke: #fff;
+            stroke-miterlimit: 10;
+            margin: 0 auto 1rem;
+            animation: fill .4s ease-in-out .4s forwards,
+                       scale .3s ease-in-out .9s both;
+        }
+
+        @keyframes stroke {
+            100% { stroke-dashoffset: 0; }
+        }
+
+        @keyframes scale {
+            0%, 100% { transform: none; }
+            50% { transform: scale3d(1.1, 1.1, 1); }
+        }
+
+        @keyframes fill {
+            100% { box-shadow: inset 0 0 0 100% #4BB543; }
+        }
     </style>
 </head>
 <body>
@@ -147,11 +181,11 @@
         <div class="nav-buttons">
             <button class="btn btn-primary" id="homeBtn">Home</button>
             <button class="btn btn-primary" id="analyticsBtn">Analytics</button>
-            <div id="authButtons" style="display: none;">
+            <div id="authButtons">
                 <button class="btn btn-primary" onclick="showModal('authModal')">Sign In</button>
                 <button class="btn btn-primary" onclick="showModal('authModal')">Sign Up</button>
             </div>
-            <div id="userSection" style="display: none;" class="user-profile">
+            <div id="userSection" class="user-profile" style="display: none;">
                 <img src="https://via.placeholder.com/40" class="profile-pic" id="navProfilePic">
                 <span id="navUserName"></span>
                 <button class="btn btn-primary" onclick="showDashboard()">Dashboard</button>
@@ -160,29 +194,74 @@
     </nav>
 
     <div class="course-cards" id="coursesSection">
-        <!-- Course Cards Same as Before -->
+        <div class="course-card">
+            <h3><i class="fas fa-robot"></i> Machine Learning</h3>
+            <p class="price">₹999</p>
+            <button class="btn btn-primary" onclick="handleEnroll('Machine Learning', 999)">Enroll Now</button>
+        </div>
+        
+        <div class="course-card">
+            <h3><i class="fas fa-chart-line"></i> AI for Management</h3>
+            <p class="price">₹999</p>
+            <button class="btn btn-primary" onclick="handleEnroll('AI for Management', 999)">Enroll Now</button>
+        </div>
+        
+        <div class="course-card">
+            <h3><i class="fas fa-gem"></i> Premium Membership</h3>
+            <p class="price">₹1299/month</p>
+            <button class="btn btn-primary" onclick="handleEnroll('Premium Membership', 1299)">Subscribe Now</button>
+        </div>
     </div>
 
-    <div class="course-details" id="courseDetails">
-        <h2 id="courseTitle"></h2>
-        <p id="coursePrice"></p>
-        <button class="btn btn-primary" onclick="showModal('paymentModal')">Complete Payment</button>
+    <div class="dashboard" id="dashboardSection">
+        <div class="profile-section">
+            <img src="https://via.placeholder.com/120" class="profile-pic" id="dashboardProfilePic">
+            <h3 id="dashboardUserName"></h3>
+            <p id="dashboardUserEmail"></p>
+            <button class="btn btn-primary" onclick="toggleEditForm()">Edit Profile</button>
+            <div class="edit-form" id="editForm" style="display: none;">
+                <input type="text" id="editName" placeholder="Full Name">
+                <input type="email" id="editEmail" placeholder="Email">
+                <input type="file" id="profileUpload" accept="image/*">
+                <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Modals Same as Before with Additions -->
+    <!-- Modals -->
     <div id="authModal" class="modal">
-        <!-- Auth Form Same -->
+        <div class="modal-content">
+            <h2>Create Account</h2>
+            <form id="authForm">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button class="btn btn-primary" type="submit">Continue</button>
+            </form>
+        </div>
     </div>
 
     <div id="paymentModal" class="modal">
-        <!-- Payment Options Same -->
+        <div class="modal-content">
+            <h2>Complete Payment</h2>
+            <div class="payment-options">
+                <div class="payment-method" onclick="selectPayment('upi')">UPI</div>
+                <div class="payment-method" onclick="selectPayment('paytm')">Paytm</div>
+                <div class="payment-method" onclick="selectPayment('netbanking')">Netbanking</div>
+                <div class="payment-method" onclick="selectPayment('card')">Card</div>
+            </div>
+            <button class="btn btn-primary" onclick="processPayment()">Pay Now</button>
+        </div>
     </div>
 
-    <div id="analyticsModal" class="modal">
-        <div class="modal-content">
-            <h2>Enter Analytics Password</h2>
-            <input type="password" id="analyticsPassword">
-            <button class="btn btn-primary" onclick="checkAnalyticsPassword()">Submit</button>
+    <div id="successModal" class="modal">
+        <div class="success-modal">
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            <h2>Payment Successful!</h2>
+            <p>Access your course now!</p>
         </div>
     </div>
 
@@ -191,19 +270,13 @@
         let selectedCourse = null;
 
         // Enrollment Flow
-        function selectCourse(name, price) {
+        function handleEnroll(name, price) {
+            selectedCourse = { name, price };
             if(!currentUser) {
-                document.getElementById('authButtons').style.display = 'flex';
-                return;
+                showModal('authModal');
+            } else {
+                showModal('paymentModal');
             }
-            showCourseDetails(name, price);
-        }
-
-        function showCourseDetails(name, price) {
-            document.getElementById('coursesSection').style.display = 'none';
-            document.getElementById('courseDetails').style.display = 'block';
-            document.getElementById('courseTitle').textContent = name;
-            document.getElementById('coursePrice').textContent = `₹${price}`;
         }
 
         // Auth Handling
@@ -214,13 +287,64 @@
                 email: e.target[1].value,
                 profilePic: 'https://via.placeholder.com/40'
             };
-            updateNav();
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateUI();
             closeModal('authModal');
-            showCourseDetails(selectedCourse.name, selectedCourse.price);
+            showModal('paymentModal');
         });
 
-        // Navigation
-        function updateNav() {
+        // Payment Processing
+        function processPayment() {
+            closeModal('paymentModal');
+            showModal('successModal');
+            setTimeout(() => {
+                closeModal('successModal');
+                showDashboard();
+            }, 2000);
+        }
+
+        // Dashboard Functions
+        function showDashboard() {
+            document.getElementById('coursesSection').style.display = 'none';
+            document.getElementById('dashboardSection').style.display = 'block';
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            if(currentUser) {
+                document.getElementById('dashboardUserName').textContent = currentUser.name;
+                document.getElementById('dashboardUserEmail').textContent = currentUser.email;
+                document.getElementById('dashboardProfilePic').src = currentUser.profilePic;
+            }
+        }
+
+        function toggleEditForm() {
+            const form = document.getElementById('editForm');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function saveProfile() {
+            currentUser.name = document.getElementById('editName').value || currentUser.name;
+            currentUser.email = document.getElementById('editEmail').value || currentUser.email;
+            
+            const fileInput = document.getElementById('profileUpload');
+            if(fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentUser.profilePic = e.target.result;
+                    updateUI();
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+            
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateDashboard();
+            toggleEditForm();
+        }
+
+        // UI Updates
+        function updateUI() {
             if(currentUser) {
                 document.getElementById('authButtons').style.display = 'none';
                 document.getElementById('userSection').style.display = 'flex';
@@ -229,31 +353,20 @@
             }
         }
 
-        function showDashboard() {
-            // Implement dashboard view
+        // Modal Controls
+        function showModal(id) {
+            document.getElementById(id).style.display = 'flex';
         }
 
-        // Analytics
-        document.getElementById('analyticsBtn').addEventListener('click', () => {
-            showModal('analyticsModal');
-        });
-
-        function checkAnalyticsPassword() {
-            if(document.getElementById('analyticsPassword').value === 'Aicourse') {
-                // Show analytics
-                closeModal('analyticsModal');
-            } else {
-                alert('Incorrect password!');
-            }
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            if(localStorage.getItem('currentUser')) {
-                currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                updateNav();
-            } else {
-                document.getElementById('authButtons').style.display = 'flex';
+            currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if(currentUser) {
+                updateUI();
             }
         });
     </script>
