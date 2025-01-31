@@ -73,13 +73,6 @@
             color: white;
         }
 
-        .profile-pic {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
         .course-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -95,13 +88,39 @@
             transition: transform 0.3s ease;
         }
 
-        .course-card:hover {
-            transform: translateY(-5px);
+        .course-content {
+            padding: 2rem 5%;
+            display: none;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            background: #000;
+        }
+
+        .video-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
         .dashboard {
             padding: 2rem 5%;
             display: none;
+        }
+
+        .analytics-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
         }
 
         .modal {
@@ -117,61 +136,12 @@
             z-index: 2000;
         }
 
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-        }
-
-        .payment-options {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        .payment-method {
-            padding: 1rem;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
         .success-modal {
             background: #4BB543;
             color: white;
             padding: 2rem;
             border-radius: 15px;
             text-align: center;
-        }
-
-        .checkmark {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: block;
-            stroke-width: 2;
-            stroke: #fff;
-            stroke-miterlimit: 10;
-            margin: 0 auto 1rem;
-            animation: fill .4s ease-in-out .4s forwards,
-                       scale .3s ease-in-out .9s both;
-        }
-
-        @keyframes stroke {
-            100% { stroke-dashoffset: 0; }
-        }
-
-        @keyframes scale {
-            0%, 100% { transform: none; }
-            50% { transform: scale3d(1.1, 1.1, 1); }
-        }
-
-        @keyframes fill {
-            100% { box-shadow: inset 0 0 0 100% #4BB543; }
         }
     </style>
 </head>
@@ -181,66 +151,59 @@
         <div class="nav-buttons">
             <button class="btn btn-primary" id="homeBtn">Home</button>
             <button class="btn btn-primary" id="analyticsBtn">Analytics</button>
-            <div id="authButtons">
-                <button class="btn btn-primary" onclick="showModal('authModal')">Sign In</button>
-                <button class="btn btn-primary" onclick="showModal('authModal')">Sign Up</button>
-            </div>
             <div id="userSection" class="user-profile" style="display: none;">
-                <img src="https://via.placeholder.com/40" class="profile-pic" id="navProfilePic">
-                <span id="navUserName"></span>
                 <button class="btn btn-primary" onclick="showDashboard()">Dashboard</button>
             </div>
         </div>
     </nav>
 
+    <!-- Course Listing -->
     <div class="course-cards" id="coursesSection">
         <div class="course-card">
             <h3><i class="fas fa-robot"></i> Machine Learning</h3>
             <p class="price">₹999</p>
-            <button class="btn btn-primary" onclick="handleEnroll('Machine Learning', 999)">Enroll Now</button>
+            <button class="btn btn-primary" onclick="handleEnroll('Machine Learning', 999, 'https://youtu.be/i_LwzRVP7bg?si=1HLp5wZk8fw-FCLO')">Enroll Now</button>
         </div>
         
         <div class="course-card">
             <h3><i class="fas fa-chart-line"></i> AI for Management</h3>
             <p class="price">₹999</p>
-            <button class="btn btn-primary" onclick="handleEnroll('AI for Management', 999)">Enroll Now</button>
+            <button class="btn btn-primary" onclick="handleEnroll('AI for Management', 999, 'https://youtu.be/_VEqy6O80FA?si=mGJVR74xmVQ-FRbV')">Enroll Now</button>
         </div>
         
         <div class="course-card">
             <h3><i class="fas fa-gem"></i> Premium Membership</h3>
             <p class="price">₹1299/month</p>
-            <button class="btn btn-primary" onclick="handleEnroll('Premium Membership', 1299)">Subscribe Now</button>
+            <button class="btn btn-primary" onclick="handleEnroll('Premium Membership', 1299, 'https://www.youtube.com/live/C4iBu-PHWII?si=WoYi8ihAle7G7r-4')">Subscribe Now</button>
         </div>
     </div>
 
+    <!-- Course Content -->
+    <div class="course-content" id="courseContent">
+        <div class="video-container">
+            <iframe class="video-iframe" id="courseVideo" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        <div class="content-analytics">
+            <h3>Course Progress</h3>
+            <p>Time Watched: <span id="timeWatched">0</span> minutes</p>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
     <div class="dashboard" id="dashboardSection">
-        <div class="profile-section">
-            <img src="https://via.placeholder.com/120" class="profile-pic" id="dashboardProfilePic">
-            <h3 id="dashboardUserName"></h3>
-            <p id="dashboardUserEmail"></p>
-            <button class="btn btn-primary" onclick="toggleEditForm()">Edit Profile</button>
-            <div class="edit-form" id="editForm" style="display: none;">
-                <input type="text" id="editName" placeholder="Full Name">
-                <input type="email" id="editEmail" placeholder="Email">
-                <input type="file" id="profileUpload" accept="image/*">
-                <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
-            </div>
+        <div class="analytics-card">
+            <h3>Your Learning Analytics</h3>
+            <p>Enrolled Courses: <span id="enrolledCount">0</span></p>
+            <p>Total Watch Time: <span id="totalWatchTime">0</span> minutes</p>
+            <p>Completed Courses: <span id="completedCourses">0</span></p>
         </div>
     </div>
 
     <!-- Modals -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <h2>Create Account</h2>
-            <form id="authForm">
-                <input type="text" placeholder="Full Name" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <button class="btn btn-primary" type="submit">Continue</button>
-            </form>
-        </div>
-    </div>
-
     <div id="paymentModal" class="modal">
         <div class="modal-content">
             <h2>Complete Payment</h2>
@@ -256,118 +219,107 @@
 
     <div id="successModal" class="modal">
         <div class="success-modal">
-            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-            </svg>
             <h2>Payment Successful!</h2>
-            <p>Access your course now!</p>
+            <p>Redirecting to course content...</p>
+        </div>
+    </div>
+
+    <div id="analyticsModal" class="modal">
+        <div class="modal-content">
+            <h2>Server Analytics</h2>
+            <div class="server-stats">
+                <p>Total Users: <span id="totalUsers">0</span></p>
+                <p>Active Courses: <span id="activeCourses">0</span></p>
+                <p>Total Revenue: ₹<span id="totalRevenue">0</span></p>
+            </div>
         </div>
     </div>
 
     <script>
-        let currentUser = null;
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
         let selectedCourse = null;
+        let watchTime = 0;
+        let watchTimer = null;
 
         // Enrollment Flow
-        function handleEnroll(name, price) {
-            selectedCourse = { name, price };
-            if(!currentUser) {
-                showModal('authModal');
-            } else {
-                showModal('paymentModal');
-            }
-        }
-
-        // Auth Handling
-        document.getElementById('authForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            currentUser = {
-                name: e.target[0].value,
-                email: e.target[1].value,
-                profilePic: 'https://via.placeholder.com/40'
-            };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            updateUI();
-            closeModal('authModal');
+        function handleEnroll(name, price, videoId) {
+            selectedCourse = { name, price, videoId };
             showModal('paymentModal');
-        });
+        }
 
         // Payment Processing
         function processPayment() {
             closeModal('paymentModal');
             showModal('successModal');
+            
+            // Save enrollment
+            const enrollments = JSON.parse(localStorage.getItem('enrollments')) || [];
+            enrollments.push(selectedCourse);
+            localStorage.setItem('enrollments', JSON.stringify(enrollments));
+            
+            // Redirect to course
             setTimeout(() => {
                 closeModal('successModal');
-                showDashboard();
+                showCourseContent(selectedCourse.videoId);
+                startWatchTimeTracker();
+                updateDashboard();
             }, 2000);
         }
 
-        // Dashboard Functions
+        // Course Content
+        function showCourseContent(videoId) {
+            document.getElementById('coursesSection').style.display = 'none';
+            document.getElementById('courseContent').style.display = 'block';
+            document.getElementById('courseVideo').src = `https://www.youtube.com/embed/${videoId}`;
+        }
+
+        // Watch Time Tracking
+        function startWatchTimeTracker() {
+            watchTimer = setInterval(() => {
+                watchTime++;
+                document.getElementById('timeWatched').textContent = watchTime;
+                localStorage.setItem('watchTime', watchTime);
+            }, 60000); // Update every minute
+        }
+
+        // Dashboard
         function showDashboard() {
             document.getElementById('coursesSection').style.display = 'none';
+            document.getElementById('courseContent').style.display = 'none';
             document.getElementById('dashboardSection').style.display = 'block';
             updateDashboard();
         }
 
         function updateDashboard() {
-            if(currentUser) {
-                document.getElementById('dashboardUserName').textContent = currentUser.name;
-                document.getElementById('dashboardUserEmail').textContent = currentUser.email;
-                document.getElementById('dashboardProfilePic').src = currentUser.profilePic;
-            }
-        }
-
-        function toggleEditForm() {
-            const form = document.getElementById('editForm');
-            form.style.display = form.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function saveProfile() {
-            currentUser.name = document.getElementById('editName').value || currentUser.name;
-            currentUser.email = document.getElementById('editEmail').value || currentUser.email;
+            const enrollments = JSON.parse(localStorage.getItem('enrollments')) || [];
+            const watchTime = localStorage.getItem('watchTime') || 0;
             
-            const fileInput = document.getElementById('profileUpload');
-            if(fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    currentUser.profilePic = e.target.result;
-                    updateUI();
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                }
-                reader.readAsDataURL(fileInput.files[0]);
+            document.getElementById('enrolledCount').textContent = enrollments.length;
+            document.getElementById('totalWatchTime').textContent = watchTime;
+        }
+
+        // Analytics
+        document.getElementById('analyticsBtn').addEventListener('click', () => {
+            const password = prompt('Enter admin password:');
+            if(password === 'Aicourse') {
+                showModal('analyticsModal');
+                document.getElementById('totalUsers').textContent = localStorage.getItem('totalUsers') || 0;
+                document.getElementById('activeCourses').textContent = 3; // Hardcoded for demo
+                document.getElementById('totalRevenue').textContent = 
+                    (JSON.parse(localStorage.getItem('enrollments')) || [])
+                    .reduce((sum, course) => sum + course.price, 0);
+            } else {
+                alert('Invalid password!');
             }
-            
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            updateDashboard();
-            toggleEditForm();
-        }
-
-        // UI Updates
-        function updateUI() {
-            if(currentUser) {
-                document.getElementById('authButtons').style.display = 'none';
-                document.getElementById('userSection').style.display = 'flex';
-                document.getElementById('navUserName').textContent = currentUser.name;
-                document.getElementById('navProfilePic').src = currentUser.profilePic;
-            }
-        }
-
-        // Modal Controls
-        function showModal(id) {
-            document.getElementById(id).style.display = 'flex';
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-        }
+        });
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if(currentUser) {
-                updateUI();
+            watchTime = parseInt(localStorage.getItem('watchTime')) || 0;
+            if(localStorage.getItem('currentUser')) {
+                document.getElementById('userSection').style.display = 'flex';
             }
+            updateDashboard();
         });
     </script>
 </body>
