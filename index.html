@@ -3,196 +3,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Learning Platform - Team Visionaries</title>
-    <style>
-        /* Previous CSS remains same, add these new styles */
-        .course-content {
-            display: none;
-            padding: 2rem;
-        }
-
-        .chatbot-container {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 1000;
-        }
-
-        .chatbot {
-            width: 300px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            display: none;
-        }
-
-        .chat-header {
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            border-radius: 10px 10px 0 0;
-        }
-
-        .chat-messages {
-            height: 300px;
-            overflow-y: auto;
-            padding: 1rem;
-        }
-
-        .payment-form input {
-            display: block;
-            margin: 0.5rem 0;
-            padding: 0.5rem;
-            width: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Previous HTML remains same, add these new sections -->
-    <section id="courseContent" class="course-content"></section>
+    <!-- Header and main content same as before -->
 
-    <div class="chatbot-container">
-        <button onclick="toggleChatbot()" class="btn btn-primary">Chat Support</button>
-        <div class="chatbot">
-            <div class="chat-header">AI Support Bot</div>
-            <div class="chat-messages" id="chatMessages"></div>
-            <input type="text" id="userMessage" placeholder="Type your message...">
-            <button onclick="sendMessage()">Send</button>
+    <!-- Add this payment modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h3>Choose Payment Method</h3>
+            <div class="payment-option" onclick="showPaymentForm('card')">
+                Credit/Debit Card
+            </div>
+            <div class="payment-option" onclick="showPaymentForm('upi')">
+                UPI
+            </div>
+            <div class="payment-option" onclick="showPaymentForm('netbanking')">
+                Netbanking
+            </div>
+            <div class="payment-option" onclick="showPaymentForm('paytm')">
+                Paytm Wallet
+            </div>
+            <div id="paymentForm"></div>
         </div>
     </div>
 
+    <!-- Dialogflow Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot" id="chatbot">
+            <div class="chat-header">
+                <span>AI Support</span>
+                <button onclick="toggleChatbot()" class="btn btn-primary">×</button>
+            </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input">
+                <input type="text" id="userMessage" placeholder="Type your message...">
+                <button onclick="sendMessage()" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+        <button onclick="toggleChatbot()" class="btn btn-primary">Chat Support</button>
+    </div>
+
     <script>
-        // Enhanced user object
-        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {
-            name: '',
-            email: '',
-            purchasedCourses: [],
-            isPremium: false
+        // Dialogflow Integration
+        const dialogflowConfig = {
+            projectId: 'YOUR_PROJECT_ID',
+            sessionId: 'quickstart-session-id',
+            languageCode: 'en-US'
         };
 
-        // Course content data
-        const courseMaterials = {
-            'ml': [
-                { type: 'video', title: 'Introduction to ML', url: '#' },
-                { type: 'pdf', title: 'ML Basics PDF', url: '#' }
-            ],
-            'ai-mgmt': [
-                { type: 'video', title: 'AI in Management', url: '#' },
-                { type: 'pdf', title: 'Case Studies', url: '#' }
-            ],
-            'premium': [
-                { type: 'video', title: 'Premium Content 1', url: '#' },
-                { type: 'live', title: 'Weekly Session Link', url: '#' }
-            ]
-        };
-
-        // Payment Gateway Simulation
-        function showPaymentForm(courseId) {
-            document.getElementById('courseOptions').innerHTML = `
-                <div class="payment-form">
-                    <input type="text" placeholder="Card Number" value="4111 1111 1111 1111">
-                    <input type="text" placeholder="MM/YY" value="12/30">
-                    <input type="text" placeholder="CVC" value="123">
-                    <button class="btn btn-primary" onclick="processPayment('${courseId}')">Pay Now</button>
-                </div>
-            `;
-        }
-
-        function processPayment(courseId) {
-            // Simulate payment processing
-            setTimeout(() => {
-                if (courseId === 'premium') {
-                    currentUser.isPremium = true;
-                } else {
-                    currentUser.purchasedCourses.push(courseId);
-                }
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                showCourseContent(courseId);
-                hideModal('courseModal');
-            }, 1000);
-        }
-
-        function showCourseContent(courseId) {
-            document.querySelector('main').style.display = 'none';
-            const content = courseMaterials[courseId].map(item => `
-                <div class="course-card">
-                    <h3>${item.title}</h3>
-                    <a href="${item.url}" class="btn btn-primary">Access ${item.type}</a>
-                </div>
-            `).join('');
-            
-            document.getElementById('courseContent').innerHTML = `
-                <h2>${courses[courseId].name} Content</h2>
-                ${content}
-                <button onclick="goBack()" class="btn btn-primary">Back to Courses</button>
-            `;
-            document.getElementById('courseContent').style.display = 'block';
-        }
-
-        function goBack() {
-            document.querySelector('main').style.display = 'block';
-            document.getElementById('courseContent').style.display = 'none';
-        }
-
-        // Chatbot functionality
-        const botResponses = {
-            'hello': 'Hello! How can I help you today?',
-            'support': 'Our support team will contact you shortly.',
-            'premium': 'Premium benefits include: 24/7 support, exclusive content, and weekly sessions.',
-            'default': 'I'm still learning. Contact us via WhatsApp for immediate support.'
-        };
-
-        function toggleChatbot() {
-            if (!currentUser.isPremium) {
-                alert('Premium feature! Upgrade to access 24/7 support');
-                return;
-            }
-            const chatbot = document.querySelector('.chatbot');
-            chatbot.style.display = chatbot.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('userMessage');
+        async function sendMessage() {
+            const userInput = document.getElementById('userMessage');
             const messages = document.getElementById('chatMessages');
             
-            // User message
-            messages.innerHTML += `<div>You: ${input.value}</div>`;
-            
-            // Bot response
-            const response = Object.keys(botResponses).find(key => 
-                input.value.toLowerCase().includes(key)
-            ) || 'default';
-            
-            messages.innerHTML += `<div>Bot: ${botResponses[response]}</div>`;
-            input.value = '';
+            // Add user message
+            messages.innerHTML += `
+                <div class="message user-message">
+                    ${userInput.value}
+                </div>
+            `;
+
+            // Dialogflow API call
+            const response = await fetch('https://dialogflow.googleapis.com/v2/projects/${dialogflowConfig.projectId}/agent/sessions/${dialogflowConfig.sessionId}:detectIntent', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    queryInput: {
+                        text: {
+                            text: userInput.value,
+                            languageCode: dialogflowConfig.languageCode
+                        }
+                    }
+                })
+            });
+
+            const data = await response.json();
+            const botResponse = data.queryResult.fulfillmentText;
+
+            // Add bot response
+            messages.innerHTML += `
+                <div class="message bot-message">
+                    ${botResponse}
+                </div>
+            `;
+
+            userInput.value = '';
             messages.scrollTop = messages.scrollHeight;
         }
 
-        // Update course selection to show payment form
-        function selectCourse(courseId) {
-            showPaymentForm(courseId);
+        // Updated Payment Functions
+        function showPaymentForm(type) {
+            let formHTML = '';
+            switch(type) {
+                case 'card':
+                    formHTML = `
+                        <div class="payment-form">
+                            <input type="text" placeholder="Card Number" required>
+                            <input type="month" placeholder="Expiry Date" required>
+                            <input type="text" placeholder="CVV" required>
+                            <button class="btn btn-primary" onclick="processPayment()">Pay Now</button>
+                        </div>
+                    `;
+                    break;
+                case 'upi':
+                    formHTML = `
+                        <div class="payment-form">
+                            <input type="text" placeholder="UPI ID" required>
+                            <button class="btn btn-primary" onclick="processPayment()">Verify UPI</button>
+                        </div>
+                    `;
+                    break;
+                case 'netbanking':
+                    formHTML = `
+                        <div class="payment-form">
+                            <select required>
+                                <option value="">Select Bank</option>
+                                <option>HDFC Bank</option>
+                                <option>State Bank of India</option>
+                                <option>ICICI Bank</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="processPayment()">Continue</button>
+                        </div>
+                    `;
+                    break;
+                case 'paytm':
+                    formHTML = `
+                        <div class="payment-form">
+                            <input type="text" placeholder="Paytm Mobile Number" required>
+                            <button class="btn btn-primary" onclick="processPayment()">Pay with Paytm</button>
+                        </div>
+                    `;
+                    break;
+            }
+            document.getElementById('paymentForm').innerHTML = formHTML;
         }
 
-        // Initialize with user status check
-        if (location.hash.includes('course')) {
-            const courseId = location.hash.split('-')[1];
-            showCourseContent(courseId);
+        function processPayment() {
+            // Simulated payment processing
+            setTimeout(() => {
+                alert('Payment Successful!');
+                showCourseContent(currentCourse);
+                hideModal('paymentModal');
+            }, 2000);
         }
 
-        // Update authentication handler to preserve purchases
-        function handleAuth() {
-            const email = document.getElementById('authEmail').value;
-            const existingUser = JSON.parse(localStorage.getItem('currentUser'));
-            
-            currentUser = existingUser || {
-                name: email.split('@')[0],
-                email,
-                purchasedCourses: [],
-                isPremium: false
-            };
-            
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            updateAccountSection();
-            hideModal('authModal');
+        function toggleChatbot() {
+            const chatbot = document.getElementById('chatbot');
+            chatbot.style.display = chatbot.style.display === 'block' ? 'none' : 'block';
         }
     </script>
 </body>
