@@ -17,12 +17,13 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         body {
             background-color: var(--light-bg);
             color: var(--text-dark);
+            min-height: 100vh;
         }
 
         /* Navbar */
@@ -32,7 +33,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
@@ -48,12 +51,18 @@
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
+            margin-left: 1rem;
         }
 
         .btn-primary {
             background: var(--accent-color);
             color: white;
             box-shadow: 0 4px 15px rgba(0,200,150,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,200,150,0.4);
         }
 
         /* Modals */
@@ -67,7 +76,7 @@
             background: rgba(0,0,0,0.5);
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 2000;
         }
 
         .modal-content {
@@ -76,6 +85,12 @@
             border-radius: 15px;
             width: 90%;
             max-width: 400px;
+            animation: modalSlide 0.3s ease-out;
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         /* Success Animation */
@@ -100,6 +115,23 @@
                        scale .3s ease-in-out .9s both;
         }
 
+        .checkmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #fff;
+            fill: none;
+            animation: stroke .6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+
+        .checkmark__check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke .3s cubic-bezier(0.65, 0, 0.45, 1) .8s forwards;
+        }
+
         @keyframes stroke {
             100% { stroke-dashoffset: 0; }
         }
@@ -114,10 +146,16 @@
         }
 
         /* Course Content */
+        .course-content {
+            padding: 2rem 5%;
+        }
+
         .video-container {
             margin: 2rem 0;
-            padding: 56.25% 0 0 0;
             position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
         }
 
         .video-iframe {
@@ -140,8 +178,8 @@
         </div>
     </nav>
 
-    <!-- Course Content (Hidden by default) -->
-    <div id="courseContent" style="display:none;">
+    <!-- Course Content -->
+    <div class="course-content" id="courseContent">
         <div class="video-container">
             <iframe class="video-iframe" src="https://www.youtube.com/embed/your-video-id" 
                 frameborder="0" allowfullscreen></iframe>
@@ -156,7 +194,7 @@
                 <input type="text" placeholder="Full Name" required>
                 <input type="email" placeholder="Email" required>
                 <input type="password" placeholder="Password" required>
-                <button class="btn btn-primary" type="submit">Sign Up</button>
+                <button class="btn btn-primary" type="submit">Continue</button>
             </form>
         </div>
     </div>
@@ -166,12 +204,20 @@
         <div class="modal-content">
             <h2>Complete Payment</h2>
             <div class="payment-options">
-                <div class="payment-method">UPI</div>
-                <div class="payment-method">Paytm</div>
-                <div class="payment-method">Netbanking</div>
-                <div class="payment-method">Credit/Debit Card</div>
+                <div class="payment-method" onclick="selectPayment('upi')">
+                    <i class="fas fa-mobile-alt"></i> UPI
+                </div>
+                <div class="payment-method" onclick="selectPayment('paytm')">
+                    <i class="fas fa-wallet"></i> Paytm
+                </div>
+                <div class="payment-method" onclick="selectPayment('netbanking')">
+                    <i class="fas fa-university"></i> Netbanking
+                </div>
+                <div class="payment-method" onclick="selectPayment('card')">
+                    <i class="far fa-credit-card"></i> Card
+                </div>
             </div>
-            <button class="btn btn-primary" id="payNowBtn">Pay Now</button>
+            <button class="btn btn-primary" onclick="processPayment()">Pay Now</button>
         </div>
     </div>
 
@@ -188,14 +234,17 @@
     </div>
 
     <script>
-        // Enrollment System
+        // User State
         let currentUser = null;
         let selectedCourse = null;
+        let selectedPaymentMethod = null;
 
+        // Enrollment Flow
         document.getElementById('enrollBtn').addEventListener('click', () => {
             showModal('authModal');
         });
 
+        // Contributors Button
         document.getElementById('contributorsBtn').addEventListener('click', () => {
             const contributors = [
                 "1. Joban Arsh",
@@ -203,10 +252,10 @@
                 "3. Raghwani Tushar",
                 "4. Bhanderi Jayesh"
             ];
-            alert("Our Visionaries:\n\n" + contributors.join("\n"));
+            alert("Project Contributors:\n\n" + contributors.join("\n"));
         });
 
-        // Auth Form Handling
+        // Auth Handling
         document.getElementById('authForm').addEventListener('submit', (e) => {
             e.preventDefault();
             currentUser = {
@@ -217,21 +266,23 @@
             showModal('paymentModal');
         });
 
-        // Payment Handling
-        document.getElementById('payNowBtn').addEventListener('click', () => {
-            closeModal('paymentModal');
+        // Payment Processing
+        function selectPayment(method) {
+            selectedPaymentMethod = method;
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.style.borderColor = el === event.target ? '#00C896' : '#ddd';
+            });
+        }
+
+        function processPayment() {
             showModal('successModal');
-            
             setTimeout(() => {
                 closeModal('successModal');
-                document.getElementById('courseContent').style.display = 'block';
-                
-                // Scroll to course content
                 document.getElementById('courseContent').scrollIntoView({
                     behavior: 'smooth'
                 });
             }, 3000);
-        });
+        }
 
         // Modal Controls
         function showModal(id) {
@@ -240,6 +291,13 @@
 
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
+        }
+
+        // Close modals on outside click
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
         }
     </script>
 </body>
