@@ -4,22 +4,25 @@
     --secondary-color: #111;
     --accent-color: #ff0033;
     --text-color: #fff;
+    --dark-bg: #000;
+    --modal-bg: rgba(0, 0, 0, 0.9);
 }
 
 body {
-    background-color: var(--secondary-color);
+    background-color: var(--dark-bg);
     color: var(--text-color);
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     overflow-x: hidden;
 }
 
 .main-header {
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: var(--modal-bg);
     padding: 1rem;
     position: fixed;
     width: 100%;
     z-index: 1000;
+    backdrop-filter: blur(10px);
 }
 
 nav {
@@ -34,6 +37,7 @@ nav {
     font-size: 2rem;
     color: var(--primary-color);
     text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    font-family: 'Orbitron', sans-serif;
 }
 
 .logo span {
@@ -50,43 +54,86 @@ nav {
     color: var(--text-color);
     text-decoration: none;
     transition: color 0.3s;
+    font-family: 'Orbitron', sans-serif;
 }
 
 .nav-links a:hover {
     color: var(--primary-color);
 }
 
-.hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1950');
-    background-size: cover;
+/* Courses Section */
+.courses {
+    padding: 4rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.course-card {
+    background: var(--secondary-color);
     padding: 2rem;
-}
-
-.hero h1 {
-    font-size: 4rem;
-    margin: 0;
-    text-shadow: 0 0 15px var(--primary-color);
-}
-
-.cta {
-    background-color: var(--accent-color);
-    color: white;
-    padding: 1rem 3rem;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid var(--primary-color);
+    text-align: center;
     transition: transform 0.3s;
-    margin-top: 2rem;
 }
 
+.course-card:hover {
+    transform: translateY(-5px);
+}
+
+.course-card h3 {
+    color: var(--primary-color);
+    margin: 0 0 1rem;
+}
+
+.course-card p {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.course-card button {
+    background: var(--accent-color);
+    border: none;
+    padding: 0.8rem 2rem;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Premium Section */
+.premium {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.premium-card {
+    background: var(--secondary-color);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px solid var(--primary-color);
+    text-align: center;
+}
+
+.premium-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.premium-card li {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+/* Modals */
 .modal {
     display: none;
     position: fixed;
@@ -94,17 +141,136 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.8);
     z-index: 1001;
 }
 
 .modal-content {
-    background-color: var(--secondary-color);
+    background: var(--secondary-color);
     margin: 5% auto;
     padding: 2rem;
-    width: 400px;
-    border: 2px solid var(--primary-color);
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
     position: relative;
+    border: 2px solid var(--primary-color);
 }
 
-/* Add remaining CSS styles for other sections, cards, chat, etc. */
+.close {
+    color: #aaa;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--primary-color);
+    color: white;
+    border-radius: 5px;
+}
+
+.auth-form button {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent-color);
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Chat Bot */
+.chat-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 300px;
+    background: var(--secondary-color);
+    border-radius: 10px;
+    border: 2px solid var(--primary-color);
+    transform: translateY(calc(100% - 40px));
+    transition: transform 0.3s;
+}
+
+.chat-container.open {
+    transform: translateY(0);
+}
+
+.chat-header {
+    background: var(--primary-color);
+    color: black;
+    padding: 1rem;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.chat-body {
+    padding: 1rem;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatMessages {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+#chatInput {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--primary-color);
+    color: white;
+    border-radius: 5px;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.error-message {
+    color: var(--accent-color);
+    margin-top: 1rem;
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .courses {
+        grid-template-columns: 1fr;
+    }
+}
