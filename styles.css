@@ -1,63 +1,118 @@
 /* styles.css */
 
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
+    font-family: 'Montserrat', sans-serif; 
+    background-color: #f4f4f4;
 }
 
+/* Header styles */
 header {
-    background-color: #000;
+    background-color: #222;
     color: #fff;
-    padding: 20px;
-    text-align: center;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-nav li {
-    display: inline;
-    margin-right: 20px;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
+    padding: 15px 0;
 }
 
 .container {
     max-width: 960px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 20px;
 }
 
-.btn-enroll, .btn-select, .btn-pay {
-    background-color: #000;
+.logo {
+    display: inline-block;
+}
+
+nav ul {
+    list-style: none;
+    float: right;
+}
+
+nav li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+nav a {
     color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.course-container {
+nav a:hover {
+    color: #fff;
+}
+
+/* Section styles */
+.section-padding {
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Course styles */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 30px;
+}
+
+.course-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.price {
+    font-weight: bold;
+    color: #222;
+}
+
+/* Membership styles */
+.membership-content {
+    text-align: center;
+}
+
+/* About styles */
+.about-content {
+    text-align: center;
+}
+
+/* Contact styles */
+.social-links {
+    list-style: none;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
-.course {
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    width: 45%;
-    margin-bottom: 20px;
+.social-links li {
+    margin: 0 10px;
 }
 
+.social-links a {
+    color: #333;
+    font-size: 20px;
+}
+
+/* Footer styles */
+footer {
+    background-color: #222;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Modal styles */
 .modal {
     display: none;
     position: fixed;
@@ -67,7 +122,7 @@ nav a {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
@@ -90,5 +145,12 @@ nav a {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .course-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
