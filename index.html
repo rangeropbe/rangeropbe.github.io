@@ -2,158 +2,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Learning Platform - Team Visionaries</title>
+    <title>AI Visionaries - Premium AI Courses</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header and main content same as before -->
+    <!-- Header Section -->
+    <header class="main-header">
+        <nav>
+            <div class="logo">AI<span>VISIONARIES</span></div>
+            <div class="nav-links">
+                <a href="#courses">Courses</a>
+                <a href="#premium">Premium</a>
+                <a href="#contact">Contact</a>
+                <button id="contributorsBtn">Contributors</button>
+                <div id="accountSection"></div>
+            </div>
+        </nav>
+    </header>
 
-    <!-- Add this payment modal -->
-    <div id="paymentModal" class="modal">
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>MASTER ARTIFICIAL INTELLIGENCE</h1>
+        <p>Join the revolution of next-gen AI education</p>
+        <button class="cta" onclick="handleEnroll()">ENROLL NOW</button>
+    </section>
+
+    <!-- Authentication Modal -->
+    <div id="authModal" class="modal">
         <div class="modal-content">
-            <h3>Choose Payment Method</h3>
-            <div class="payment-option" onclick="showPaymentForm('card')">
-                Credit/Debit Card
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="authForms">
+                <div class="auth-form active" id="signinForm">
+                    <h2>SIGN IN</h2>
+                    <input type="email" id="loginEmail" placeholder="Email">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                    <button onclick="signIn()">ENTER</button>
+                    <p>New user? <a href="#" onclick="toggleAuthForm('signup')">Sign up</a></p>
+                </div>
+                <div class="auth-form" id="signupForm">
+                    <h2>SIGN UP</h2>
+                    <input type="text" id="signupName" placeholder="Name">
+                    <input type="email" id="signupEmail" placeholder="Email">
+                    <input type="password" id="signupPassword" placeholder="Password">
+                    <button onclick="signUp()">CREATE ACCOUNT</button>
+                    <p>Existing user? <a href="#" onclick="toggleAuthForm('signin')">Sign in</a></p>
+                </div>
             </div>
-            <div class="payment-option" onclick="showPaymentForm('upi')">
-                UPI
-            </div>
-            <div class="payment-option" onclick="showPaymentForm('netbanking')">
-                Netbanking
-            </div>
-            <div class="payment-option" onclick="showPaymentForm('paytm')">
-                Paytm Wallet
-            </div>
-            <div id="paymentForm"></div>
         </div>
     </div>
 
-    <!-- Dialogflow Chatbot -->
-    <div class="chatbot-container">
-        <div class="chatbot" id="chatbot">
-            <div class="chat-header">
-                <span>AI Support</span>
-                <button onclick="toggleChatbot()" class="btn btn-primary">×</button>
-            </div>
-            <div class="chat-messages" id="chatMessages"></div>
-            <div class="chat-input">
-                <input type="text" id="userMessage" placeholder="Type your message...">
-                <button onclick="sendMessage()" class="btn btn-primary">Send</button>
-            </div>
+    <!-- Courses Section -->
+    <section id="courses" class="courses">
+        <div class="course-card">
+            <h3>Machine Learning</h3>
+            <p>₹999</p>
+            <button onclick="selectCourse('ml')">SELECT COURSE</button>
         </div>
-        <button onclick="toggleChatbot()" class="btn btn-primary">Chat Support</button>
+        <div class="course-card">
+            <h3>AI for Management</h3>
+            <p>₹999</p>
+            <button onclick="selectCourse('ai-mgmt')">SELECT COURSE</button>
+        </div>
+    </section>
+
+    <!-- Premium Section -->
+    <section id="premium" class="premium">
+        <div class="premium-card">
+            <h3>PREMIUM MEMBERSHIP</h3>
+            <p>₹1299/month</p>
+            <ul>
+                <li>Exclusive Content</li>
+                <li>Weekly Sessions</li>
+                <li>Webinar Priority</li>
+                <li>24/7 Chat Support</li>
+            </ul>
+            <button onclick="selectPremium()">GO PREMIUM</button>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content payment-content">
+            <span class="close" onclick="closePayment()">&times;</span>
+            <h2>Complete Payment</h2>
+            <div class="payment-options">
+                <label><input type="radio" name="payment" checked> UPI</label>
+                <label><input type="radio" name="payment"> Paytm</label>
+                <label><input type="radio" name="payment"> NetBanking</label>
+                <label><input type="radio" name="payment"> Credit/Debit Card</label>
+            </div>
+            <button onclick="processPayment()">CONFIRM PAYMENT</button>
+        </div>
     </div>
 
-    <script>
-        // Dialogflow Integration
-        const dialogflowConfig = {
-            projectId: 'YOUR_PROJECT_ID',
-            sessionId: 'quickstart-session-id',
-            languageCode: 'en-US'
-        };
+    <!-- Chat Bot -->
+    <div class="chat-container">
+        <div class="chat-header" onclick="toggleChat()">Chat Support</div>
+        <div class="chat-body">
+            <div id="chatMessages"></div>
+            <input type="text" id="chatInput" placeholder="Type your message...">
+        </div>
+    </div>
 
-        async function sendMessage() {
-            const userInput = document.getElementById('userMessage');
-            const messages = document.getElementById('chatMessages');
-            
-            // Add user message
-            messages.innerHTML += `
-                <div class="message user-message">
-                    ${userInput.value}
-                </div>
-            `;
+    <!-- Contributors Section -->
+    <div id="contributorsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeContributors()">&times;</span>
+            <h2>Contributors</h2>
+            <ul>
+                <li>Joban Arsh</li>
+                <li>Jadeja Keyur</li>
+                <li>Raghwani Tushar</li>
+                <li>Bhanderi Jayesh</li>
+            </ul>
+        </div>
+    </div>
 
-            // Dialogflow API call
-            const response = await fetch('https://dialogflow.googleapis.com/v2/projects/${dialogflowConfig.projectId}/agent/sessions/${dialogflowConfig.sessionId}:detectIntent', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    queryInput: {
-                        text: {
-                            text: userInput.value,
-                            languageCode: dialogflowConfig.languageCode
-                        }
-                    }
-                })
-            });
-
-            const data = await response.json();
-            const botResponse = data.queryResult.fulfillmentText;
-
-            // Add bot response
-            messages.innerHTML += `
-                <div class="message bot-message">
-                    ${botResponse}
-                </div>
-            `;
-
-            userInput.value = '';
-            messages.scrollTop = messages.scrollHeight;
-        }
-
-        // Updated Payment Functions
-        function showPaymentForm(type) {
-            let formHTML = '';
-            switch(type) {
-                case 'card':
-                    formHTML = `
-                        <div class="payment-form">
-                            <input type="text" placeholder="Card Number" required>
-                            <input type="month" placeholder="Expiry Date" required>
-                            <input type="text" placeholder="CVV" required>
-                            <button class="btn btn-primary" onclick="processPayment()">Pay Now</button>
-                        </div>
-                    `;
-                    break;
-                case 'upi':
-                    formHTML = `
-                        <div class="payment-form">
-                            <input type="text" placeholder="UPI ID" required>
-                            <button class="btn btn-primary" onclick="processPayment()">Verify UPI</button>
-                        </div>
-                    `;
-                    break;
-                case 'netbanking':
-                    formHTML = `
-                        <div class="payment-form">
-                            <select required>
-                                <option value="">Select Bank</option>
-                                <option>HDFC Bank</option>
-                                <option>State Bank of India</option>
-                                <option>ICICI Bank</option>
-                            </select>
-                            <button class="btn btn-primary" onclick="processPayment()">Continue</button>
-                        </div>
-                    `;
-                    break;
-                case 'paytm':
-                    formHTML = `
-                        <div class="payment-form">
-                            <input type="text" placeholder="Paytm Mobile Number" required>
-                            <button class="btn btn-primary" onclick="processPayment()">Pay with Paytm</button>
-                        </div>
-                    `;
-                    break;
-            }
-            document.getElementById('paymentForm').innerHTML = formHTML;
-        }
-
-        function processPayment() {
-            // Simulated payment processing
-            setTimeout(() => {
-                alert('Payment Successful!');
-                showCourseContent(currentCourse);
-                hideModal('paymentModal');
-            }, 2000);
-        }
-
-        function toggleChatbot() {
-            const chatbot = document.getElementById('chatbot');
-            chatbot.style.display = chatbot.style.display === 'block' ? 'none' : 'block';
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
