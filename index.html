@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Course Hub - Team Visionaries</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Merged CSS -->
     <style>
         :root {
             --primary: #6a11cb;
@@ -120,6 +118,7 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
     </style>
 </head>
 <body>
@@ -161,6 +160,16 @@
         </div>
     </section>
 
+    <!-- Dashboard Section -->
+    <section id="dashboard" style="display: none;">
+        <h1>Your Dashboard</h1>
+        <div>
+            <h2>Welcome, <span id="userName">User</span></h2>
+            <h3>Your Enrolled Courses:</h3>
+            <ul id="userCourses"></ul>
+        </div>
+    </section>
+
     <!-- Payment Modal -->
     <div class="modal" id="paymentModal">
         <h2>Select Payment Method</h2>
@@ -175,6 +184,11 @@
 
     <!-- Merged JavaScript -->
     <script>
+        let currentUser = {
+            name: 'Guest',
+            courses: []
+        };
+
         function showSection(sectionId) {
             document.querySelectorAll('section').forEach(section => {
                 section.style.display = 'none';
@@ -194,8 +208,16 @@
             setTimeout(() => {
                 document.getElementById('phonePeAnimation').style.display = 'none';
                 alert('Payment Successful! Redirecting to course content...');
+                currentUser.courses.push(selectedCourse);
+                updateDashboard();
                 showSection('dashboard');
             }, 3000);
+        }
+
+        function updateDashboard() {
+            document.getElementById('userName').innerText = currentUser.name;
+            const coursesList = document.getElementById('userCourses');
+            coursesList.innerHTML = currentUser.courses.map(course => `<li>${course}</li>`).join('');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
