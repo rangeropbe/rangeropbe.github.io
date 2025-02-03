@@ -25,214 +25,196 @@
             background: var(--gradient);
             color: white;
             min-height: 100vh;
+            text-align: center;
         }
 
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            width: 220px;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 2rem 1rem;
+        .navbar {
+            padding: 1.5rem 5%;
             display: flex;
-            flex-direction: column;
-            gap: 2rem;
+            justify-content: space-between;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
         }
 
-        .sidebar a {
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .nav-links a {
             color: white;
+            margin: 0 1rem;
             text-decoration: none;
-            font-size: 1.2rem;
-            padding: 0.8rem;
-            border-radius: 8px;
-            transition: 0.3s;
         }
 
-        .sidebar a:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .main-content {
-            margin-left: 240px;
-            padding: 4rem;
-        }
-
-        /* Dashboard Section */
-        #dashboard {
-            display: none;
-        }
-
-        .dashboard-container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 10px;
-        }
-
-        /* Course Card */
         .course-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            padding: 2rem 0;
+            padding: 7rem 5% 2rem;
         }
 
         .course-card {
             background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
             padding: 2rem;
-            text-align: center;
+            border-radius: 20px;
             transition: 0.3s;
+            text-align: center;
         }
 
         .course-card:hover {
-            transform: scale(1.05);
+            transform: translateY(-10px);
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 30px;
+            border-radius: 30px;
             border: none;
-            border-radius: 20px;
             background: var(--secondary);
             color: white;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
         }
 
-        .btn:hover {
-            background: var(--primary);
-        }
-
-        /* Hidden Sections */
-        section {
+        /* Payment Modal */
+        .modal {
             display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
         }
 
-        /* Active Section */
-        .active {
-            display: block !important;
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .payment-methods .btn {
+            background: var(--glass);
+            backdrop-filter: blur(5px);
+        }
+
+        /* PhonePe Animation */
+        .phonepe-animation {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid white;
+            border-radius: 50%;
+            border-top: 5px solid transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-        <h2>AI Visionaries</h2>
-        <a href="#" onclick="showSection('home')">🏠 Home</a>
-        <a href="#" onclick="showSection('courses')">📚 Courses</a>
-        <a href="#" onclick="showSection('dashboard')">📊 Dashboard</a>
-        <a href="#" onclick="showSection('analytics')">📈 Analytics</a>
-        <a href="#" onclick="logout()">🚪 Logout</a>
+    <nav class="navbar">
+        <div class="logo">AI Visionaries</div>
+        <div class="nav-links">
+            <a href="#" onclick="showSection('home')">Home</a>
+            <a href="#" onclick="showSection('courses')">Courses</a>
+            <a href="#" onclick="showSection('dashboard')">Dashboard</a>
+        </div>
     </nav>
 
-    <div class="main-content">
-        
-        <!-- Home Section -->
-        <section id="home" class="active">
-            <h1>Welcome to AI Visionaries</h1>
-            <p>Start your AI journey with our expert courses</p>
-            <button class="btn" onclick="showSection('courses')">Browse Courses</button>
-        </section>
+    <!-- Home Section -->
+    <section id="home">
+        <h1>Welcome to AI Visionaries</h1>
+        <button class="btn" onclick="showSection('courses')">Browse Courses</button>
+    </section>
 
-        <!-- Courses Section -->
-        <section id="courses">
-            <h1>Our Courses</h1>
-            <div class="course-grid">
-                <div class="course-card">
-                    <h2>Machine Learning</h2>
-                    <p>₹999</p>
-                    <button class="btn" onclick="enroll('ml')">Enroll Now</button>
-                </div>
+    <!-- Courses Section -->
+    <section id="courses" class="course-grid">
+        <div class="course-card">
+            <h2>Machine Learning</h2>
+            <p>₹999</p>
+            <button class="btn" onclick="showPaymentModal('ml')">Enroll Now</button>
+        </div>
 
-                <div class="course-card">
-                    <h2>AI for Management</h2>
-                    <p>₹999</p>
-                    <button class="btn" onclick="enroll('management')">Enroll Now</button>
-                </div>
+        <div class="course-card">
+            <h2>AI for Management</h2>
+            <p>₹999</p>
+            <button class="btn" onclick="showPaymentModal('management')">Enroll Now</button>
+        </div>
 
-                <div class="course-card">
-                    <h2>Premium Course</h2>
-                    <p>₹1299/month</p>
-                    <button class="btn" onclick="enroll('premium')">Enroll Now</button>
-                </div>
-            </div>
-        </section>
+        <div class="course-card">
+            <h2>Premium Course</h2>
+            <p>₹1299/month</p>
+            <button class="btn" onclick="showPaymentModal('premium')">Enroll Now</button>
+        </div>
+    </section>
 
-        <!-- Dashboard Section -->
-        <section id="dashboard">
-            <h1>Dashboard</h1>
-            <div class="dashboard-container">
-                <h2>Welcome, <span id="userName"></span></h2>
-                <h3>Your Enrolled Courses:</h3>
-                <ul id="userCourses"></ul>
-            </div>
-        </section>
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <h2>Select Payment Method</h2>
+        <div class="payment-methods">
+            <button class="btn" onclick="processPayment('UPI')">UPI</button>
+            <button class="btn" onclick="processPayment('NetBanking')">NetBanking</button>
+            <button class="btn" onclick="processPayment('Card')">Credit/Debit Card</button>
+        </div>
+    </div>
 
-        <!-- Analytics Section -->
-        <section id="analytics">
-            <h1>Analytics Coming Soon!</h1>
-        </section>
+    <!-- PhonePe Animation -->
+    <div class="phonepe-animation" id="phonePeAnimation">
+        <div class="spinner"></div>
+        <h2>Processing Payment...</h2>
     </div>
 
     <script>
-        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        let selectedCourse = null;
 
         function showSection(sectionId) {
             document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('active');
+                section.style.display = 'none';
             });
-            document.getElementById(sectionId).classList.add('active');
-
-            if (sectionId === 'dashboard') {
-                updateDashboard();
-            }
+            document.getElementById(sectionId).style.display = 'block';
         }
 
-        function enroll(course) {
-            if (!currentUser) {
-                alert('Please log in to enroll in a course.');
-                return;
-            }
-
-            currentUser.courses.push(course);
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-            alert('Successfully enrolled in ' + course);
-            showSection('dashboard');
+        function showPaymentModal(course) {
+            selectedCourse = course;
+            document.getElementById('paymentModal').style.display = 'block';
         }
 
-        function updateDashboard() {
-            if (!currentUser) return;
-            document.getElementById('userName').innerText = currentUser.name;
-            let courseList = document.getElementById('userCourses');
-            courseList.innerHTML = '';
+        function processPayment(method) {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('phonePeAnimation').style.display = 'flex';
 
-            if (currentUser.courses.length === 0) {
-                courseList.innerHTML = '<li>No courses enrolled yet.</li>';
-            } else {
-                currentUser.courses.forEach(course => {
-                    let li = document.createElement('li');
-                    li.innerText = course;
-                    courseList.appendChild(li);
-                });
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('currentUser');
-            currentUser = null;
-            alert('Logged out successfully.');
-            location.reload();
+            setTimeout(() => {
+                document.getElementById('phonePeAnimation').style.display = 'none';
+                alert('Payment Successful! Course unlocked.');
+            }, 3000);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            if (!currentUser) {
-                currentUser = { name: "Guest", courses: [] };
-            }
-            updateDashboard();
+            showSection('home');
         });
     </script>
+
 </body>
 </html>
