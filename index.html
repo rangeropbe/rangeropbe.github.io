@@ -130,6 +130,18 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Dashboard */
+        #dashboard {
+            display: none;
+            padding: 7rem 5% 2rem;
+        }
+
+        .dashboard-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -170,6 +182,16 @@
         </div>
     </section>
 
+    <!-- Dashboard -->
+    <section id="dashboard">
+        <h1>Your Dashboard</h1>
+        <div class="dashboard-container">
+            <h2>Welcome, <span id="userName"></span></h2>
+            <h3>Your Enrolled Courses:</h3>
+            <ul id="userCourses"></ul>
+        </div>
+    </section>
+
     <!-- Payment Modal -->
     <div class="modal" id="paymentModal">
         <h2>Select Payment Method</h2>
@@ -207,7 +229,8 @@
 
             setTimeout(() => {
                 document.getElementById('phonePeAnimation').style.display = 'none';
-                alert('Payment Successful! Course unlocked.');
+                alert('Payment Successful! Redirecting to course content...');
+                showSection('dashboard');
             }, 3000);
         }
 
