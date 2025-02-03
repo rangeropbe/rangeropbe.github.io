@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Course Hub - Team Visionaries</title>
+    <title>AI Courses - Team Visionaries</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #6a11cb;
             --secondary: #2575fc;
             --gradient: linear-gradient(45deg, #6a11cb, #2575fc);
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -32,7 +33,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--glass);
             backdrop-filter: blur(10px);
             position: fixed;
             width: 100%;
@@ -51,58 +52,62 @@
         .nav-links {
             display: flex;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
             color: white;
             text-decoration: none;
             transition: 0.3s;
+            position: relative;
         }
 
         .nav-links a:hover {
             transform: translateY(-3px);
         }
 
-        /* Auth Section */
-        .auth-section {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .auth-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            border: 2px solid white;
-            background: transparent;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        /* Course Cards */
+        /* Course Grid */
         .course-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            padding: 2rem 5%;
-            margin-top: 80px;
+            padding: 7rem 5% 2rem;
         }
 
         .course-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--glass);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 2rem;
             transition: 0.3s;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
-        .course-card:hover {
-            transform: translateY(-10px);
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+
+        .course-card:hover::before {
+            animation: shine 1.5s;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(45deg) translate(-50%, -50%); }
+            100% { transform: rotate(45deg) translate(50%, 50%); }
         }
 
         /* Payment Modal */
-        .payment-modal {
+        .modal {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -112,10 +117,12 @@
             border-radius: 20px;
             display: none;
             z-index: 1001;
+            width: 90%;
+            max-width: 500px;
         }
 
         /* Chatbot */
-        .chatbot-container {
+        .chatbot {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
@@ -135,7 +142,6 @@
             animation: float 3s ease-in-out infinite;
         }
 
-        /* Animations */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
@@ -144,24 +150,25 @@
 
         /* Dashboard */
         .dashboard {
-            padding: 5rem 5% 2rem;
+            padding: 7rem 5% 2rem;
         }
 
         .profile-section {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            margin-bottom: 3rem;
+            background: var(--glass);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
         }
 
-        .profile-pic {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
+        /* Contributors */
+        .contributors {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            background: var(--glass);
+            padding: 1rem;
+            border-radius: 15px;
         }
-
-        /* Add more styles as needed */
     </style>
 </head>
 <body>
@@ -170,17 +177,36 @@
         <div class="nav-links">
             <a href="#home">Home</a>
             <a href="#courses">Courses</a>
-            <a href="#dashboard">Dashboard</a>
-            <div class="auth-section" id="authSection">
+            <div id="authSection">
                 <button class="auth-btn" onclick="showAuthModal()">Enroll Now</button>
             </div>
         </div>
     </nav>
 
+    <main class="course-grid">
+        <div class="course-card" data-course="ml">
+            <h2>Machine Learning</h2>
+            <p>₹999</p>
+            <button onclick="showPaymentModal('ml')">Enroll Now</button>
+        </div>
+        
+        <div class="course-card" data-course="management">
+            <h2>AI for Management</h2>
+            <p>₹999</p>
+            <button onclick="showPaymentModal('management')">Enroll Now</button>
+        </div>
+
+        <div class="course-card" data-course="premium">
+            <h2>Premium Course</h2>
+            <p>₹1299/month</p>
+            <button onclick="showPaymentModal('premium')">Enroll Now</button>
+        </div>
+    </main>
+
     <!-- Auth Modal -->
-    <div class="payment-modal" id="authModal">
-        <h2>Sign Up/Login</h2>
-        <form id="authForm">
+    <div class="modal" id="authModal">
+        <h2>Create Account</h2>
+        <form id="authForm" onsubmit="handleAuth(event)">
             <input type="email" placeholder="Email" required>
             <input type="password" placeholder="Password" required>
             <button type="submit">Continue</button>
@@ -188,16 +214,16 @@
     </div>
 
     <!-- Payment Modal -->
-    <div class="payment-modal" id="paymentModal">
-        <h2>Select Payment Method</h2>
+    <div class="modal" id="paymentModal">
+        <h2>Complete Payment</h2>
         <div class="payment-methods">
-            <div class="payment-option" onclick="selectPayment('upi')">
+            <div class="method" onclick="selectPayment('upi')">
                 <i class="fa-brands fa-google-pay"></i> UPI
             </div>
-            <div class="payment-option" onclick="selectPayment('paytm')">
+            <div class="method" onclick="selectPayment('paytm')">
                 <i class="fa-solid fa-wallet"></i> Paytm
             </div>
-            <div class="payment-option" onclick="selectPayment('card')">
+            <div class="method" onclick="selectPayment('card')">
                 <i class="fa-regular fa-credit-card"></i> Card
             </div>
         </div>
@@ -205,30 +231,41 @@
     </div>
 
     <!-- Chatbot -->
-    <div class="chatbot-container">
-        <div class="chat-icon">
+    <div class="chatbot">
+        <div class="chat-icon" onclick="toggleChat()">
             <i class="fa-solid fa-robot"></i>
         </div>
     </div>
 
-    <!-- Course Content -->
-    <div id="courseContent" style="display: none;">
-        <!-- Course content will be loaded here -->
+    <!-- Contributors -->
+    <div class="contributors">
+        <h3>Team Visionaries</h3>
+        <ul>
+            <li>Joban Arsh</li>
+            <li>Jadeja Keyur</li>
+            <li>Raghwani Tushar</li>
+            <li>Bhanderi Jayesh</li>
+        </ul>
     </div>
 
     <script>
         // User Management
-        let currentUser = null;
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let selectedCourse = null;
 
         // Courses Data
         const courses = {
-            'ai for management': {
+            ml: {
                 price: 999,
-                content: '<h2>Ai for Management Course</h2><ul><li>Module 1: Basics</li><li>Module 2: Advanced</li></ul>'
+                content: '<h2>Machine Learning Content</h2><ul><li>Module 1: Basics</li><li>Module 2: Advanced</li></ul>'
             },
-            'premium': {
+            management: {
+                price: 999,
+                content: '<h2>AI Management Content</h2><ul><li>Module 1: Strategy</li><li>Module 2: Implementation</li></ul>'
+            },
+            premium: {
                 price: 1299,
-                content: '<h2>Premium Content</h2><ul><li>Weekly Sessions</li><li>Exclusive Materials</li></ul>'
+                content: '<h2>Premium Content</h2><ul><li>Exclusive Videos</li><li>Live Sessions</li></ul>'
             }
         };
 
@@ -237,62 +274,79 @@
             document.getElementById('authModal').style.display = 'block';
         }
 
-        document.getElementById('authForm').onsubmit = function(e) {
+        function handleAuth(e) {
             e.preventDefault();
-            // Simulate auth
             currentUser = {
-                name: "User",
-                email: this.email.value,
-                pfp: "https://via.placeholder.com/100"
+                email: e.target[0].value,
+                name: e.target[0].value.split('@')[0],
+                courses: []
             };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
             updateAuthState();
             document.getElementById('authModal').style.display = 'none';
-        };
+        }
 
         function updateAuthState() {
+            const authSection = document.getElementById('authSection');
             if(currentUser) {
-                document.getElementById('authSection').innerHTML = `
+                authSection.innerHTML = `
                     <div class="profile">
-                        <img src="${currentUser.pfp}" class="profile-pic">
                         <span>${currentUser.name}</span>
+                        <button onclick="logout()">Logout</button>
                     </div>
                 `;
+            } else {
+                authSection.innerHTML = '<button class="auth-btn" onclick="showAuthModal()">Enroll Now</button>';
             }
         }
 
+        function logout() {
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+            updateAuthState();
+        }
+
         // Payment Handling
+        function showPaymentModal(course) {
+            if(!currentUser) return showAuthModal();
+            selectedCourse = course;
+            document.getElementById('paymentModal').style.display = 'block';
+        }
+
         function selectPayment(method) {
-            // Handle payment method selection
+            document.querySelectorAll('.method').forEach(m => m.style.background = '');
+            event.target.style.background = 'rgba(255,255,255,0.1)';
         }
 
         function processPayment() {
-            // Simulate payment
-            showPaymentSuccess();
-            showCourseContent();
-        }
-
-        function showPaymentSuccess() {
-            alert('Payment Successful!');
+            if(!currentUser || !selectedCourse) return;
+            
+            currentUser.courses.push(selectedCourse);
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
             document.getElementById('paymentModal').style.display = 'none';
+            showCourseContent(selectedCourse);
+            alert('Payment Successful!');
         }
 
-        function showCourseContent() {
-            document.getElementById('courseContent').style.display = 'block';
-            document.getElementById('courseContent').innerHTML = courses['machine-learning'].content;
+        function showCourseContent(course) {
+            const content = courses[course].content;
+            window.location.hash = '#content';
+            document.body.innerHTML = `
+                <nav class="navbar">
+                    ${document.querySelector('.navbar').innerHTML}
+                </nav>
+                <div class="dashboard">
+                    <button onclick="window.location.reload()">Back to Courses</button>
+                    ${content}
+                </div>
+            `;
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            // Initial setup
+            updateAuthState();
         });
-
-        // Contributors Data
-        const contributors = [
-            "Joban Arsh",
-            "Jadeja Keyur", 
-            "Raghwani Tushar",
-            "Bhanderi Jayesh"
-        ];
     </script>
 </body>
 </html>
