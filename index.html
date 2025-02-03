@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Courses - Team Visionaries</title>
+    <title>AI Course Hub - Team Visionaries</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -11,6 +11,7 @@
             --secondary: #2575fc;
             --gradient: linear-gradient(45deg, #6a11cb, #2575fc);
             --glass: rgba(255, 255, 255, 0.1);
+            --success: #4BB543;
         }
 
         * {
@@ -47,6 +48,7 @@
             background: linear-gradient(45deg, #ff6b6b, #ffd93d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            cursor: pointer;
         }
 
         .nav-links {
@@ -60,10 +62,12 @@
             text-decoration: none;
             transition: 0.3s;
             position: relative;
+            padding: 5px 10px;
+            border-radius: 8px;
         }
 
         .nav-links a:hover {
-            transform: translateY(-3px);
+            background: rgba(255,255,255,0.1);
         }
 
         /* Course Grid */
@@ -83,46 +87,98 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
 
-        .course-card::before {
+        .course-card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Animated Buttons */
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            border: none;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            margin: 10px;
+        }
+
+        .btn::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255,255,255,0.3),
+                transparent
+            );
             transition: 0.5s;
         }
 
-        .course-card:hover::before {
-            animation: shine 1.5s;
+        .btn:hover::before {
+            left: 100%;
         }
 
-        @keyframes shine {
-            0% { transform: rotate(45deg) translate(-50%, -50%); }
-            100% { transform: rotate(45deg) translate(50%, 50%); }
-        }
-
-        /* Payment Modal */
-        .modal {
+        /* Payment Success Animation */
+        .success-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.9);
-            padding: 2rem;
-            border-radius: 20px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            animation: fadeOut 3s forwards;
+        }
+
+        .checkmark {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 2;
+            stroke: white;
+            stroke-miterlimit: 10;
+            animation: fill 0.4s ease-in-out 0.4s forwards,
+                     scale 0.3s ease-in-out 0.9s both;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+
+        /* Course Content Section */
+        .course-content {
+            padding: 7rem 5% 2rem;
             display: none;
-            z-index: 1001;
-            width: 90%;
-            max-width: 500px;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
         }
 
         /* Chatbot */
-        .chatbot {
+        .chatbot-container {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
@@ -148,18 +204,6 @@
             100% { transform: translateY(0px); }
         }
 
-        /* Dashboard */
-        .dashboard {
-            padding: 7rem 5% 2rem;
-        }
-
-        .profile-section {
-            background: var(--glass);
-            padding: 2rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-        }
-
         /* Contributors */
         .contributors {
             position: fixed;
@@ -168,40 +212,62 @@
             background: var(--glass);
             padding: 1rem;
             border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Analytics */
+        .analytics {
+            display: none;
+            padding: 7rem 5% 2rem;
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">AI Visionaries</div>
+        <div class="logo" onclick="showSection('home')">AI Visionaries</div>
         <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#courses">Courses</a>
-            <div id="authSection">
-                <button class="auth-btn" onclick="showAuthModal()">Enroll Now</button>
-            </div>
+            <a href="#home" onclick="showSection('home')">Home</a>
+            <a href="#courses" onclick="showSection('courses')">Courses</a>
+            <a href="#analytics" onclick="showAnalytics()">Analytics</a>
+            <div id="authSection"></div>
         </div>
     </nav>
 
-    <main class="course-grid">
+    <!-- Home Section -->
+    <section id="homeSection" class="course-grid">
+        <div class="course-card">
+            <h2>Welcome to AI Visionaries</h2>
+            <p>Start your AI journey with our expert courses</p>
+            <button class="btn" onclick="showSection('courses')">Browse Courses</button>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="coursesSection" class="course-grid" style="display: none;">
         <div class="course-card" data-course="ml">
             <h2>Machine Learning</h2>
             <p>₹999</p>
-            <button onclick="showPaymentModal('ml')">Enroll Now</button>
+            <button class="btn" onclick="showPaymentModal('ml')">Enroll Now</button>
         </div>
         
         <div class="course-card" data-course="management">
             <h2>AI for Management</h2>
             <p>₹999</p>
-            <button onclick="showPaymentModal('management')">Enroll Now</button>
+            <button class="btn" onclick="showPaymentModal('management')">Enroll Now</button>
         </div>
 
         <div class="course-card" data-course="premium">
             <h2>Premium Course</h2>
             <p>₹1299/month</p>
-            <button onclick="showPaymentModal('premium')">Enroll Now</button>
+            <button class="btn" onclick="showPaymentModal('premium')">Enroll Now</button>
         </div>
-    </main>
+    </section>
+
+    <!-- Course Content Section -->
+    <section class="course-content" id="courseContent">
+        <div class="video-container" id="videoPlayer"></div>
+        <button class="btn" onclick="showSection('courses')">Back to Courses</button>
+    </section>
 
     <!-- Auth Modal -->
     <div class="modal" id="authModal">
@@ -209,7 +275,7 @@
         <form id="authForm" onsubmit="handleAuth(event)">
             <input type="email" placeholder="Email" required>
             <input type="password" placeholder="Password" required>
-            <button type="submit">Continue</button>
+            <button class="btn" type="submit">Continue</button>
         </form>
     </div>
 
@@ -217,21 +283,21 @@
     <div class="modal" id="paymentModal">
         <h2>Complete Payment</h2>
         <div class="payment-methods">
-            <div class="method" onclick="selectPayment('upi')">
+            <div class="btn" onclick="selectPayment('upi')">
                 <i class="fa-brands fa-google-pay"></i> UPI
             </div>
-            <div class="method" onclick="selectPayment('paytm')">
+            <div class="btn" onclick="selectPayment('paytm')">
                 <i class="fa-solid fa-wallet"></i> Paytm
             </div>
-            <div class="method" onclick="selectPayment('card')">
+            <div class="btn" onclick="selectPayment('card')">
                 <i class="fa-regular fa-credit-card"></i> Card
             </div>
         </div>
-        <button onclick="processPayment()">Pay Now</button>
+        <button class="btn" onclick="processPayment()">Pay Now</button>
     </div>
 
     <!-- Chatbot -->
-    <div class="chatbot">
+    <div class="chatbot-container">
         <div class="chat-icon" onclick="toggleChat()">
             <i class="fa-solid fa-robot"></i>
         </div>
@@ -250,28 +316,43 @@
 
     <script>
         // User Management
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
         let selectedCourse = null;
+        let selectedPaymentMethod = null;
 
         // Courses Data
         const courses = {
             ml: {
                 price: 999,
-                content: '<h2>Machine Learning Content</h2><ul><li>Module 1: Basics</li><li>Module 2: Advanced</li></ul>'
+                content: '<h3>Machine Learning Content</h3><ul><li>Introduction to ML</li><li>Supervised Learning</li></ul>',
+                video: 'https://www.youtube.com/embed/ML_VIDEO_ID'
             },
             management: {
                 price: 999,
-                content: '<h2>AI Management Content</h2><ul><li>Module 1: Strategy</li><li>Module 2: Implementation</li></ul>'
+                content: '<h3>AI Management Content</h3><ul><li>Strategic Planning</li><li>Implementation</li></ul>',
+                video: 'https://www.youtube.com/embed/MGMT_VIDEO_ID'
             },
             premium: {
                 price: 1299,
-                content: '<h2>Premium Content</h2><ul><li>Exclusive Videos</li><li>Live Sessions</li></ul>'
+                content: '<h3>Premium Content</h3><ul><li>Advanced Modules</li><li>Live Sessions</li></ul>',
+                video: 'https://www.youtube.com/embed/PREMIUM_VIDEO_ID'
             }
         };
 
+        // Section Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.getElementById(sectionId + 'Section').style.display = 'grid';
+            window.location.hash = sectionId;
+        }
+
         // Auth Handling
         function showAuthModal() {
-            document.getElementById('authModal').style.display = 'block';
+            if(!currentUser) {
+                document.getElementById('authModal').style.display = 'block';
+            }
         }
 
         function handleAuth(e) {
@@ -279,7 +360,8 @@
             currentUser = {
                 email: e.target[0].value,
                 name: e.target[0].value.split('@')[0],
-                courses: []
+                courses: [],
+                joined: new Date().toISOString()
             };
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             updateAuthState();
@@ -292,11 +374,11 @@
                 authSection.innerHTML = `
                     <div class="profile">
                         <span>${currentUser.name}</span>
-                        <button onclick="logout()">Logout</button>
+                        <button class="btn" onclick="logout()">Logout</button>
                     </div>
                 `;
             } else {
-                authSection.innerHTML = '<button class="auth-btn" onclick="showAuthModal()">Enroll Now</button>';
+                authSection.innerHTML = '<button class="btn" onclick="showAuthModal()">Enroll Now</button>';
             }
         }
 
@@ -304,6 +386,7 @@
             localStorage.removeItem('currentUser');
             currentUser = null;
             updateAuthState();
+            showSection('home');
         }
 
         // Payment Handling
@@ -314,38 +397,65 @@
         }
 
         function selectPayment(method) {
-            document.querySelectorAll('.method').forEach(m => m.style.background = '');
-            event.target.style.background = 'rgba(255,255,255,0.1)';
+            selectedPaymentMethod = method;
+            document.querySelectorAll('.payment-methods .btn').forEach(btn => {
+                btn.style.background = '';
+            });
+            event.target.style.background = 'rgba(255,255,255,0.2)';
         }
 
         function processPayment() {
-            if(!currentUser || !selectedCourse) return;
+            if(!currentUser || !selectedCourse || !selectedPaymentMethod) return;
             
+            showSuccessAnimation();
             currentUser.courses.push(selectedCourse);
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             
-            document.getElementById('paymentModal').style.display = 'none';
-            showCourseContent(selectedCourse);
-            alert('Payment Successful!');
+            setTimeout(() => {
+                document.getElementById('paymentModal').style.display = 'none';
+                showCourseContent();
+            }, 2500);
         }
 
-        function showCourseContent(course) {
-            const content = courses[course].content;
-            window.location.hash = '#content';
-            document.body.innerHTML = `
-                <nav class="navbar">
-                    ${document.querySelector('.navbar').innerHTML}
-                </nav>
-                <div class="dashboard">
-                    <button onclick="window.location.reload()">Back to Courses</button>
-                    ${content}
-                </div>
+        function showSuccessAnimation() {
+            const animation = document.createElement('div');
+            animation.className = 'success-animation';
+            animation.innerHTML = `
+                <svg class="checkmark" viewBox="0 0 52 52">
+                    <circle cx="26" cy="26" r="25" fill="none"/>
+                    <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
             `;
+            document.body.appendChild(animation);
+            setTimeout(() => animation.remove(), 2500);
+        }
+
+        function showCourseContent() {
+            showSection('courseContent');
+            const courseData = courses[selectedCourse];
+            document.getElementById('courseContent').style.display = 'block';
+            document.getElementById('videoPlayer').innerHTML = `
+                <iframe width="100%" height="400" src="${courseData.video}" 
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen></iframe>
+                ${courseData.content}
+            `;
+        }
+
+        // Analytics
+        function showAnalytics() {
+            const password = prompt('Enter analytics password:');
+            if(password === 'Aicourse') {
+                alert('Analytics Feature Coming Soon!');
+            } else {
+                alert('Invalid password!');
+            }
         }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             updateAuthState();
+            showSection('home');
         });
     </script>
 </body>
