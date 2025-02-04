@@ -19,6 +19,8 @@
             text-align: center;
             transition: 0.3s;
             font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding-top: 60px; /* Ensure content is visible under navbar */
         }
 
         .dark-mode {
@@ -26,20 +28,41 @@
         }
 
         .navbar {
-            padding: 1.5rem 5%;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--glass);
             display: flex;
             justify-content: space-between;
-            background: var(--glass);
-            position: fixed;
-            width: 100%;
-            top: 0;
+            align-items: center;
+            padding: 0.8rem 5%;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: var(--secondary);
         }
 
         .course-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 7rem 5% 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 2rem 5%;
         }
 
         .modal {
@@ -49,19 +72,44 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.8);
-            padding: 2rem;
+            padding: 1.5rem;
             text-align: center;
             border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
         }
 
         .btn {
-            padding: 12px 30px;
-            border-radius: 30px;
+            padding: 10px 20px;
+            border-radius: 5px;
             border: none;
             background: var(--secondary);
             color: white;
             font-weight: 600;
             cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem 5%;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 8px;
+            }
         }
     </style>
 </head>
@@ -74,7 +122,7 @@
             <a href="#" onclick="showSection('home')">Home</a>
             <a href="#" onclick="showSection('courses')">Courses</a>
             <a href="#" onclick="showSection('dashboard')">Dashboard</a>
-            <a href="#" onclick="toggleDarkMode()">🌑</a>
+            <a href="#" onclick="toggleDarkMode()">🌙</a>
         </div>
     </nav>
 
@@ -110,19 +158,11 @@
         </div>
     </section>
 
-    <!-- Course Content Section (Redirected After Payment) -->
+    <!-- Course Content Section -->
     <section id="course-content" style="display: none;">
         <h1>Welcome to Your Course</h1>
         <h2 id="courseTitle"></h2>
         <div id="courseDetails"></div>
-    </section>
-
-    <!-- Dashboard Section -->
-    <section id="dashboard" style="display: none;">
-        <h1>Your Dashboard</h1>
-        <h2>Welcome, <span id="userName">Guest</span></h2>
-        <h3>Your Enrolled Courses:</h3>
-        <ul id="userCourses"></ul>
     </section>
 
     <!-- Payment Modal -->
@@ -131,44 +171,33 @@
         <button class="btn" onclick="processPayment()">Pay Now</button>
     </div>
 
-    <!-- Payment Animation -->
-    <div class="modal" id="paymentAnimation">
-        <h2>Processing Payment...</h2>
-    </div>
-
     <script>
         let currentUser = { name: 'Guest', courses: [] };
         let selectedCourse = "";
 
         const courseContent = {
             "Machine Learning": `
-                <h3>Introduction to Machine Learning</h3>
-                <p>Machine learning is a branch of AI that enables systems to learn patterns from data.</p>
-                <h3>Topics Covered:</h3>
+                <h3>Machine Learning Fundamentals</h3>
                 <ul>
-                    <li>Supervised Learning</li>
-                    <li>Unsupervised Learning</li>
-                    <li>Deep Learning</li>
+                    <li>Supervised vs Unsupervised Learning</li>
+                    <li>Neural Networks</li>
+                    <li>Deep Learning Basics</li>
                 </ul>
             `,
             "AI for Management": `
-                <h3>AI in Business Management</h3>
-                <p>Learn how AI is transforming business processes and decision-making.</p>
-                <h3>Topics Covered:</h3>
+                <h3>AI in Business</h3>
                 <ul>
                     <li>AI in Marketing</li>
-                    <li>AI in Finance</li>
-                    <li>AI in HR</li>
+                    <li>AI in Decision Making</li>
+                    <li>AI in Human Resources</li>
                 </ul>
             `,
             "Premium Course": `
                 <h3>Advanced AI Topics</h3>
-                <p>This premium course covers cutting-edge AI technologies.</p>
-                <h3>Topics Covered:</h3>
                 <ul>
-                    <li>Natural Language Processing</li>
-                    <li>AI Ethics</li>
-                    <li>AI and Blockchain</li>
+                    <li>AI & Blockchain</li>
+                    <li>Generative AI</li>
+                    <li>Future of AI</li>
                 </ul>
             `
         };
@@ -182,7 +211,6 @@
             const name = document.getElementById('username').value;
             if (name) {
                 currentUser.name = name;
-                document.getElementById('userName').innerText = name;
                 document.getElementById('authModal').style.display = 'none';
                 showSection('home');
             } else {
@@ -197,21 +225,12 @@
 
         function processPayment() {
             document.getElementById('paymentModal').style.display = 'none';
-            document.getElementById('paymentAnimation').style.display = 'block';
 
             setTimeout(() => {
-                document.getElementById('paymentAnimation').style.display = 'none';
                 alert('Payment Successful! Redirecting to course content...');
                 currentUser.courses.push(selectedCourse);
-                updateDashboard();
                 showCourseContent(selectedCourse);
-            }, 3000);
-        }
-
-        function updateDashboard() {
-            document.getElementById('userName').innerText = currentUser.name;
-            const coursesList = document.getElementById('userCourses');
-            coursesList.innerHTML = currentUser.courses.map(course => `<li>${course}</li>`).join('');
+            }, 2000);
         }
 
         function showCourseContent(courseName) {
