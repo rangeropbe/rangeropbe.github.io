@@ -18,6 +18,7 @@
       --glass: rgba(255, 255, 255, 0.15);
       --modal-bg: rgba(0, 0, 0, 0.95);
     }
+    
     /* Global Styles */
     * { box-sizing: border-box; }
     body {
@@ -26,7 +27,7 @@
       background: var(--bg-gradient);
       color: var(--light);
       transition: background 0.3s, color 0.3s;
-      padding-top: 70px; /* Space for fixed header */
+      padding-top: 70px; /* Fixed header space */
       overflow-x: hidden;
     }
     .dark-mode { background: var(--dark); }
@@ -42,8 +43,8 @@
       background: var(--glass);
       backdrop-filter: blur(10px);
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       padding: 0 20px;
       z-index: 1000;
     }
@@ -85,7 +86,7 @@
       position: absolute;
       right: 20px;
       top: 70px;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0,0,0,0.9);
       border-radius: 5px;
       overflow: hidden;
       display: none;
@@ -119,7 +120,7 @@
       position: absolute;
       top: 50px;
       right: 0;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0,0,0,0.9);
       border-radius: 5px;
       overflow: hidden;
       display: none;
@@ -135,16 +136,20 @@
     }
     .profile-dropdown a:last-child { border-bottom: none; }
     .profile-dropdown a:hover { background: var(--secondary); }
-
+    
     /* Sections */
-    .section { display: none; padding: 40px 20px; animation: fadeIn 0.4s ease-in-out; }
+    .section {
+      display: none;
+      padding: 40px 20px;
+      animation: fadeIn 0.4s ease-in-out;
+    }
     .active-section { display: block; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    /* Grid for Courses */
+    
+    /* Courses Grid */
     .course-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -161,7 +166,7 @@
     .course-card h2 { margin-top: 0; }
     .course-card p { font-size: 18px; margin: 10px 0; }
     .course-card .btn { margin-top: 15px; }
-
+    
     /* Modals */
     .modal {
       display: none;
@@ -189,7 +194,7 @@
       border: none;
       font-size: 16px;
     }
-
+    
     /* Buttons */
     .btn {
       display: inline-block;
@@ -204,7 +209,7 @@
       transition: background 0.2s;
     }
     .btn:hover { background: var(--accent); }
-
+    
     /* Payment Options */
     .payment-options {
       margin: 20px 0;
@@ -217,7 +222,7 @@
       font-size: 16px;
     }
     .payment-options input { margin-right: 10px; }
-
+    
     /* Quiz Section */
     .quiz-container {
       max-width: 600px;
@@ -232,7 +237,7 @@
     .quiz-options li { margin-bottom: 10px; }
     .quiz-options label { cursor: pointer; }
     .quiz-feedback { margin-top: 15px; font-size: 18px; font-weight: bold; }
-
+    
     /* Live Chat Support Section */
     .chat-container {
       max-width: 600px;
@@ -272,7 +277,7 @@
     }
     .chat-message.user { background: var(--secondary); text-align: right; }
     .chat-message.ai { background: var(--glass); }
-
+    
     /* Responsive */
     @media (max-width: 768px) {
       .navbar .logo { font-size: 20px; }
@@ -316,7 +321,7 @@
       </div>
     </div>
   </nav>
-
+  
   <!-- Authentication Modal -->
   <div class="modal" id="authModal">
     <h2>Sign In / Sign Up</h2>
@@ -326,7 +331,7 @@
     <br /><br />
     <button class="btn" onclick="authenticateUser()">Proceed</button>
   </div>
-
+  
   <!-- Edit Profile Modal -->
   <div class="modal" id="editProfileModal">
     <h2>Edit Profile</h2>
@@ -336,7 +341,7 @@
     <br /><br />
     <button class="btn" onclick="saveProfile()">Save Changes</button>
   </div>
-
+  
   <!-- Profile Section -->
   <section id="profile" class="section">
     <h1>My Profile</h1>
@@ -345,14 +350,14 @@
     <p id="profileSectionEmail">your.email@example.com</p>
     <button class="btn" onclick="openEditProfileModal()">Edit Profile</button>
   </section>
-
+  
   <!-- Home Section -->
   <section id="home" class="section active-section">
     <h1>Welcome to AI Visionaries</h1>
     <p>Discover the future of learning with our cutting-edge AI courses.</p>
     <button class="btn" onclick="showSection('courses')">Browse Courses</button>
   </section>
-
+  
   <!-- Courses Section -->
   <section id="courses" class="section">
     <h1>Our Courses</h1>
@@ -374,7 +379,7 @@
       </div>
     </div>
   </section>
-
+  
   <!-- Dashboard Section -->
   <section id="dashboard" class="section">
     <h1>Your Dashboard</h1>
@@ -382,14 +387,14 @@
     <h3>Your Enrolled Courses:</h3>
     <ul id="userCourses"></ul>
   </section>
-
+  
   <!-- Course Content Section -->
   <section id="course-content" class="section">
     <h1>Course Content</h1>
     <h2 id="courseTitle"></h2>
     <div id="courseDetails"></div>
   </section>
-
+  
   <!-- Quizzes Section -->
   <section id="quizzes" class="section">
     <h1>Quizzes & Assignments</h1>
@@ -416,14 +421,14 @@
       <div class="quiz-feedback" id="quizFeedback"></div>
     </div>
   </section>
-
+  
   <!-- AI Chatbot Section -->
   <section id="chatbot" class="section">
     <h1>AI Chatbot</h1>
     <p>Chat with our AI assistant for help and support.</p>
     <p><em>The chat interface is integrated into the Live Chat Support section below.</em></p>
   </section>
-
+  
   <!-- Completion Badges Section -->
   <section id="badges" class="section">
     <h1>Course Completion Badges</h1>
@@ -434,7 +439,7 @@
       <li>🥉 Advanced Badge</li>
     </ul>
   </section>
-
+  
   <!-- Reviews Section -->
   <section id="reviews" class="section">
     <h1>User Reviews</h1>
@@ -445,14 +450,14 @@
       <li>"The content is up-to-date and engaging." – Priya</li>
     </ul>
   </section>
-
+  
   <!-- Daily Challenges Section -->
   <section id="challenges" class="section">
     <h1>Daily Challenges</h1>
     <p>Keep learning with daily AI challenges designed for you.</p>
     <p><em>Challenge details coming soon...</em></p>
   </section>
-
+  
   <!-- Social Sharing Section -->
   <section id="social" class="section">
     <h1>Social Sharing</h1>
@@ -460,14 +465,14 @@
     <button class="btn">Share on Facebook</button>
     <button class="btn">Share on Twitter</button>
   </section>
-
+  
   <!-- FAQ Section -->
   <section id="faq" class="section">
     <h1>Frequently Asked Questions</h1>
     <p><strong>Q:</strong> How do I enroll?<br /><strong>A:</strong> Click "Enroll Now" on the course card.</p>
     <p><strong>Q:</strong> How can I get support?<br /><strong>A:</strong> Use our Live Chat Support feature.</p>
   </section>
-
+  
   <!-- Live Chat Support Section -->
   <section id="livechat" class="section">
     <h1>Live Chat Support</h1>
@@ -479,7 +484,7 @@
       <input type="text" class="chat-input" id="chatInput" placeholder="Type your message and press Enter..." onkeydown="if(event.key==='Enter'){ sendChatMessage(); }" />
     </div>
   </section>
-
+  
   <!-- Payment Modal -->
   <div class="modal" id="paymentModal">
     <h2>Select Payment Method</h2>
@@ -490,9 +495,8 @@
     </div>
     <button class="btn" onclick="processPayment()">Pay Now</button>
   </div>
-
+  
   <script>
-    // Global variables
     let currentUser = { name: 'Guest', email: '', courses: [], profilePic: 'https://via.placeholder.com/150' };
     let selectedCourse = "";
     const courseContent = {
@@ -501,32 +505,32 @@
       "Premium Course": "<h3>Advanced AI</h3><p>Dive deep into AI & Blockchain, AI Ethics, and the emerging world of Generative AI.</p>"
     };
     
-    // Navbar & Dropdown functions
+    // Navbar & Dropdown Functions
     function toggleMenu() {
       const menu = document.getElementById("menuDropdown");
       menu.style.display = (menu.style.display === "block") ? "none" : "block";
-      console.log("toggleMenu called");
+      console.log("Menu toggled");
     }
     function toggleProfileDropdown() {
       const dropdown = document.getElementById("profileDropdown");
       dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-      console.log("toggleProfileDropdown called");
+      console.log("Profile dropdown toggled");
     }
     function showSection(sectionId) {
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
       document.getElementById(sectionId).classList.add('active-section');
-      // Hide dropdowns
+      // Hide any open dropdowns
       document.getElementById("menuDropdown").style.display = "none";
       const profDrop = document.getElementById("profileDropdown");
       if (profDrop) { profDrop.style.display = "none"; }
-      console.log("Showing section:", sectionId);
+      console.log("Section shown:", sectionId);
     }
     
-    // Authentication functions
+    // Authentication Functions
     function toggleAuthModal() {
       const modal = document.getElementById('authModal');
       modal.style.display = (modal.style.display === "block") ? "none" : "block";
-      console.log("toggleAuthModal called");
+      console.log("Auth modal toggled");
     }
     function authenticateUser() {
       const fullname = document.getElementById('fullname').value.trim();
@@ -544,12 +548,10 @@
       }
     }
     function updateUserDisplay() {
-      // Hide the Sign In / Sign Up button and show profile container
       document.getElementById('authToggleBtn').style.display = "none";
       document.getElementById('profileContainer').style.display = "flex";
       document.getElementById('profilePic').src = currentUser.profilePic;
       document.getElementById('profileName').innerText = currentUser.name;
-      // Update Profile Section
       document.getElementById('profileSectionPic').src = currentUser.profilePic;
       document.getElementById('profileSectionName').innerText = currentUser.name;
       document.getElementById('profileSectionEmail').innerText = currentUser.email;
@@ -557,7 +559,7 @@
       console.log("User display updated.");
     }
     
-    // Edit Profile functions
+    // Edit Profile Functions
     function openEditProfileModal() {
       document.getElementById('editFullname').value = currentUser.name;
       document.getElementById('editEmail').value = currentUser.email;
@@ -581,4 +583,5 @@
       }
     }
     function signOut() {
-      currentUser = { name: 'Guest', email: '', courses: [], profilePic: 'https://via.placeholder.co
+      currentUser = { name: 'Guest', email: '', courses: [], profilePic: 'https://via.placeholder.com/150' };
+      document.getElementById('authToggleBt
