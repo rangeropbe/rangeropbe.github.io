@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Course Hub - Revamped</title>
+  <title>AI Course Hub - Team Visionaries</title>
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
@@ -18,7 +18,6 @@
       --glass: rgba(255, 255, 255, 0.15);
       --modal-bg: rgba(0, 0, 0, 0.95);
     }
-    
     /* Global Styles */
     * { box-sizing: border-box; }
     body {
@@ -27,18 +26,15 @@
       background: var(--bg-gradient);
       color: var(--light);
       transition: background 0.3s, color 0.3s;
-      padding-top: 70px; /* Fixed header space */
+      padding-top: 70px; /* Space for fixed header */
       overflow-x: hidden;
     }
     .dark-mode { background: var(--dark); }
     a { color: inherit; text-decoration: none; }
-    
     /* Navbar */
     .navbar {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 70px;
       background: var(--glass);
       backdrop-filter: blur(10px);
@@ -86,7 +82,7 @@
       position: absolute;
       right: 20px;
       top: 70px;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0, 0, 0, 0.9);
       border-radius: 5px;
       overflow: hidden;
       display: none;
@@ -120,7 +116,7 @@
       position: absolute;
       top: 50px;
       right: 0;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0, 0, 0, 0.9);
       border-radius: 5px;
       overflow: hidden;
       display: none;
@@ -138,11 +134,7 @@
     .profile-dropdown a:hover { background: var(--secondary); }
     
     /* Sections */
-    .section {
-      display: none;
-      padding: 40px 20px;
-      animation: fadeIn 0.4s ease-in-out;
-    }
+    .section { display: none; padding: 40px 20px; animation: fadeIn 0.4s ease-in-out; }
     .active-section { display: block; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -171,10 +163,8 @@
     .modal {
       display: none;
       position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 90%;
-      max-width: 400px;
+      top: 50%; left: 50%;
+      width: 90%; max-width: 400px;
       transform: translate(-50%, -50%);
       background: var(--modal-bg);
       padding: 30px;
@@ -479,7 +469,7 @@
     <div class="chat-container">
       <div class="chat-header">AI Chat Support</div>
       <div class="chat-body" id="chatBody">
-        <!-- Chat messages will appear here -->
+        <!-- Chat messages appear here -->
       </div>
       <input type="text" class="chat-input" id="chatInput" placeholder="Type your message and press Enter..." onkeydown="if(event.key==='Enter'){ sendChatMessage(); }" />
     </div>
@@ -505,7 +495,7 @@
       "Premium Course": "<h3>Advanced AI</h3><p>Dive deep into AI & Blockchain, AI Ethics, and the emerging world of Generative AI.</p>"
     };
     
-    // Navbar & Dropdown Functions
+    // Navbar & Dropdown functions
     function toggleMenu() {
       const menu = document.getElementById("menuDropdown");
       menu.style.display = (menu.style.display === "block") ? "none" : "block";
@@ -519,14 +509,13 @@
     function showSection(sectionId) {
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
       document.getElementById(sectionId).classList.add('active-section');
-      // Hide any open dropdowns
       document.getElementById("menuDropdown").style.display = "none";
       const profDrop = document.getElementById("profileDropdown");
       if (profDrop) { profDrop.style.display = "none"; }
-      console.log("Section shown:", sectionId);
+      console.log("Showing section:", sectionId);
     }
     
-    // Authentication Functions
+    // Authentication functions
     function toggleAuthModal() {
       const modal = document.getElementById('authModal');
       modal.style.display = (modal.style.display === "block") ? "none" : "block";
@@ -559,7 +548,7 @@
       console.log("User display updated.");
     }
     
-    // Edit Profile Functions
+    // Edit Profile functions
     function openEditProfileModal() {
       document.getElementById('editFullname').value = currentUser.name;
       document.getElementById('editEmail').value = currentUser.email;
@@ -584,4 +573,74 @@
     }
     function signOut() {
       currentUser = { name: 'Guest', email: '', courses: [], profilePic: 'https://via.placeholder.com/150' };
-      document.getElementById('authToggleBt
+      document.getElementById('authToggleBtn').style.display = "inline-block";
+      document.getElementById('profileContainer').style.display = "none";
+      showSection('home');
+    }
+    // --- Payment Modal ---
+    function showPaymentModal(course) {
+      selectedCourse = course;
+      document.getElementById('paymentModal').style.display = "block";
+    }
+    function processPayment() {
+      document.getElementById('paymentModal').style.display = "none";
+      setTimeout(() => {
+        alert("Payment Successful! Redirecting to course content...");
+        currentUser.courses.push(selectedCourse);
+        showCourseContent(selectedCourse);
+      }, 2000);
+    }
+    function showCourseContent(courseName) {
+      document.getElementById('courseTitle').innerText = courseName;
+      document.getElementById('courseDetails').innerHTML = courseContent[courseName] || "Course content not available.";
+      showSection('course-content');
+    }
+    // --- Quiz Section ---
+    function checkQuizAnswer() {
+      const selected = document.querySelector('input[name="quiz1"]:checked');
+      const feedback = document.getElementById('quizFeedback');
+      if (!selected) {
+        feedback.innerText = "Please select an answer.";
+        return;
+      }
+      // For this sample, assume option "a" is correct.
+      if (selected.value === "a") {
+        feedback.innerText = "Correct! Supervised learning uses labeled data.";
+        feedback.style.color = "lightgreen";
+      } else {
+        feedback.innerText = "Incorrect. Please try again.";
+        feedback.style.color = "red";
+      }
+    }
+    // --- Live Chat Support (Integrated in Live Chat Section) ---
+    function sendChatMessage() {
+      const input = document.getElementById("chatInput");
+      const message = input.value.trim();
+      if (message === "") return;
+      addChatMessage("user", message);
+      input.value = "";
+      // Simulate AI response after 1.5 seconds
+      setTimeout(() => {
+        addChatMessage("ai", generateAIResponse(message));
+      }, 1500);
+    }
+    function addChatMessage(sender, text) {
+      const chatBody = document.getElementById("chatBody");
+      const msgDiv = document.createElement("div");
+      msgDiv.classList.add("chat-message", sender);
+      msgDiv.innerText = text;
+      chatBody.appendChild(msgDiv);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    function generateAIResponse(userMsg) {
+      // A simple, static response for demonstration purposes.
+      return "I'm here to help! How can I assist you with our courses?";
+    }
+    // --- On Page Load ---
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('authToggleBtn').style.display = "inline-block";
+      document.getElementById('profileContainer').style.display = "none";
+    });
+  </script>
+</body>
+</html>
