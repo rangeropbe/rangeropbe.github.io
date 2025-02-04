@@ -53,9 +53,24 @@
       padding: 0 20px;
       z-index: 1000;
     }
+    .navbar .left-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
     .navbar .logo {
       font-size: 24px;
       font-weight: 700;
+    }
+    .navbar .nav-link {
+      font-size: 16px;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .navbar .nav-link:hover {
+      background: var(--secondary);
     }
     .menu-btn {
       font-size: 32px;
@@ -142,7 +157,7 @@
       border-radius: 10px;
       z-index: 1200;
     }
-    .modal input[type="text"] {
+    .modal input {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
@@ -173,6 +188,9 @@
       .navbar .logo {
         font-size: 20px;
       }
+      .navbar .nav-link {
+        font-size: 14px;
+      }
       .menu-dropdown a {
         font-size: 14px;
         padding: 10px 14px;
@@ -187,8 +205,12 @@
 <body>
   <!-- Navbar -->
   <nav class="navbar">
-    <div class="logo">AI Visionaries</div>
+    <div class="left-links">
+      <div class="logo">AI Visionaries</div>
+      <div class="nav-link" onclick="showSection('home')">Home</div>
+    </div>
     <div class="menu-btn" onclick="toggleMenu()">⋮</div>
+    <!-- Dropdown Menu with Interactive Features -->
     <div class="menu-dropdown" id="menuDropdown">
       <a href="#" onclick="showSection('dashboard')">📊 Dashboard</a>
       <a href="#" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</a>
@@ -203,18 +225,20 @@
     </div>
   </nav>
 
-  <!-- Authentication Modal -->
+  <!-- Authentication Modal (Sign In/Sign Up via Email) -->
   <div class="modal" id="authModal">
     <h2>Sign In / Sign Up</h2>
-    <input type="text" id="username" placeholder="Enter your name" />
-    <br />
+    <input type="text" id="fullname" placeholder="Full Name" />
+    <input type="email" id="email" placeholder="Email Address" />
+    <input type="password" id="password" placeholder="Password" />
+    <br /><br />
     <button class="btn" onclick="authenticateUser()">Proceed</button>
   </div>
 
   <!-- Home Section -->
   <section id="home" class="section active-section">
     <h1>Welcome to AI Visionaries</h1>
-    <p>Discover the future of learning with cutting-edge AI courses.</p>
+    <p>Discover the future of learning with our cutting-edge AI courses.</p>
     <button class="btn" onclick="showSection('courses')">Browse Courses</button>
   </section>
 
@@ -329,7 +353,7 @@
   </div>
 
   <script>
-    let currentUser = { name: 'Guest', courses: [] };
+    let currentUser = { name: 'Guest', email: '', courses: [] };
     let selectedCourse = "";
 
     const courseContent = {
@@ -352,16 +376,19 @@
       document.getElementById("menuDropdown").style.display = "none";
     }
 
-    // Authenticate user from modal
+    // Authenticate user from modal (via email)
     function authenticateUser() {
-      const name = document.getElementById('username').value.trim();
-      if (name) {
-        currentUser.name = name;
-        document.getElementById('userName').innerText = name;
+      const fullname = document.getElementById('fullname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;  // In a real app, password handling must be secure.
+      if (fullname && email && password) {
+        currentUser.name = fullname;
+        currentUser.email = email;
+        document.getElementById('userName').innerText = fullname;
         document.getElementById('authModal').style.display = "none";
         showSection('home');
       } else {
-        alert("Please enter a valid name.");
+        alert("Please enter a valid full name, email, and password.");
       }
     }
 
@@ -393,7 +420,7 @@
       document.body.classList.toggle('dark-mode');
     }
 
-    // Show authentication modal on page load
+    // On page load, show the authentication modal
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('authModal').style.display = "block";
     });
