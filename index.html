@@ -16,6 +16,7 @@
       --dark: #121212;
       --bg-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
       --glass: rgba(255, 255, 255, 0.15);
+      --modal-bg: rgba(0, 0, 0, 0.95);
     }
 
     /* Global Styles */
@@ -29,6 +30,7 @@
       color: var(--light);
       transition: background 0.3s, color 0.3s;
       padding-top: 70px; /* Space for fixed header */
+      overflow-x: hidden;
     }
     .dark-mode {
       background: var(--dark);
@@ -61,6 +63,7 @@
     .navbar .logo {
       font-size: 24px;
       font-weight: 700;
+      cursor: pointer;
     }
     .navbar .nav-link {
       font-size: 16px;
@@ -71,6 +74,25 @@
     }
     .navbar .nav-link:hover {
       background: var(--secondary);
+    }
+    /* The Sign In / Sign Up button next to Home */
+    .navbar .auth-btn {
+      font-size: 16px;
+      cursor: pointer;
+      padding: 6px 12px;
+      border: 1px solid var(--light);
+      border-radius: 4px;
+      background: transparent;
+      transition: background 0.2s;
+    }
+    .navbar .auth-btn:hover {
+      background: var(--secondary);
+    }
+    /* Right side: Three-Dot Menu & Profile (if signed in) */
+    .navbar .right-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     .menu-btn {
       font-size: 32px;
@@ -99,6 +121,48 @@
       border-bottom: none;
     }
     .menu-dropdown a:hover {
+      background: var(--secondary);
+    }
+    .profile-container {
+      position: relative;
+      display: none;
+      align-items: center;
+      cursor: pointer;
+    }
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--light);
+    }
+    .profile-name {
+      margin-left: 8px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .profile-dropdown {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 5px;
+      overflow: hidden;
+      display: none;
+      z-index: 1100;
+      width: 200px;
+    }
+    .profile-dropdown a {
+      display: block;
+      padding: 10px 16px;
+      font-size: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer;
+    }
+    .profile-dropdown a:last-child {
+      border-bottom: none;
+    }
+    .profile-dropdown a:hover {
       background: var(--secondary);
     }
 
@@ -152,10 +216,15 @@
       width: 90%;
       max-width: 400px;
       transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.95);
+      background: var(--modal-bg);
       padding: 30px;
       border-radius: 10px;
       z-index: 1200;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translate(-50%, -60%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
     }
     .modal input {
       width: 100%;
@@ -183,21 +252,114 @@
       background: var(--accent);
     }
 
+    /* Payment Options (in Payment Modal) */
+    .payment-options {
+      margin: 20px 0;
+      text-align: left;
+    }
+    .payment-options label {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .payment-options input {
+      margin-right: 10px;
+    }
+
+    /* Quiz Section Styling */
+    .quiz-container {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+      background: var(--glass);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .quiz-question {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    .quiz-options {
+      list-style: none;
+      padding: 0;
+    }
+    .quiz-options li {
+      margin-bottom: 10px;
+    }
+    .quiz-options label {
+      cursor: pointer;
+    }
+    .quiz-feedback {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* Live Chat Support Section (Integrated Chat) */
+    .chat-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--modal-bg);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+    }
+    .chat-header {
+      background: var(--secondary);
+      padding: 10px;
+      text-align: center;
+      font-size: 18px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .chat-body {
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      background: var(--glass);
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .chat-input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+    }
+    .chat-message {
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 5px;
+    }
+    .chat-message.user {
+      background: var(--secondary);
+      text-align: right;
+    }
+    .chat-message.ai {
+      background: var(--glass);
+    }
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .navbar .logo {
         font-size: 20px;
       }
-      .navbar .nav-link {
+      .navbar .nav-link,
+      .navbar .auth-btn {
         font-size: 14px;
       }
-      .menu-dropdown a {
+      .menu-dropdown a, .profile-dropdown a {
         font-size: 14px;
         padding: 10px 14px;
       }
       .btn {
         font-size: 14px;
         padding: 10px 16px;
+      }
+      .quiz-question, .quiz-feedback {
+        font-size: 16px;
       }
     }
   </style>
@@ -206,26 +368,40 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="left-links">
-      <div class="logo">AI Visionaries</div>
+      <div class="logo" onclick="showSection('home')">AI Visionaries</div>
       <div class="nav-link" onclick="showSection('home')">Home</div>
+      <!-- Sign In / Sign Up button (visible when not signed in) -->
+      <button class="auth-btn" id="authToggleBtn" onclick="toggleAuthModal()">Sign In / Sign Up</button>
     </div>
-    <div class="menu-btn" onclick="toggleMenu()">⋮</div>
-    <!-- Dropdown Menu with Interactive Features -->
-    <div class="menu-dropdown" id="menuDropdown">
-      <a href="#" onclick="showSection('dashboard')">📊 Dashboard</a>
-      <a href="#" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</a>
-      <a href="#" onclick="showSection('badges')">🏆 Completion Badges</a>
-      <a href="#" onclick="showSection('chatbot')">💬 AI Chatbot</a>
-      <a href="#" onclick="showSection('quizzes')">📝 Quizzes & Assignments</a>
-      <a href="#" onclick="showSection('reviews')">⭐ Reviews</a>
-      <a href="#" onclick="showSection('challenges')">🔥 Daily Challenges</a>
-      <a href="#" onclick="showSection('social')">🔗 Social Sharing</a>
-      <a href="#" onclick="showSection('faq')">❓ FAQ</a>
-      <a href="#" onclick="showSection('livechat')">💻 Live Chat Support</a>
+    <div class="right-links">
+      <!-- Three Dot Menu for Interactive Features -->
+      <div class="menu-btn" onclick="toggleMenu()">⋮</div>
+      <div class="menu-dropdown" id="menuDropdown">
+        <a onclick="showSection('dashboard')">📊 Dashboard</a>
+        <a onclick="toggleDarkMode()">🌙 Toggle Dark Mode</a>
+        <a onclick="showSection('badges')">🏆 Completion Badges</a>
+        <a onclick="showSection('chatbot')">💬 AI Chatbot</a>
+        <a onclick="showSection('quizzes')">📝 Quizzes & Assignments</a>
+        <a onclick="showSection('reviews')">⭐ Reviews</a>
+        <a onclick="showSection('challenges')">🔥 Daily Challenges</a>
+        <a onclick="showSection('social')">🔗 Social Sharing</a>
+        <a onclick="showSection('faq')">❓ FAQ</a>
+        <a onclick="showSection('livechat')">💻 Live Chat Support</a>
+      </div>
+      <!-- Profile container (visible when signed in) -->
+      <div class="profile-container" id="profileContainer" onclick="toggleProfileDropdown()">
+        <img src="" alt="Profile Picture" id="profilePic" class="profile-pic" />
+        <span class="profile-name" id="profileName"></span>
+        <div class="profile-dropdown" id="profileDropdown">
+          <a onclick="showSection('profile')">My Profile</a>
+          <a onclick="openEditProfileModal()">Edit Profile</a>
+          <a onclick="signOut()">Sign Out</a>
+        </div>
+      </div>
     </div>
   </nav>
 
-  <!-- Authentication Modal (Sign In/Sign Up via Email) -->
+  <!-- Authentication Modal (Sign In / Sign Up) -->
   <div class="modal" id="authModal">
     <h2>Sign In / Sign Up</h2>
     <input type="text" id="fullname" placeholder="Full Name" />
@@ -234,6 +410,25 @@
     <br /><br />
     <button class="btn" onclick="authenticateUser()">Proceed</button>
   </div>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal" id="editProfileModal">
+    <h2>Edit Profile</h2>
+    <input type="text" id="editFullname" placeholder="Full Name" />
+    <input type="email" id="editEmail" placeholder="Email Address" />
+    <input type="text" id="editProfilePic" placeholder="Profile Picture URL" />
+    <br /><br />
+    <button class="btn" onclick="saveProfile()">Save Changes</button>
+  </div>
+
+  <!-- Profile Section -->
+  <section id="profile" class="section">
+    <h1>My Profile</h1>
+    <img src="" alt="Profile Picture" id="profileSectionPic" class="profile-pic" style="width:100px;height:100px;" />
+    <h2 id="profileSectionName">Your Name</h2>
+    <p id="profileSectionEmail">your.email@example.com</p>
+    <button class="btn" onclick="openEditProfileModal()">Edit Profile</button>
+  </section>
 
   <!-- Home Section -->
   <section id="home" class="section active-section">
@@ -279,8 +474,41 @@
     <div id="courseDetails"></div>
   </section>
 
-  <!-- Interactive Feature Sections -->
+  <!-- Quizzes Section -->
+  <section id="quizzes" class="section">
+    <h1>Quizzes & Assignments</h1>
+    <div class="quiz-container">
+      <div class="quiz-question">What is Supervised Learning?</div>
+      <ul class="quiz-options">
+        <li>
+          <label>
+            <input type="radio" name="quiz1" value="a" /> Learning with labeled data
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="quiz1" value="b" /> Learning with unlabeled data
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="quiz1" value="c" /> Learning without data
+          </label>
+        </li>
+      </ul>
+      <button class="btn" onclick="checkQuizAnswer()">Submit Answer</button>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+    </div>
+  </section>
 
+  <!-- AI Chatbot Section -->
+  <section id="chatbot" class="section">
+    <h1>AI Chatbot</h1>
+    <p>Chat with our AI assistant for help and support.</p>
+    <p><em>The chatbot interface is available in the Live Chat Support section below.</em></p>
+  </section>
+
+  <!-- Other Interactive Sections -->
   <!-- Completion Badges -->
   <section id="badges" class="section">
     <h1>Course Completion Badges</h1>
@@ -290,20 +518,6 @@
       <li>🥈 Intermediate Badge</li>
       <li>🥉 Advanced Badge</li>
     </ul>
-  </section>
-
-  <!-- AI Chatbot -->
-  <section id="chatbot" class="section">
-    <h1>AI Chatbot</h1>
-    <p>Ask our AI assistant any questions about the courses.</p>
-    <p><em>Chatbot interface coming soon...</em></p>
-  </section>
-
-  <!-- Quizzes & Assignments -->
-  <section id="quizzes" class="section">
-    <h1>Quizzes & Assignments</h1>
-    <p>Test your skills with interactive quizzes and assignments.</p>
-    <p><em>Quiz content coming soon...</em></p>
   </section>
 
   <!-- Reviews -->
@@ -339,21 +553,31 @@
     <p><strong>Q:</strong> How can I get support?<br /><strong>A:</strong> Use our Live Chat Support feature.</p>
   </section>
 
-  <!-- Live Chat Support -->
+  <!-- Live Chat Support Section (Integrated AI Chat) -->
   <section id="livechat" class="section">
     <h1>Live Chat Support</h1>
-    <p>Our support team is here to help you in real time.</p>
-    <p><em>Live chat interface coming soon...</em></p>
+    <div class="chat-container">
+      <div class="chat-header">AI Chat Support</div>
+      <div class="chat-body" id="chatBody">
+        <!-- Chat messages will appear here -->
+      </div>
+      <input type="text" class="chat-input" id="chatInput" placeholder="Type your message and press Enter..." onkeydown="if(event.key==='Enter'){ sendChatMessage(); }" />
+    </div>
   </section>
 
-  <!-- Payment Modal -->
+  <!-- Payment Modal with Payment Options -->
   <div class="modal" id="paymentModal">
     <h2>Select Payment Method</h2>
+    <div class="payment-options">
+      <label><input type="radio" name="payment" value="upi" checked /> UPI</label>
+      <label><input type="radio" name="payment" value="netbanking" /> Net Banking</label>
+      <label><input type="radio" name="payment" value="card" /> Credit/Debit Card</label>
+    </div>
     <button class="btn" onclick="processPayment()">Pay Now</button>
   </div>
 
   <script>
-    let currentUser = { name: 'Guest', email: '', courses: [] };
+    let currentUser = { name: 'Guest', email: '', courses: [], profilePic: 'https://via.placeholder.com/150' };
     let selectedCourse = "";
 
     const courseContent = {
@@ -362,68 +586,63 @@
       "Premium Course": "<h3>Advanced AI</h3><p>Dive deep into AI & Blockchain, AI Ethics, and the emerging world of Generative AI.</p>"
     };
 
-    // Toggle dropdown menu visibility
+    // --- Navbar & Dropdown Functions ---
     function toggleMenu() {
       const menu = document.getElementById("menuDropdown");
       menu.style.display = (menu.style.display === "block") ? "none" : "block";
     }
-
-    // Show the specified section and hide others
+    function toggleProfileDropdown() {
+      const dropdown = document.getElementById("profileDropdown");
+      dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    }
     function showSection(sectionId) {
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active-section'));
       document.getElementById(sectionId).classList.add('active-section');
-      // Hide dropdown if open
+      // Hide any open dropdowns
       document.getElementById("menuDropdown").style.display = "none";
+      if(document.getElementById("profileDropdown")){
+        document.getElementById("profileDropdown").style.display = "none";
+      }
     }
-
-    // Authenticate user from modal (via email)
+    // --- Authentication Modal Toggle ---
+    function toggleAuthModal() {
+      const modal = document.getElementById('authModal');
+      modal.style.display = (modal.style.display === "block") ? "none" : "block";
+    }
+    // --- Authentication ---
     function authenticateUser() {
       const fullname = document.getElementById('fullname').value.trim();
       const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;  // In a real app, password handling must be secure.
+      const password = document.getElementById('password').value;
       if (fullname && email && password) {
         currentUser.name = fullname;
         currentUser.email = email;
-        document.getElementById('userName').innerText = fullname;
+        updateUserDisplay();
         document.getElementById('authModal').style.display = "none";
         showSection('home');
       } else {
         alert("Please enter a valid full name, email, and password.");
       }
     }
-
-    // Show payment modal when enrolling in a course
-    function showPaymentModal(course) {
-      selectedCourse = course;
-      document.getElementById('paymentModal').style.display = "block";
+    function updateUserDisplay() {
+      // Hide the auth button and show the profile container
+      document.getElementById('authToggleBtn').style.display = "none";
+      document.getElementById('profileContainer').style.display = "flex";
+      document.getElementById('profilePic').src = currentUser.profilePic;
+      document.getElementById('profileName').innerText = currentUser.name;
+      // Update Profile Section details
+      document.getElementById('profileSectionPic').src = currentUser.profilePic;
+      document.getElementById('profileSectionName').innerText = currentUser.name;
+      document.getElementById('profileSectionEmail').innerText = currentUser.email;
+      document.getElementById('userName').innerText = currentUser.name;
     }
-
-    // Simulate payment process and redirect to course content
-    function processPayment() {
-      document.getElementById('paymentModal').style.display = "none";
-      setTimeout(() => {
-        alert("Payment Successful! Redirecting to course content...");
-        currentUser.courses.push(selectedCourse);
-        showCourseContent(selectedCourse);
-      }, 2000);
+    // --- Edit Profile ---
+    function openEditProfileModal() {
+      document.getElementById('editFullname').value = currentUser.name;
+      document.getElementById('editEmail').value = currentUser.email;
+      document.getElementById('editProfilePic').value = currentUser.profilePic;
+      document.getElementById('editProfileModal').style.display = "block";
     }
-
-    // Display the purchased course content
-    function showCourseContent(courseName) {
-      document.getElementById('courseTitle').innerText = courseName;
-      document.getElementById('courseDetails').innerHTML = courseContent[courseName] || "Course content not available.";
-      showSection('course-content');
-    }
-
-    // Toggle dark mode
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark-mode');
-    }
-
-    // On page load, show the authentication modal
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('authModal').style.display = "block";
-    });
-  </script>
-</body>
-</html>
+    function saveProfile() {
+      const newName = document.getElementById('editFullname').value.trim();
+      const newEmail = document.getEle
